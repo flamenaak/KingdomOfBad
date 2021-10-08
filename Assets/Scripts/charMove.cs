@@ -11,15 +11,17 @@ public class charMove : MonoBehaviour
     public float acceleration = 0.3f;
     private Rigidbody2D rigidBody;
     private CameraMovement camera;
+    private Animator animator;
+    private Animation animation;
 
     private float oldInput = 0f;
 
-    private Animator animation;
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        animation = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+        animation = GetComponent<Animation>();
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
     }
 
@@ -56,6 +58,7 @@ public class charMove : MonoBehaviour
         else
         {
             camera.isSprinting = true;
+            animation.Play("Run");
         }
         oldInput = input;
         return newSpeed * direction;
