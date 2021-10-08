@@ -11,7 +11,7 @@ public class charMove : MonoBehaviour
     public float acceleration = 0.3f;
     private Rigidbody2D rigidBody;
     private CameraMovement camera;
-    private Animator animator;
+    public Animator animator;
     private Animation animation;
 
     private float oldInput = 0f;
@@ -28,8 +28,11 @@ public class charMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+       
         float moveX = Input.GetAxis("Horizontal");
         float newSpeed = GetNewSpeed(moveX, rigidBody.velocity.x, this.acceleration);
+        animator.SetFloat("Speed", newSpeed);
         rigidBody.velocity = new Vector2(newSpeed, rigidBody.velocity.y);
         if (newSpeed != 0)
             Debug.Log("newSpeed " + newSpeed + " input " + moveX);
