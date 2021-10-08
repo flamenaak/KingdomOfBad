@@ -12,7 +12,6 @@ public class charMove : MonoBehaviour
     private Rigidbody2D rigidBody;
     private CameraMovement camera;
     public Animator animator;
-    private Animation animation;
 
     private float oldInput = 0f;
 
@@ -21,7 +20,6 @@ public class charMove : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        animation = GetComponent<Animation>();
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
     }
 
@@ -32,7 +30,7 @@ public class charMove : MonoBehaviour
        
         float moveX = Input.GetAxis("Horizontal");
         float newSpeed = GetNewSpeed(moveX, rigidBody.velocity.x, this.acceleration);
-        animator.SetFloat("Speed", newSpeed);
+        animator.SetFloat("Speed", Math.Abs(newSpeed));
         rigidBody.velocity = new Vector2(newSpeed, rigidBody.velocity.y);
         if (newSpeed != 0)
             Debug.Log("newSpeed " + newSpeed + " input " + moveX);
@@ -61,7 +59,6 @@ public class charMove : MonoBehaviour
         else
         {
             camera.isSprinting = true;
-            animation.Play("Run");
         }
         oldInput = input;
         return newSpeed * direction;
