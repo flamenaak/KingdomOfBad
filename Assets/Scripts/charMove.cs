@@ -12,8 +12,10 @@ public class charMove : MonoBehaviour
     private Rigidbody2D rigidBody;
     private CameraMovement camera;
     public Animator animator;
-
+    public CharacterController2D controller;
     private float oldInput = 0f;
+    bool crouch = false;
+    bool jump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +28,6 @@ public class charMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-       
         float moveX = Input.GetAxis("Horizontal");
         float newSpeed = GetNewSpeed(moveX, rigidBody.velocity.x, this.acceleration);
         animator.SetFloat("Speed", Math.Abs(newSpeed));
@@ -40,10 +40,40 @@ public class charMove : MonoBehaviour
         || (newSpeed > 0.1f && transform.localScale.x < 0))
             
         {
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-           
+            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);         
         }
 
+        if (Input.GetButtonDown("Jump"))
+        {
+            jump = true;
+            animator.SetBool("IsJumping", true);
+        }
+
+        if (Input.GetButtonDown("Crouch"))
+        {
+            crouch = true;
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            crouch = false;
+        }
+
+    }
+
+    public void OnLanding()
+    {
+        animator.SetBool("IsJumping", false);
+    }
+
+    public void OnCrouching(bool IsCrouching)
+    {
+        animator.SetBool("IsCrouching", IsCrouching);
+    }
+
+    private void FixedUpdate()
+    {
+        controller.Move(crouch, jump);
+        jump = false;
     }
 
     float GetNewSpeed(float input, float velocity, float acceleration)
