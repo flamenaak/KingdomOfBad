@@ -30,7 +30,7 @@ public class charMove : MonoBehaviour
     {
         float moveX = Input.GetAxis("Horizontal");
         float newSpeed = GetNewSpeed(moveX, rigidBody.velocity.x, this.acceleration);
-        animator.SetFloat("Speed", Math.Abs(newSpeed));
+        animator.SetFloat("Speed", Mathf.Abs(newSpeed));
         rigidBody.velocity = new Vector2(newSpeed, rigidBody.velocity.y);
         if (newSpeed != 0)
             Debug.Log("newSpeed " + newSpeed + " input " + moveX);
