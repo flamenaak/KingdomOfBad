@@ -8,7 +8,7 @@ public class charMove : MonoBehaviour
     public float speed = 5f;
     public float maxWalkSpeed = 5f;
     public float maxSprintSpeed = 10f;
-    public float acceleration = 0.3f;
+    public float acceleration = 1f;
     private Rigidbody2D rigidBody;
     private CameraMovement camera;
     public Animator animator;
@@ -25,25 +25,21 @@ public class charMove : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-
-       
+    {       
         float moveX = Input.GetAxis("Horizontal");
         float newSpeed = GetNewSpeed(moveX, rigidBody.velocity.x, this.acceleration);
         animator.SetFloat("Speed", Math.Abs(newSpeed));
-        rigidBody.velocity = new Vector2(newSpeed, rigidBody.velocity.y);
+        //rigidBody.velocity = new Vector2(newSpeed, rigidBody.velocity.y);
+        rigidBody.AddForce(new Vector2(newSpeed, rigidBody.velocity.y), ForceMode2D.Force);
         if (newSpeed != 0)
-            Debug.Log("newSpeed " + newSpeed + " input " + moveX);
+            //Debug.Log("newSpeed " + newSpeed + " input " + moveX);
         //animation.SetFloat("speed", Math.Abs(newSpeed));
         // flip sprite if necessary
         if ((newSpeed < -0.1f && transform.localScale.x > 0)
         || (newSpeed > 0.1f && transform.localScale.x < 0))
-            
         {
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-           
         }
-
     }
 
     float GetNewSpeed(float input, float velocity, float acceleration)
