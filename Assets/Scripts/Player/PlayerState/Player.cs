@@ -10,11 +10,14 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState {get; private set;}
     public PlayerWalkState WalkState {get; private set;}
     public PlayerRunState RunState {get; private set;}
+
+    public PlayerSprintState SprintState { get; private set; }
     
 
     public Animator Anim {get; private set;}
     private Rigidbody2D RigidBody;
     public Vector2 Velocity {get; private set;}
+    public float velocityX;
     public CharacterController2D controller;
     private CameraMovement camera;
 
@@ -25,6 +28,7 @@ public class Player : MonoBehaviour
 
     public float WalkSpeed = 5f;
     public float RunSpeed = 10f;
+    public float SprintSpeed = 20f;
 
     private void Awake()
     {
@@ -33,7 +37,7 @@ public class Player : MonoBehaviour
         IdleState = new PlayerIdleState(this, StateMachine, "idle");
         WalkState = new PlayerWalkState(this, StateMachine, "walk");
         RunState = new PlayerRunState(this, StateMachine, "run");
-
+        SprintState = new PlayerSprintState(this, StateMachine, "sprint");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
@@ -79,7 +83,7 @@ public class Player : MonoBehaviour
 
 
         int input = ReadInputX();
-        Debug.Log("Xinput " + input);
+        //Debug.Log("Xinput " + input);
         
         controller.Move(Crouch, Jump);
         Jump = false;
@@ -87,10 +91,15 @@ public class Player : MonoBehaviour
         if (input != 0)
         {
             RigidBody.velocity = (new Vector2(WalkSpeed * input, 0));
+                             
   
             if (StateMachine.CurrentState == RunState)
             {
                 RigidBody.velocity = (new Vector2(RunSpeed * input, 0));
+            }
+            if(StateMachine.CurrentState == SprintState)
+            {
+                RigidBody.velocity = (new Vector2(SprintSpeed * input, 0));
             }
             
         } else {
@@ -98,6 +107,8 @@ public class Player : MonoBehaviour
         }
 
         Velocity = RigidBody.velocity;
+        velocityX = Math.Abs(Velocity.x);
+       // Debug.Log(velocityX);       
     }
 
     public void OnLanding()

@@ -1,10 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerState
+public class PlayerSprintState : PlayerState
 {
-    public PlayerIdleState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerSprintState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -12,22 +12,22 @@ public class PlayerIdleState : PlayerState
     {
         base.DoChecks();
 
-        if (player.velocityX > 0)
+        if (player.velocityX < player.SprintSpeed)
         {
-            stateMachine.ChangeState(player.WalkState);
+            stateMachine.ChangeState(player.RunState);
         }
     }
 
     public override void Enter()
     {
         base.Enter();
-        player.Anim.SetBool("idle", true);
+        player.Anim.SetBool("sprint", true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.Anim.SetBool("idle", false);
+        player.Anim.SetBool("sprint", false);
     }
 
     public override void FixedUpdate()

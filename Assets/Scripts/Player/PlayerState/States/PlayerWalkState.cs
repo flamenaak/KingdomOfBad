@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerWalkState : PlayerState
 {
+    public int acc = 0;
     public PlayerWalkState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -12,9 +13,14 @@ public class PlayerWalkState : PlayerState
     {
         base.DoChecks();
 
-        if (player.Velocity.x == 0)
+        if (player.velocityX == 0)
         {
             stateMachine.ChangeState(player.IdleState);
+        }
+        else if(acc > 100)
+        {
+            stateMachine.ChangeState(player.RunState);
+            acc = 0;
         }
     }
 
@@ -33,6 +39,15 @@ public class PlayerWalkState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if(player.velocityX > 0)
+        {
+            acc++;
+        }
+        else
+        {
+            acc = 0;
+        }
+        Debug.Log(acc);
     }
 
     public override void Update()

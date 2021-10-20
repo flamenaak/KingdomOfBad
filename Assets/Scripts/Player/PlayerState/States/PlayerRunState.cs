@@ -12,9 +12,14 @@ public class PlayerRunState : PlayerState
     {
         base.DoChecks();
 
-        if (player.Velocity.x == 0)
+
+        if (player.velocityX > 0 && player.velocityX < player.RunSpeed)
         {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(player.WalkState);
+        }
+        if(player.velocityX >= player.SprintSpeed)
+        {
+            stateMachine.ChangeState(player.SprintState);
         }
     }
 
