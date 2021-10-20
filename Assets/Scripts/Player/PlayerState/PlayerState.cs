@@ -26,6 +26,7 @@ public class PlayerState
 
     public virtual void Exit()
     {
+        startTime = -1f;
         player.Anim.SetBool(animBoolName, false);
     }
 

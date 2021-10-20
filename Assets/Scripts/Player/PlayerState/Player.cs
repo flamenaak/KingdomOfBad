@@ -9,10 +9,17 @@ public class Player : MonoBehaviour
 
     public PlayerIdleState IdleState {get; private set;}
     public PlayerWalkState WalkState {get; private set;}
+    public PlayerRunState RunState {get; private set;}
+    
 
     public Animator Anim {get; private set;}
     private Rigidbody2D RigidBody;
     public Vector2 Velocity {get; private set;}
+    public CharacterController2D controller;
+    private CameraMovement camera;
+
+    public bool Crouch = false;
+    public bool Jump = false;
 
 
 
@@ -25,6 +32,8 @@ public class Player : MonoBehaviour
 
         IdleState = new PlayerIdleState(this, StateMachine, "idle");
         WalkState = new PlayerWalkState(this, StateMachine, "walk");
+        RunState = new PlayerRunState(this, StateMachine, "run");
+
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
@@ -33,14 +42,20 @@ public class Player : MonoBehaviour
     private void Start()
     {
         Velocity = RigidBody.velocity;
-
         StateMachine.Initialize(IdleState);
+        camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
     }
 
     // logic
     private void Update()
     {
         StateMachine.CurrentState.Update();
+
+        if ((Velocity.x < -0.1f && transform.localScale.x > 0)
+        || (Velocity.x > 0.1f && transform.localScale.x < 0))
+        {
+            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);         
+        }
     }
 
     // physics
@@ -48,17 +63,51 @@ public class Player : MonoBehaviour
     {
         StateMachine.CurrentState.FixedUpdate();
 
+        if (Input.GetButtonDown("Jump"))
+        {
+            Jump = true;
+        }
+
+        if (Input.GetButtonDown("Crouch"))
+        {
+            Crouch = true;
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            Crouch = false;
+        }
+
+
         int input = ReadInputX();
         Debug.Log("Xinput " + input);
         
+        controller.Move(Crouch, Jump);
+        Jump = false;
+
         if (input != 0)
         {
             RigidBody.velocity = (new Vector2(WalkSpeed * input, 0));
+  
+            if (StateMachine.CurrentState == RunState)
+            {
+                RigidBody.velocity = (new Vector2(RunSpeed * input, 0));
+            }
+            
         } else {
             RigidBody.velocity = new Vector2(0, 0);
         }
 
         Velocity = RigidBody.velocity;
+    }
+
+    public void OnLanding()
+    {
+        StateMachine.ChangeState(IdleState);
+    }
+
+    public void OnCrouching(bool IsCrouching)
+    {
+        // animator.SetBool("IsCrouching", IsCrouching);
     }
 
     private int ReadInputX()
