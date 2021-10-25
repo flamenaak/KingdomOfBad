@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSprintState : PlayerState
+public class PlayerSprintState : PlayerGroundedState
 {
     public PlayerSprintState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -11,28 +11,29 @@ public class PlayerSprintState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
-
-        if (player.velocityX < player.SprintSpeed)
-        {
-            stateMachine.ChangeState(player.RunState);
-        }
     }
 
     public override void Enter()
     {
         base.Enter();
-        player.Anim.SetBool("sprint", true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.Anim.SetBool("sprint", false);
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (!sprint)
+        {
+            player.StateMachine.ChangeState(player.RunState);
+        }
+        else
+        {
+            player.Velocity = new Vector2(player.SprintSpeed * xInput, player.Velocity.y);
+        }
     }
 
     public override void Update()

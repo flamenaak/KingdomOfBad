@@ -2604,7 +2604,7 @@ GameObject:
   - component: {fileID: 534308343}
   - component: {fileID: 534308336}
   - component: {fileID: 534308344}
-  - component: {fileID: 534308342}
+  - component: {fileID: 534308341}
   - component: {fileID: 534308340}
   - component: {fileID: 534308339}
   m_Layer: 10
@@ -2753,8 +2753,8 @@ MonoBehaviour:
   - {x: -0.02652113, y: 0.12469703, z: 0}
   - {x: -0.07300546, y: 0.051829305, z: 0}
   m_ShapePathHash: 887767756
-  m_Mesh: {fileID: 2089165937}
-  m_InstanceId: -26552
+  m_Mesh: {fileID: 2039297936}
+  m_InstanceId: 16822
 --- !u!95 &534308340
 Animator:
   serializedVersion: 3
@@ -2774,7 +2774,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &534308342
+--- !u!114 &534308341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2786,10 +2786,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d7e0783b5e0dd246a55f680e020618b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 700
+  m_JumpForce: 400
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
-  m_AirControl: 1
+  m_AirControl: 0
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 512
@@ -2807,7 +2807,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: OnLanding
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   OnCrouchEvent:
@@ -2815,7 +2815,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 534308344}
         m_MethodName: OnCrouching
-        m_Mode: 6
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2853,7 +2853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityX: 0
-  controller: {fileID: 534308342}
+  Controller: {fileID: 534308341}
   Crouch: 0
   Jump: 0
   WalkSpeed: 5
@@ -4807,7 +4807,7 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!43 &2089165937
+--- !u!43 &2039297936
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

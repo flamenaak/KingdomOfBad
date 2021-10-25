@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System;
+
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -133,7 +135,7 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 
-	private void Flip()
+	public void Flip()
 	{
 		// Switch the way the player is labelled as facing.
 		m_FacingRight = !m_FacingRight;
@@ -142,5 +144,28 @@ public class CharacterController2D : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	public int ReadInputX()
+    {
+        float moveX = Input.GetAxis("Horizontal");
+        int normalized = (int)Math.Round(moveX/Math.Abs(moveX));
+
+        return  Math.Abs(moveX) > 0.1 ? normalized : 0;
+    }
+
+	public bool GetJumpInput()
+	{
+		return Input.GetButton("Jump");
+	}
+
+	public bool GetCrouchInput()
+	{
+		return Input.GetButton("Crouch");
+	}
+
+	public bool GetSprintInput()
+	{
+		return Input.GetKey("left shift");
 	}
 }

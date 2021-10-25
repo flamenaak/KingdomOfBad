@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWalkState : PlayerState
+public class PlayerWalkState : PlayerGroundedState
 {
     public int acc = 0;
     public PlayerWalkState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
@@ -12,42 +12,41 @@ public class PlayerWalkState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
-
-        if (player.velocityX == 0)
-        {
-            stateMachine.ChangeState(player.IdleState);
-        }
-        else if(acc > 100)
-        {
-            stateMachine.ChangeState(player.RunState);
-            acc = 0;
-        }
     }
 
     public override void Enter()
     {
         base.Enter();
-        player.Anim.SetBool("walk", true);
     }
 
     public override void Exit()
     {
+        acc = 0;
         base.Exit();
-        player.Anim.SetBool("walk", false);
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if(player.velocityX > 0)
+        acc++;
+        
+        if (xInput != 0)
         {
-            acc++;
-        }
-        else
-        {
-            acc = 0;
-        }
-        Debug.Log(acc);
+            if(acc > 20)
+            {
+                if (sprint)
+                {
+                    stateMachine.ChangeState(player.SprintState);
+                    acc = 0;
+                } else 
+                {
+                    stateMachine.ChangeState(player.RunState);
+                    acc = 0;
+                }
+            } else {
+                player.Velocity = new Vector2(xInput * player.WalkSpeed, player.Velocity.y);
+            } 
+        }     
     }
 
     public override void Update()

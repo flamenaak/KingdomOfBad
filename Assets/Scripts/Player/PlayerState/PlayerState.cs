@@ -6,6 +6,7 @@ public class PlayerState
 {
     protected Player player;
     protected PlayerStateMachine stateMachine;
+    protected Input input;
 
     protected float startTime;
     private string animBoolName;
@@ -31,6 +32,9 @@ public class PlayerState
     }
 
     // every frame
+    /**
+    * stuff
+    */
     public virtual void Update()
     {
 

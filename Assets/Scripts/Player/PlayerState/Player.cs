@@ -16,9 +16,9 @@ public class Player : MonoBehaviour
 
     public Animator Anim {get; private set;}
     private Rigidbody2D RigidBody;
-    public Vector2 Velocity {get; private set;}
+    public Vector2 Velocity {get; set;}
     public float velocityX;
-    public CharacterController2D controller;
+    public CharacterController2D Controller;
     private CameraMovement camera;
 
     public bool Crouch = false;
@@ -26,9 +26,9 @@ public class Player : MonoBehaviour
 
 
 
-    public float WalkSpeed = 5f;
-    public float RunSpeed = 10f;
-    public float SprintSpeed = 20f;
+    public float WalkSpeed = 2f;
+    public float RunSpeed = 5f;
+    public float SprintSpeed = 7f;
 
     private void Awake()
     {
@@ -48,6 +48,9 @@ public class Player : MonoBehaviour
         Velocity = RigidBody.velocity;
         StateMachine.Initialize(IdleState);
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
+
+        if (Controller == null)
+            Debug.Log("no controller");
     }
 
     // logic
@@ -58,7 +61,7 @@ public class Player : MonoBehaviour
         if ((Velocity.x < -0.1f && transform.localScale.x > 0)
         || (Velocity.x > 0.1f && transform.localScale.x < 0))
         {
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);         
+            Controller.Flip();
         }
     }
 
@@ -66,48 +69,34 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         StateMachine.CurrentState.FixedUpdate();
+        RigidBody.velocity = Velocity;
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump = true;
-        }
-
-        if (Input.GetButtonDown("Crouch"))
-        {
-            Crouch = true;
-        }
-        else if (Input.GetButtonUp("Crouch"))
-        {
-            Crouch = false;
-        }
-
-
-        int input = ReadInputX();
-        //Debug.Log("Xinput " + input);
+        // int input = ReadInputX();
+        // //Debug.Log("Xinput " + input);
         
-        controller.Move(Crouch, Jump);
-        Jump = false;
+        // Controller.Move(Crouch, Jump);
+        // Jump = false;
 
-        if (input != 0)
-        {
-            RigidBody.velocity = (new Vector2(WalkSpeed * input, 0));
+        // if (input != 0)
+        // {
+        //     RigidBody.velocity = (new Vector2(WalkSpeed * input, 0));
                              
   
-            if (StateMachine.CurrentState == RunState)
-            {
-                RigidBody.velocity = (new Vector2(RunSpeed * input, 0));
-            }
-            if(StateMachine.CurrentState == SprintState)
-            {
-                RigidBody.velocity = (new Vector2(SprintSpeed * input, 0));
-            }
+        //     if (StateMachine.CurrentState == RunState)
+        //     {
+        //         RigidBody.velocity = (new Vector2(RunSpeed * input, 0));
+        //     }
+        //     if(StateMachine.CurrentState == SprintState)
+        //     {
+        //         RigidBody.velocity = (new Vector2(SprintSpeed * input, 0));
+        //     }
             
-        } else {
-            RigidBody.velocity = new Vector2(0, 0);
-        }
+        // } else {
+        //     RigidBody.velocity = new Vector2(0, 0);
+        // }
 
-        Velocity = RigidBody.velocity;
-        velocityX = Math.Abs(Velocity.x);
+        // Velocity = RigidBody.velocity;
+        // velocityX = Math.Abs(Velocity.x);
        // Debug.Log(velocityX);       
     }
 
