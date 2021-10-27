@@ -27,12 +27,15 @@ public class PlayerRunState : PlayerGroundedState
     {
         base.FixedUpdate();
 
-        if (sprint)
+        if (jump && player.Controller.m_Grounded)
+        {
+            stateMachine.ChangeState(player.JumpState);
+        } else if (sprint)
         {
             stateMachine.ChangeState(player.SprintState);
         } else
         {
-            player.Velocity = new Vector2(player.RunSpeed * xInput, player.Velocity.y);
+            player.RigidBody.velocity = new Vector2(player.RunSpeed * xInput, player.RigidBody.velocity.y);
         }
 
     }

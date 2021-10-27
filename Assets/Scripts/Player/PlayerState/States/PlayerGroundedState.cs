@@ -35,10 +35,7 @@ public class PlayerGroundedState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (jump && player.Controller.Grounded)
-        {
-            stateMachine.ChangeState(player.JumpState);
-        } else if (xInput == 0)
+        if (xInput == 0)
         {
             stateMachine.ChangeState(player.IdleState);
         } else {

@@ -32,7 +32,7 @@ public class PlayerSprintState : PlayerGroundedState
         }
         else
         {
-            player.Velocity = new Vector2(player.SprintSpeed * xInput, player.Velocity.y);
+            player.RigidBody.velocity = new Vector2(player.SprintSpeed * xInput, player.RigidBody.velocity.y);
         }
     }
 

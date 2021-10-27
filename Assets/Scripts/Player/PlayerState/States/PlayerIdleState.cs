@@ -25,19 +25,16 @@ public class PlayerIdleState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
-        if (crouch)
+        if (jump && player.Controller.m_Grounded)
         {
-            // stateMachine.ChangeState(player.CrouchState);
-            return;
-        }
-
-        if (xInput != 0)
+            stateMachine.ChangeState(player.JumpState);
+        } else if (xInput != 0)
         {
             stateMachine.ChangeState(player.WalkState);
         } else {
-            player.Velocity = new Vector2(0, player.Velocity.y);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
         }
+        base.FixedUpdate();
     }
 
     public override void Update()
