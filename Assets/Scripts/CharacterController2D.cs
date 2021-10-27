@@ -159,12 +159,7 @@ public class CharacterController2D : MonoBehaviour
 		return Input.GetButton("Jump");
 	}
 
-	public bool GetCrouchInput()
-	{
-		return Input.GetButton("Crouch");
-	}
-
-	public bool GetDashInput()
+	public bool GetDashOrEvadeInput()
 	{
 		return Input.GetButton("Dash");
 	}

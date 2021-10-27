@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerState
 {
-    protected bool sprint;
+    protected bool dashAndEvade;
     protected bool jump;
-    protected bool crouch;
     protected int xInput;
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -17,8 +16,7 @@ public class PlayerGroundedState : PlayerState
         base.DoChecks();
 
         jump = player.Controller.GetJumpInput();
-        crouch = player.Controller.GetCrouchInput();
-        sprint = player.Controller.GetDashInput();
+        dashAndEvade = player.Controller.GetDashOrEvadeInput();
         xInput = player.Controller.ReadInputX();
     }
 
@@ -35,10 +33,7 @@ public class PlayerGroundedState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (jump && player.Controller.Grounded)
-        {
-            stateMachine.ChangeState(player.JumpState);
-        } else if (xInput == 0)
+        if (xInput == 0 && stateMachine.CurrentState != player.IdleState)
         {
             stateMachine.ChangeState(player.IdleState);
         } else {

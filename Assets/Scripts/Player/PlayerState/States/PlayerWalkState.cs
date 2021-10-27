@@ -17,6 +17,7 @@ public class PlayerWalkState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        
     }
 
     public override void Exit()
@@ -33,17 +34,22 @@ public class PlayerWalkState : PlayerGroundedState
         if (xInput != 0)
         {
             if(acc > 20)
-            {
-                if (sprint)
-                {
-                    stateMachine.ChangeState(player.SprintState);
-                    acc = 0;
-                } else 
-                {
+            {      
                     stateMachine.ChangeState(player.RunState);
                     acc = 0;
-                }
-            } else {
+                
+            }
+            if (jump)
+            {
+                stateMachine.ChangeState(player.JumpState);
+                acc = 0;
+            }
+            if (dashAndEvade && player.canDashOrEvade)
+            {
+                stateMachine.ChangeState(player.DashState);
+            }
+            else 
+            {
                 player.Velocity = new Vector2(xInput * player.WalkSpeed, player.Velocity.y);
             } 
         }     

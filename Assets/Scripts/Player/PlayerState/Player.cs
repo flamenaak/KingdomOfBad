@@ -10,12 +10,14 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState {get; private set;}
     public PlayerWalkState WalkState {get; private set;}
     public PlayerRunState RunState {get; private set;}
-    public PlayerSprintState SprintState { get; private set; }
+    public PlayerDashState DashState { get; private set; }
+    public PlayerEvadeState EvadeState { get; private set; }
     public PlayerJumpState JumpState {get; private set;}
-    
 
+
+    [SerializeField] public LayerMask layerMask;
     public Animator Anim {get; private set;}
-    private Rigidbody2D RigidBody;
+    public Rigidbody2D RigidBody;
     public Vector2 Velocity {get; set;}
     public float velocityX;
     public CharacterController2D Controller;
@@ -29,6 +31,9 @@ public class Player : MonoBehaviour
     public float WalkSpeed = 2f;
     public float RunSpeed = 5f;
     public float SprintSpeed = 7f;
+    public float DashForce = 10f;
+    public float DashCooldown = 3f;
+    public bool canDashOrEvade = true;
 
     private void Awake()
     {
@@ -37,7 +42,8 @@ public class Player : MonoBehaviour
         IdleState = new PlayerIdleState(this, StateMachine, "idle");
         WalkState = new PlayerWalkState(this, StateMachine, "walk");
         RunState = new PlayerRunState(this, StateMachine, "run");
-        SprintState = new PlayerSprintState(this, StateMachine, "sprint");
+        DashState = new PlayerDashState(this, StateMachine, "dash");
+        EvadeState = new PlayerEvadeState(this, StateMachine, "evade");
         JumpState = new PlayerJumpState(this, StateMachine, "jump");
 
         Anim = GetComponent<Animator>();
@@ -109,10 +115,6 @@ public class Player : MonoBehaviour
         StateMachine.ChangeState(IdleState);
     }
 
-    public void OnCrouching(bool IsCrouching)
-    {
-        // animator.SetBool("IsCrouching", IsCrouching);
-    }
 
     private int ReadInputX()
     {
@@ -127,4 +129,26 @@ public class Player : MonoBehaviour
         Controller.Move(false, true);
     }
 
+    public IEnumerator WaitAndPrint()
+    {
+        yield return new WaitForSeconds(DashCooldown);
+    }
+
+    public IEnumerator StartDashOrEvadeCooldown()
+    {
+        canDashOrEvade = false;
+        yield return StartCoroutine("WaitAndPrint");
+        canDashOrEvade = true;
+    }
+
+    public void startDashCoolDown()
+    {
+        canDashOrEvade = false;
+        Invoke("clearDashOrEvadeCooldown", DashCooldown);
+    }
+
+    void clearDashOrEvadeCooldown()
+    {
+        canDashOrEvade = true;
+    }
 }

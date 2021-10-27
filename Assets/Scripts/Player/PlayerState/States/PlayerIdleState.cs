@@ -16,6 +16,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        
     }
 
     public override void Exit()
@@ -26,18 +27,25 @@ public class PlayerIdleState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (crouch)
-        {
-            // stateMachine.ChangeState(player.CrouchState);
-            return;
-        }
-
+        Debug.Log(startTime);
         if (xInput != 0)
         {
             stateMachine.ChangeState(player.WalkState);
-        } else {
+        } 
+        else if (jump)
+        {
+            stateMachine.ChangeState(player.JumpState);
+        }
+        else if (dashAndEvade && player.canDashOrEvade)
+        {
+            Debug.Log("From idle to evade");
+          stateMachine.ChangeState(player.EvadeState);           
+        }
+        else
+        {
             player.Velocity = new Vector2(0, player.Velocity.y);
         }
+
     }
 
     public override void Update()
