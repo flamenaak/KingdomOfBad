@@ -18,7 +18,7 @@ public class PlayerGroundedState : PlayerState
 
         jump = player.Controller.GetJumpInput();
         crouch = player.Controller.GetCrouchInput();
-        sprint = player.Controller.GetSprintInput();
+        sprint = player.Controller.GetDashInput();
         xInput = player.Controller.ReadInputX();
     }
 
@@ -35,12 +35,14 @@ public class PlayerGroundedState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        int xInput = player.Controller.ReadInputX();
-        if (xInput == 0)
+        if (jump && player.Controller.Grounded)
+        {
+            stateMachine.ChangeState(player.JumpState);
+        } else if (xInput == 0)
         {
             stateMachine.ChangeState(player.IdleState);
         } else {
-
+            
         }
     }
     

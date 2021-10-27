@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState {get; private set;}
     public PlayerWalkState WalkState {get; private set;}
     public PlayerRunState RunState {get; private set;}
-
     public PlayerSprintState SprintState { get; private set; }
+    public PlayerJumpState JumpState {get; private set;}
     
 
     public Animator Anim {get; private set;}
@@ -38,16 +38,20 @@ public class Player : MonoBehaviour
         WalkState = new PlayerWalkState(this, StateMachine, "walk");
         RunState = new PlayerRunState(this, StateMachine, "run");
         SprintState = new PlayerSprintState(this, StateMachine, "sprint");
+        JumpState = new PlayerJumpState(this, StateMachine, "jump");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
+        Velocity = RigidBody.velocity;
+
+        StateMachine.Initialize(IdleState);
+
     }
 
     private void Start()
     {
-        Velocity = RigidBody.velocity;
-        StateMachine.Initialize(IdleState);
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
+        Velocity = RigidBody.velocity;
 
         if (Controller == null)
             Debug.Log("no controller");
@@ -116,6 +120,11 @@ public class Player : MonoBehaviour
         int normalized = (int)Math.Round(moveX/Math.Abs(moveX));
 
         return  Math.Abs(moveX) > 0.3 ? normalized : 0;
+    }
+
+    public void DoJump()
+    {
+        Controller.Move(false, true);
     }
 
 }
