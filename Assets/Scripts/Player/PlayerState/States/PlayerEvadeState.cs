@@ -27,8 +27,17 @@ public class PlayerEvadeState : PlayerGroundedState
     }
 
     public override void FixedUpdate()
-    {      
-            Vector3 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y) - (new Vector2(0.2f, 0) * player.DashForce);
+    {
+        Vector3 dashPosition = new Vector3(); 
+        if(player.transform.localScale.x > 0)
+        {
+            dashPosition = new Vector2(player.transform.position.x, player.transform.position.y) - (new Vector2(0.2f, 0) * player.DashForce);
+        }
+        else if(player.transform.localScale.x < 0)
+        {
+            dashPosition = new Vector2(player.transform.position.x, player.transform.position.y) + (new Vector2(0.2f, 0) * player.DashForce);
+        }
+            
 
             RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, player.Velocity, player.DashForce, player.layerMask);
             if (raycastHit2D.collider != null)
