@@ -26,26 +26,24 @@ public class PlayerIdleState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
-        Debug.Log(startTime);
-        if (xInput != 0)
-        {
-            stateMachine.ChangeState(player.WalkState);
-        } 
-        else if (jump)
+        if (jump && player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.JumpState);
-        }
+        } 
         else if (dashAndEvade && player.canDashOrEvade)
         {
             Debug.Log("From idle to evade");
-          stateMachine.ChangeState(player.EvadeState);           
-        }
+            stateMachine.ChangeState(player.EvadeState);           
+        } 
+        else if (xInput != 0)
+        {
+            stateMachine.ChangeState(player.WalkState);
+        } 
         else
         {
-            player.Velocity = new Vector2(0, player.Velocity.y);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
         }
-
+        base.FixedUpdate();
     }
 
     public override void Update()

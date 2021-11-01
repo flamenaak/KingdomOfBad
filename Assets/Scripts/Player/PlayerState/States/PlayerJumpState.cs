@@ -17,7 +17,8 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.DoJump();
+        player.RigidBody.velocity = new Vector2(player.RigidBody.velocity.x, 10);
+        player.Controller.m_Grounded = false;
         acc = 0;
     }
 
@@ -28,22 +29,22 @@ public class PlayerJumpState : PlayerState
 
     public override void FixedUpdate()
     {
-        acc++; 
         base.FixedUpdate();
-
-        if (player.Controller.Grounded && acc > 20)
+        acc++; 
+        if (player.Controller.m_Grounded)
         {
             Debug.Log("Grounded");
-            if (Mathf.Abs(player.Velocity.x) == player.RunSpeed)
+            if (Mathf.Abs(player.RigidBody.velocity.x) == player.RunSpeed)
             {
                 stateMachine.ChangeState(player.RunState);
             }
-            else if (Mathf.Abs(player.Velocity.x) == player.WalkSpeed)
+            else if (Mathf.Abs(player.RigidBody.velocity.x) == player.WalkSpeed)
             {
                 stateMachine.ChangeState(player.WalkState);
             }
-            else if (player.Velocity.x == 0)
+            else if (player.RigidBody.velocity.x == 0)
             {
+                Debug.Log("jump to idle");
                 stateMachine.ChangeState(player.IdleState);
             }
         }    

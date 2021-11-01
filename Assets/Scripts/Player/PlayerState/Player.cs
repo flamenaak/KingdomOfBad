@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
     [SerializeField] public LayerMask layerMask;
     public Animator Anim {get; private set;}
     public Rigidbody2D RigidBody;
-    public Vector2 Velocity {get; set;}
     public float velocityX;
     public CharacterController2D Controller;
     private CameraMovement camera;
@@ -48,7 +47,6 @@ public class Player : MonoBehaviour
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
-        Velocity = RigidBody.velocity;
 
         StateMachine.Initialize(IdleState);
 
@@ -57,7 +55,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
-        Velocity = RigidBody.velocity;
 
         if (Controller == null)
             Debug.Log("no controller");
@@ -67,9 +64,10 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.Update();
+        Vector2 velocity = RigidBody.velocity;
 
-        if ((Velocity.x < -0.1f && transform.localScale.x > 0)
-        || (Velocity.x > 0.1f && transform.localScale.x < 0))
+        if ((velocity.x < -0.1f && transform.localScale.x > 0)
+        || (velocity.x > 0.1f && transform.localScale.x < 0))
         {
             Controller.Flip();
         }
@@ -79,8 +77,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         StateMachine.CurrentState.FixedUpdate();
-        RigidBody.velocity = Velocity;
-
         // int input = ReadInputX();
         // //Debug.Log("Xinput " + input);
         

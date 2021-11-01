@@ -70,7 +70,6 @@ public class charMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        controller.Move(crouch, jump);
         jump = false;
     }
 

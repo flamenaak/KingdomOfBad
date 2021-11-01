@@ -31,26 +31,24 @@ public class PlayerWalkState : PlayerGroundedState
         base.FixedUpdate();
         acc++;
         
-        if (xInput != 0)
+        if (jump && player.Controller.m_Grounded)
         {
-            if(acc > 20)
+            stateMachine.ChangeState(player.JumpState);
+        } else if (xInput != 0)
+        {
+            if (dashAndEvade && player.canDashOrEvade)
+            {
+                stateMachine.ChangeState(player.DashState);
+            }
+            else if(acc > 20)
             {      
                     stateMachine.ChangeState(player.RunState);
                     acc = 0;
                 
             }
-            if (jump)
-            {
-                stateMachine.ChangeState(player.JumpState);
-                acc = 0;
-            }
-            if (dashAndEvade && player.canDashOrEvade)
-            {
-                stateMachine.ChangeState(player.DashState);
-            }
             else 
             {
-                player.Velocity = new Vector2(xInput * player.WalkSpeed, player.Velocity.y);
+                player.RigidBody.velocity = new Vector2(xInput * player.WalkSpeed, player.RigidBody.velocity.y);
             } 
         }     
     }

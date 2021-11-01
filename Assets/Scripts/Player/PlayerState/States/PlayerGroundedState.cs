@@ -33,7 +33,7 @@ public class PlayerGroundedState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (xInput == 0 && stateMachine.CurrentState != player.IdleState)
+        if (xInput == 0)
         {
             stateMachine.ChangeState(player.IdleState);
         } else {
