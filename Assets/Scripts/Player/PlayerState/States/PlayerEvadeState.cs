@@ -39,7 +39,7 @@ public class PlayerEvadeState : PlayerGroundedState
         }
             
 
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, player.Velocity, player.DashForce, player.layerMask);
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, player.RigidBody.velocity, player.DashForce, player.layerMask);
             if (raycastHit2D.collider != null)
             {
                 dashPosition = raycastHit2D.point;

@@ -33,8 +33,8 @@ public class PlayerWalkState : PlayerGroundedState
         
         if (jump && player.Controller.m_Grounded)
         {
-            stateMachine.ChangeState(player.JumpState);
-        } else if (xInput != 0)
+            stateMachine.ChangeState(player.LiftState);
+        } else
         {
             if (dashAndEvade && player.canDashOrEvade)
             {
@@ -42,9 +42,8 @@ public class PlayerWalkState : PlayerGroundedState
             }
             else if(acc > 20)
             {      
-                    stateMachine.ChangeState(player.RunState);
-                    acc = 0;
-                
+                stateMachine.ChangeState(player.RunState);
+                acc = 0;
             }
             else 
             {

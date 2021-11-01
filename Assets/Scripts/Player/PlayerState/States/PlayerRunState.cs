@@ -29,7 +29,7 @@ public class PlayerRunState : PlayerGroundedState
 
         if (jump && player.Controller.m_Grounded)
         {
-            stateMachine.ChangeState(player.JumpState);
+            stateMachine.ChangeState(player.RiseState);
         }
         else if (dashAndEvade && player.canDashOrEvade)
         {

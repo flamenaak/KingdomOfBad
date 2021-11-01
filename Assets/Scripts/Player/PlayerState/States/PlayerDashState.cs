@@ -31,14 +31,14 @@ public class PlayerDashState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if ((player.Velocity.x < -0.1f && player.transform.localScale.x > 0)
-       || (player.Velocity.x > 0.1f && player.transform.localScale.x < 0))
+        if ((player.RigidBody.velocity.x < -0.1f && player.transform.localScale.x > 0)
+       || (player.RigidBody.velocity.x > 0.1f && player.transform.localScale.x < 0))
         {
             
         }
         Vector3 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y) + (new Vector2(0.3f, 0) * player.DashForce * player.Controller.ReadInputX());
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, player.Velocity, player.DashForce, player.layerMask);
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, player.RigidBody.velocity, player.DashForce, player.layerMask);
         if (raycastHit2D.collider != null)
         {
             dashPosition = raycastHit2D.point;

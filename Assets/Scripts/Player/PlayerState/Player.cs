@@ -13,10 +13,16 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; private set; }
     public PlayerEvadeState EvadeState { get; private set; }
     public PlayerJumpState JumpState {get; private set;}
-
+    public LiftState LiftState { get; private set; }
+    public RiseState RiseState { get; private set; }
+    public FloatState FloatState { get; private set; }
+    public FallState FallState { get; private set; }
+    public LandState LandState { get; private set; }
 
     [SerializeField] public LayerMask layerMask;
     public Animator Anim {get; private set;}
+
+
     public Rigidbody2D RigidBody;
     public float velocityX;
     public CharacterController2D Controller;
@@ -44,12 +50,16 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, "dash");
         EvadeState = new PlayerEvadeState(this, StateMachine, "evade");
         JumpState = new PlayerJumpState(this, StateMachine, "jump");
+        LiftState = new LiftState(this, StateMachine, "lift");
+        RiseState = new RiseState(this, StateMachine, "rise");
+        FloatState = new FloatState(this, StateMachine, "float");
+        FallState = new FallState(this, StateMachine, "fall");
+        LandState = new LandState(this, StateMachine, "land");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
 
         StateMachine.Initialize(IdleState);
-
     }
 
     private void Start()
@@ -76,39 +86,12 @@ public class Player : MonoBehaviour
     // physics
     private void FixedUpdate()
     {
-        StateMachine.CurrentState.FixedUpdate();
-        // int input = ReadInputX();
-        // //Debug.Log("Xinput " + input);
-        
-        // Controller.Move(Crouch, Jump);
-        // Jump = false;
-
-        // if (input != 0)
-        // {
-        //     RigidBody.velocity = (new Vector2(WalkSpeed * input, 0));
-                             
-  
-        //     if (StateMachine.CurrentState == RunState)
-        //     {
-        //         RigidBody.velocity = (new Vector2(RunSpeed * input, 0));
-        //     }
-        //     if(StateMachine.CurrentState == SprintState)
-        //     {
-        //         RigidBody.velocity = (new Vector2(SprintSpeed * input, 0));
-        //     }
-            
-        // } else {
-        //     RigidBody.velocity = new Vector2(0, 0);
-        // }
-
-        // Velocity = RigidBody.velocity;
-        // velocityX = Math.Abs(Velocity.x);
-       // Debug.Log(velocityX);       
+        StateMachine.CurrentState.FixedUpdate();     
     }
 
     public void OnLanding()
     {
-        StateMachine.ChangeState(IdleState);
+        //StateMachine.ChangeState(IdleState);
     }
 
 
@@ -118,23 +101,6 @@ public class Player : MonoBehaviour
         int normalized = (int)Math.Round(moveX/Math.Abs(moveX));
 
         return  Math.Abs(moveX) > 0.3 ? normalized : 0;
-    }
-
-    public void DoJump()
-    {
-        Controller.Move(false, true);
-    }
-
-    public IEnumerator WaitAndPrint()
-    {
-        yield return new WaitForSeconds(DashCooldown);
-    }
-
-    public IEnumerator StartDashOrEvadeCooldown()
-    {
-        canDashOrEvade = false;
-        yield return StartCoroutine("WaitAndPrint");
-        canDashOrEvade = true;
     }
 
     public void startDashCoolDown()
