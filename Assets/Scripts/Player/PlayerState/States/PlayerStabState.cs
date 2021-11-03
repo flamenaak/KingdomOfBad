@@ -16,6 +16,7 @@ public class PlayerStabState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.startStabCoolDown();
     }
 
     public override void Exit()
@@ -26,11 +27,25 @@ public class PlayerStabState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
-        player.RigidBody.AddForce(new Vector2(2.0f , player.RigidBody.velocity.y));
-        if (slash)
+        Vector3 stabPosition = new Vector3();
+        if (player.transform.localScale.x > 0)
         {
-            stateMachine.ChangeState(player.SlashState);
+            stabPosition = new Vector2(player.transform.position.x, player.transform.position.y) + (new Vector2(0.2f, 0) * player.StabForce);
+        }
+        else if (player.transform.localScale.x < 0)
+        {
+            stabPosition = new Vector2(player.transform.position.x, player.transform.position.y) - (new Vector2(0.2f, 0) * player.StabForce);
+        }
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, player.RigidBody.velocity, player.StabForce, player.layerMask);
+        if (raycastHit2D.collider != null)
+        {
+            stabPosition = raycastHit2D.point;
+        }
+        player.RigidBody.MovePosition(stabPosition);
+        if (Time.time - startTime > 0.32f)
+        {
+            stateMachine.ChangeState(player.IdleState);
         }
     }
 

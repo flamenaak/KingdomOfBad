@@ -176,6 +176,13 @@ public class CharacterController2D : MonoBehaviour
 
 	public bool GetStabInput()
     {
-		return Input.GetButton("Stab");
+
+	    return Input.GetButtonUp("Stab");
+		
     }
+
+	public bool GetWindUpInput()
+	{
+		return Input.GetButtonDown("Stab");
+	}
 }

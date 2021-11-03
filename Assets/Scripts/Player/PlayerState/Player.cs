@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -20,28 +18,37 @@ public class Player : MonoBehaviour
     public PlayerSlashState SlashState { get; private set; }
     public PlayerStabState StabState { get; private set; }
 
+    public PlayerWindUpState WindUpState { get; private set; }
+
     [SerializeField] public LayerMask layerMask;
     public Animator Anim {get; private set;}
 
 
     public Rigidbody2D RigidBody;
+    public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
     private CameraMovement camera;
 
     public bool Crouch = false;
     public bool Jump = false;
-    public bool Slash =  false;
-
-
 
     public float WalkSpeed = 2f;
     public float RunSpeed = 5f;
     public float SprintSpeed = 7f;
-    public float DashForce = 10f;
+
+    public float DashForce = 1f;
     public float DashCooldown = 3f;
-    public float SlashForce = 2f;
-    public float StabForce = 6f;
     public bool canDashOrEvade = true;
+
+    public float SlashForce = 0.5f;
+    public float SlashCooldown = 0.5f;
+    public bool canSlash = true;
+
+    public float StabForce = 3f;
+    public float StabCooldown = 1.5f;
+    public bool canStab = true;
+
+
 
 
     private void Awake()
@@ -61,10 +68,12 @@ public class Player : MonoBehaviour
         LandState = new LandState(this, StateMachine, "land");
         SlashState = new PlayerSlashState(this, StateMachine, "slash");
         StabState = new PlayerStabState(this, StateMachine, "stab");
+        WindUpState = new PlayerWindUpState(this, StateMachine, "windUp");
 
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
 
         StateMachine.Initialize(IdleState);
     }
@@ -119,6 +128,28 @@ public class Player : MonoBehaviour
     void clearDashOrEvadeCooldown()
     {
         canDashOrEvade = true;
+    }
+
+    public void startSlashCoolDown()
+    {
+        canSlash = false;
+        Invoke("clearSlashCooldown", SlashCooldown);
+    }
+
+    void clearSlashCooldown()
+    {
+        canSlash = true;
+    }
+
+    public void startStabCoolDown()
+    {
+        canStab = false;
+        Invoke("clearStabCooldown", StabCooldown);
+    }
+
+    void clearStabCooldown()
+    {
+        canStab = true;
     }
 
 }

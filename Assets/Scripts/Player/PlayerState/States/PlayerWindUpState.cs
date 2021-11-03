@@ -1,13 +1,13 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerGroundedState
+public class PlayerWindUpState : PlayerGroundedState
 {
-    public PlayerIdleState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    float chargeTime = 0.2f;
+    public PlayerWindUpState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
-
     public override void DoChecks()
     {
         base.DoChecks();
@@ -21,6 +21,7 @@ public class PlayerIdleState : PlayerGroundedState
 
     public override void Exit()
     {
+
         base.Exit();
     }
 
@@ -30,11 +31,11 @@ public class PlayerIdleState : PlayerGroundedState
         if (jump && player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.LiftState);
-        } 
+        }
         else if (dashAndEvade && player.canDashOrEvade)
         {
-            stateMachine.ChangeState(player.EvadeState);           
-        } 
+            stateMachine.ChangeState(player.EvadeState);
+        }
         else if (slash && player.canSlash)
         {
             stateMachine.ChangeState(player.SlashState);
@@ -43,7 +44,7 @@ public class PlayerIdleState : PlayerGroundedState
         else if (xInput != 0)
         {
             stateMachine.ChangeState(player.WalkState);
-        } 
+        }
         else if (!player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.FloatState);
@@ -57,9 +58,11 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        if (Input.GetButtonDown("Stab") && player.canStab)
+        if (Input.GetButtonUp("Stab"))
         {
-            stateMachine.ChangeState(player.WindUpState);
+            stateMachine.ChangeState(player.StabState);
         }
     }
+
+
 }
