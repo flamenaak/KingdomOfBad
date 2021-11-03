@@ -33,13 +33,17 @@ public class PlayerIdleState : PlayerGroundedState
         } 
         else if (dashAndEvade && player.canDashOrEvade)
         {
-            Debug.Log("From idle to evade");
             stateMachine.ChangeState(player.EvadeState);           
         } 
+        else if (slash)
+        {
+            stateMachine.ChangeState(player.SlashState);
+        }
         else if (xInput != 0)
         {
             stateMachine.ChangeState(player.WalkState);
-        } else if (!player.Controller.m_Grounded)
+        } 
+        else if (!player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.FloatState);
         }

@@ -168,4 +168,9 @@ public class CharacterController2D : MonoBehaviour
 	{
 		Gizmos.DrawWireSphere(m_GroundCheck.position, k_GroundedRadius);
 	}
+
+	public bool GetSlashInput()
+    {
+		return Input.GetButton("Slash");
+    }
 }

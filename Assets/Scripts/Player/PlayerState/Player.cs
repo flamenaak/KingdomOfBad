@@ -6,7 +6,6 @@ using System;
 public class Player : MonoBehaviour
 {
     public PlayerStateMachine StateMachine { get; private set;}
-
     public PlayerIdleState IdleState {get; private set;}
     public PlayerWalkState WalkState {get; private set;}
     public PlayerRunState RunState {get; private set;}
@@ -18,18 +17,20 @@ public class Player : MonoBehaviour
     public FloatState FloatState { get; private set; }
     public FallState FallState { get; private set; }
     public LandState LandState { get; private set; }
+    public PlayerSlashState SlashState { get; private set; }
+    public PlayerStabState StabState { get; private set; }
 
     [SerializeField] public LayerMask layerMask;
     public Animator Anim {get; private set;}
 
 
     public Rigidbody2D RigidBody;
-    public float velocityX;
     public CharacterController2D Controller;
     private CameraMovement camera;
 
     public bool Crouch = false;
     public bool Jump = false;
+    public bool Slash =  false;
 
 
 
@@ -55,6 +56,9 @@ public class Player : MonoBehaviour
         FloatState = new FloatState(this, StateMachine, "float");
         FallState = new FallState(this, StateMachine, "fall");
         LandState = new LandState(this, StateMachine, "land");
+        SlashState = new PlayerSlashState(this, StateMachine, "slash");
+        StabState = new PlayerStabState(this, StateMachine, "stab");
+
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();

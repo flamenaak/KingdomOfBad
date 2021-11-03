@@ -6,6 +6,8 @@ public class PlayerGroundedState : PlayerState
 {
     protected bool dashAndEvade;
     protected bool jump;
+    protected bool slash;
+    protected bool stab;
     protected int xInput;
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -17,6 +19,8 @@ public class PlayerGroundedState : PlayerState
 
         jump = player.Controller.GetJumpInput();
         dashAndEvade = player.Controller.GetDashOrEvadeInput();
+        slash = player.Controller.GetSlashInput();
+        stab = player.Controller.GetSlashInput();
         xInput = player.Controller.ReadInputX();
     }
 

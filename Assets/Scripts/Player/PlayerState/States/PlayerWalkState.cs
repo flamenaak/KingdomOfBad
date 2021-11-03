@@ -34,7 +34,12 @@ public class PlayerWalkState : PlayerGroundedState
         if (jump && player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.LiftState);
-        } else
+        }
+        else if (slash)
+        {
+            stateMachine.ChangeState(player.SlashState);
+        }
+        else
         {
             if (dashAndEvade && player.canDashOrEvade)
             {

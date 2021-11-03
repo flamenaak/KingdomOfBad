@@ -35,6 +35,10 @@ public class PlayerRunState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.DashState);
         }
+        else if (slash)
+        {
+            stateMachine.ChangeState(player.SlashState);
+        }
         else
         {
             player.RigidBody.velocity = new Vector2(player.RunSpeed * xInput, player.RigidBody.velocity.y);

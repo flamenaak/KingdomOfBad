@@ -2766,8 +2766,8 @@ MonoBehaviour:
   - {x: -0.019463446, y: -0.018812971, z: 0}
   - {x: -0.029938234, y: -0.018812971, z: 0}
   m_ShapePathHash: -1726909903
-  m_Mesh: {fileID: 1102106622}
-  m_InstanceId: 17060
+  m_Mesh: {fileID: 859490728}
+  m_InstanceId: 16836
 --- !u!95 &534308340
 Animator:
   serializedVersion: 3
@@ -2877,7 +2877,7 @@ MonoBehaviour:
   WalkSpeed: 5
   RunSpeed: 10
   SprintSpeed: 20
-  DashForce: 10
+  DashForce: 1
   DashCooldown: 3
   canDashOrEvade: 1
 --- !u!1 &550849498
@@ -3646,7 +3646,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 1.646, y: 0.49, z: -159.947}
---- !u!43 &1102106622
+--- !u!43 &859490728
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
