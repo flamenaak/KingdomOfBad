@@ -37,7 +37,13 @@ public class PlayerRunState : PlayerGroundedState
         }
         else if (slash)
         {
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
             stateMachine.ChangeState(player.SlashState);
+        }
+        else if (stab)
+        {
+            stateMachine.ChangeState(player.StabState);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
         }
         else
         {

@@ -39,7 +39,10 @@ public class Player : MonoBehaviour
     public float SprintSpeed = 7f;
     public float DashForce = 10f;
     public float DashCooldown = 3f;
+    public float SlashForce = 2f;
+    public float StabForce = 6f;
     public bool canDashOrEvade = true;
+
 
     private void Awake()
     {
@@ -117,4 +120,5 @@ public class Player : MonoBehaviour
     {
         canDashOrEvade = true;
     }
+
 }

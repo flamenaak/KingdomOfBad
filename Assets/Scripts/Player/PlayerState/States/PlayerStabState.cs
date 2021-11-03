@@ -27,6 +27,7 @@ public class PlayerStabState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        player.RigidBody.AddForce(new Vector2(2.0f , player.RigidBody.velocity.y));
         if (slash)
         {
             stateMachine.ChangeState(player.SlashState);

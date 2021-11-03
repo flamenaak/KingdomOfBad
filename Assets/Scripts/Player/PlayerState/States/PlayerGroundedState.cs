@@ -20,7 +20,7 @@ public class PlayerGroundedState : PlayerState
         jump = player.Controller.GetJumpInput();
         dashAndEvade = player.Controller.GetDashOrEvadeInput();
         slash = player.Controller.GetSlashInput();
-        stab = player.Controller.GetSlashInput();
+        stab = player.Controller.GetStabInput();
         xInput = player.Controller.ReadInputX();
     }
 

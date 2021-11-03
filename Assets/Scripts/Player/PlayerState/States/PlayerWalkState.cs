@@ -38,6 +38,12 @@ public class PlayerWalkState : PlayerGroundedState
         else if (slash)
         {
             stateMachine.ChangeState(player.SlashState);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
+        }
+        else if (stab)
+        {
+            stateMachine.ChangeState(player.StabState);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
         }
         else
         {

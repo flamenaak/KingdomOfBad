@@ -173,4 +173,9 @@ public class CharacterController2D : MonoBehaviour
     {
 		return Input.GetButton("Slash");
     }
+
+	public bool GetStabInput()
+    {
+		return Input.GetButton("Stab");
+    }
 }

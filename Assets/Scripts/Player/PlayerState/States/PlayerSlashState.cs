@@ -23,15 +23,29 @@ public class PlayerSlashState : PlayerGroundedState
     {
 
         base.Exit();
+        
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (stab)
+        /* if (player.transform.localScale.x > 0)
+         {
+             player.RigidBody.velocity = new Vector2(player.SlashForce, 0);
+         }
+         else if (player.transform.localScale.x < 0)
+         {
+             player.RigidBody.velocity = new Vector2(player.SlashForce * -1, 0);
+         }
+         else if (stab)
+         {
+             stateMachine.ChangeState(player.StabState);           
+         }*/
+        if (Time.time - startTime > 0.36f)
         {
-            stateMachine.ChangeState(player.StabState);
+            stateMachine.ChangeState(player.IdleState);
         }
+
     }
 
     public override void Update()
