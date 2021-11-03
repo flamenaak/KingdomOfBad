@@ -18,7 +18,7 @@ public class LiftState : PlayerState
     {
         base.FixedUpdate();
 
-        if (Time.time - startTime > 0.4f)
+        if (Time.time - startTime > 0.2f)
         {
             this.stateMachine.ChangeState(player.RiseState);
         }

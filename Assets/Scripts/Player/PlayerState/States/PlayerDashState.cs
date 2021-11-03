@@ -18,7 +18,6 @@ public class PlayerDashState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        player.canDashOrEvade = false;
         player.startDashCoolDown();
     }
 

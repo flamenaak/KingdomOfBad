@@ -33,10 +33,10 @@ public class Player : MonoBehaviour
 
 
 
-    public float WalkSpeed = 2f;
-    public float RunSpeed = 5f;
-    public float SprintSpeed = 7f;
-    public float DashForce = 10f;
+    public float WalkSpeed = 5f;
+    public float RunSpeed = 10f;
+    public float SprintSpeed = 20f;
+    public float DashForce = 1f;
     public float DashCooldown = 3f;
     public bool canDashOrEvade = true;
 
