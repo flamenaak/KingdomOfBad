@@ -47,6 +47,9 @@ TagManager:
   - name: Floor
     uniqueID: 1633714379
     locked: 0
+  - name: Collision
+    uniqueID: 793368383
+    locked: 0
   - name: Player
     uniqueID: 1364010161
     locked: 0

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallState : PlayerState
+public class FallState : PlayerAirState
 {
     public FallState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -30,6 +30,7 @@ public class FallState : PlayerState
         {
             stateMachine.ChangeState(player.LandState);
         }
+        CheckHang();
     }
 
     // Start is called before the first frame update

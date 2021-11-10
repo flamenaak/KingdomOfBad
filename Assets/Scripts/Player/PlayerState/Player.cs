@@ -5,22 +5,26 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    public PlayerStateMachine StateMachine { get; private set;}
+    public PlayerStateMachine StateMachine { get; private set; }
 
-    public PlayerIdleState IdleState {get; private set;}
-    public PlayerWalkState WalkState {get; private set;}
-    public PlayerRunState RunState {get; private set;}
+    #region PlayerStates
+    public PlayerIdleState IdleState { get; private set; }
+    public PlayerWalkState WalkState { get; private set; }
+    public PlayerRunState RunState { get; private set; }
     public PlayerDashState DashState { get; private set; }
     public PlayerEvadeState EvadeState { get; private set; }
-    public PlayerJumpState JumpState {get; private set;}
     public LiftState LiftState { get; private set; }
     public RiseState RiseState { get; private set; }
     public FloatState FloatState { get; private set; }
     public FallState FallState { get; private set; }
     public LandState LandState { get; private set; }
 
+    public PlayerHangState HangState { get; private set; }
+    #endregion
+
+
     [SerializeField] public LayerMask layerMask;
-    public Animator Anim {get; private set;}
+    public Animator Anim { get; private set; }
 
 
     public Rigidbody2D RigidBody;
@@ -40,6 +44,9 @@ public class Player : MonoBehaviour
     public float DashCooldown = 3f;
     public bool canDashOrEvade = true;
 
+    public float xLedgeOffset = 0.5f;
+    public float yLedgeOffset = 0.5f;
+
     private void Awake()
     {
         StateMachine = new PlayerStateMachine();
@@ -49,12 +56,12 @@ public class Player : MonoBehaviour
         RunState = new PlayerRunState(this, StateMachine, "run");
         DashState = new PlayerDashState(this, StateMachine, "dash");
         EvadeState = new PlayerEvadeState(this, StateMachine, "evade");
-        JumpState = new PlayerJumpState(this, StateMachine, "jump");
         LiftState = new LiftState(this, StateMachine, "lift");
         RiseState = new RiseState(this, StateMachine, "rise");
         FloatState = new FloatState(this, StateMachine, "float");
         FallState = new FallState(this, StateMachine, "fall");
         LandState = new LandState(this, StateMachine, "land");
+        HangState = new PlayerHangState(this, StateMachine, "hang");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
@@ -75,7 +82,6 @@ public class Player : MonoBehaviour
     {
         StateMachine.CurrentState.Update();
         Vector2 velocity = RigidBody.velocity;
-
         if ((velocity.x < -0.1f && transform.localScale.x > 0)
         || (velocity.x > 0.1f && transform.localScale.x < 0))
         {
@@ -86,7 +92,7 @@ public class Player : MonoBehaviour
     // physics
     private void FixedUpdate()
     {
-        StateMachine.CurrentState.FixedUpdate();     
+        StateMachine.CurrentState.FixedUpdate();
     }
 
     public void OnLanding()
@@ -94,14 +100,6 @@ public class Player : MonoBehaviour
         //StateMachine.ChangeState(IdleState);
     }
 
-
-    private int ReadInputX()
-    {
-        float moveX = Input.GetAxis("Horizontal");
-        int normalized = (int)Math.Round(moveX/Math.Abs(moveX));
-
-        return  Math.Abs(moveX) > 0.3 ? normalized : 0;
-    }
 
     public void startDashCoolDown()
     {
@@ -112,5 +110,17 @@ public class Player : MonoBehaviour
     void clearDashOrEvadeCooldown()
     {
         canDashOrEvade = true;
+    }
+
+    public void OnDrawGizmos()
+    {
+        if (StateMachine.CurrentState == HangState)
+        {
+            Vector2 ledgePos = HangState.ledgePos;
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(new Vector3(ledgePos.x, ledgePos.y), 0.2f);
+            //Debug.Log("position of ledge " + ledgePos.x + " " + ledgePos.y);
+
+        }
     }
 }

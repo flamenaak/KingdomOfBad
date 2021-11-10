@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RiseState : PlayerState
+public class RiseState : PlayerAirState
 {
     public RiseState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -20,6 +20,7 @@ public class RiseState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        CheckHang();
         if (Time.time - startTime > 0.4f){
             if (player.RigidBody.velocity.y < -0.2f) {
                 stateMachine.ChangeState(player.FallState);
@@ -27,11 +28,5 @@ public class RiseState : PlayerState
                 stateMachine.ChangeState(player.FloatState);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
