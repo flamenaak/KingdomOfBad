@@ -30,11 +30,20 @@ public class PlayerWalkState : PlayerGroundedState
     {
         base.FixedUpdate();
         acc++;
-        
+        if (xInput == 0)
+        {
+            stateMachine.ChangeState(player.IdleState);
+        }
         if (jump && player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.LiftState);
-        } else
+        }
+        else if (slash && player.canSlash)
+        {
+            stateMachine.ChangeState(player.SlashState);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
+        }
+        else
         {
             if (dashAndEvade && player.canDashOrEvade)
             {

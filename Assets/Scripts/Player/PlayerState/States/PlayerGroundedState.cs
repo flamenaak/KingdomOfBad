@@ -6,6 +6,9 @@ public class PlayerGroundedState : PlayerState
 {
     protected bool dashAndEvade;
     protected bool jump;
+    protected bool slash;
+    protected bool stab;
+    protected bool windUp;
     protected int xInput;
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -17,6 +20,9 @@ public class PlayerGroundedState : PlayerState
 
         jump = player.Controller.GetJumpInput();
         dashAndEvade = player.Controller.GetDashOrEvadeInput();
+        slash = player.Controller.GetSlashInput();
+        stab = player.Controller.GetStabInput();
+        windUp = player.Controller.GetWindUpInput();
         xInput = player.Controller.ReadInputX();
     }
 
@@ -33,12 +39,7 @@ public class PlayerGroundedState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (xInput == 0)
-        {
-            stateMachine.ChangeState(player.IdleState);
-        } else {
-            
-        }
+       
     }
     
     public override void Update()

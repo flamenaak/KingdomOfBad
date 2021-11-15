@@ -27,13 +27,22 @@ public class PlayerRunState : PlayerGroundedState
     {
         base.FixedUpdate();
 
-        if (jump && player.Controller.m_Grounded)
+        if (xInput == 0)
+        {
+            stateMachine.ChangeState(player.IdleState);
+        }
+        else if (jump && player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.RiseState);
         }
         else if (dashAndEvade && player.canDashOrEvade)
         {
             stateMachine.ChangeState(player.DashState);
+        }
+        else if (slash && player.canSlash)
+        {
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
+            stateMachine.ChangeState(player.SlashState);
         }
         else
         {

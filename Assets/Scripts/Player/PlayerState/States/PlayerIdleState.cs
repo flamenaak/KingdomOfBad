@@ -33,13 +33,18 @@ public class PlayerIdleState : PlayerGroundedState
         } 
         else if (dashAndEvade && player.canDashOrEvade)
         {
-            Debug.Log("From idle to evade");
             stateMachine.ChangeState(player.EvadeState);           
         } 
+        else if (slash && player.canSlash)
+        {
+            stateMachine.ChangeState(player.SlashState);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
+        }
         else if (xInput != 0)
         {
             stateMachine.ChangeState(player.WalkState);
-        } else if (!player.Controller.m_Grounded)
+        } 
+        else if (!player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.FloatState);
         }
@@ -52,5 +57,9 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
+        if (Input.GetButtonDown("Stab") && player.canStab)
+        {
+            stateMachine.ChangeState(player.WindUpState);
+        }
     }
 }
