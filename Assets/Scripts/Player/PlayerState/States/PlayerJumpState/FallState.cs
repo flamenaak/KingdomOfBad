@@ -26,10 +26,12 @@ public class FallState : PlayerAirState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        CheckAirInput();
         if (player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.LandState);
         }
+
         CheckHang();
     }
 

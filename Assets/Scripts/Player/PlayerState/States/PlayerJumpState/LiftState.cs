@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiftState : PlayerState
+public class LiftState : PlayerAirState
 {
     public LiftState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -17,11 +17,12 @@ public class LiftState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-
+        CheckAirInput();
         if (Time.time - startTime > 0.2f)
         {
             this.stateMachine.ChangeState(player.RiseState);
         }
+
     }
 
     // Update is called once per frame

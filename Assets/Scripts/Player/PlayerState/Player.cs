@@ -36,7 +36,9 @@ public class Player : MonoBehaviour
     private CameraMovement camera;
 
     public bool Crouch = false;
+
     public bool Jump = false;
+    public float horJumpSpeed = 0.2f;
 
     public float WalkSpeed = 2f;
     public float RunSpeed = 5f;
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour
 
     public float xLedgeOffset = 0.5f;
     public float yLedgeOffset = 0.5f;
+
     public float SlashForce = 0.5f;
     public float SlashCooldown = 0.5f;
     public bool canSlash = true;
@@ -115,6 +118,7 @@ public class Player : MonoBehaviour
         {
             Controller.Flip();
         }
+        Debug.Log(velocity.x);
     }
 
     public void ReceiveDamage(Damage dmg)
