@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Collision
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Platform
   - Blocking
   - Actor
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -46,6 +48,9 @@ TagManager:
     locked: 0
   - name: Floor
     uniqueID: 1633714379
+    locked: 0
+  - name: Enemy
+    uniqueID: 1447474771
     locked: 0
   - name: Player
     uniqueID: 1364010161

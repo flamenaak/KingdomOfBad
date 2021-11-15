@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerSlashState : PlayerGroundedState
 {
+    public int damagePoint = 1;
+    public float pushForce = 2.0F;
     // Start is called before the first frame update
     public PlayerSlashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -29,7 +31,7 @@ public class PlayerSlashState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        
+        player.Attack();
         Vector3 slashPosition = new Vector3();
         if (player.transform.localScale.x > 0)
         {
@@ -43,13 +45,14 @@ public class PlayerSlashState : PlayerGroundedState
         RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, player.RigidBody.velocity, player.SlashForce, player.layerMask);
         if (raycastHit2D.collider != null)
         {
-            slashPosition = raycastHit2D.point;
+            slashPosition = raycastHit2D.point;     
         }
         player.RigidBody.MovePosition(slashPosition);
         if (Time.time - startTime > 0.36f)
         {
             stateMachine.ChangeState(player.IdleState);
         }
+     
 
     }
 

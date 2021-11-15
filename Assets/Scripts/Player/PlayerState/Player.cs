@@ -23,8 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField] public LayerMask layerMask;
     public Animator Anim {get; private set;}
 
-
     public Rigidbody2D RigidBody;
+    public BoxCollider2D boxCollider2D;
+    public CircleCollider2D circleCollider2D;
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
     private CameraMovement camera;
@@ -48,7 +49,19 @@ public class Player : MonoBehaviour
     public float StabCooldown = 1.5f;
     public bool canStab = true;
 
+    public int hitPoint;
+    public int maxHitPoint;
+    public float pushRecoverySpeed = 0.2F;
 
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayer;
+
+
+    protected float immuneTime = 1.0F;
+    protected float lastImmune;
+
+    protected Vector3 pushDirection;
 
 
     private void Awake()
@@ -69,7 +82,6 @@ public class Player : MonoBehaviour
         SlashState = new PlayerSlashState(this, StateMachine, "slash");
         StabState = new PlayerStabState(this, StateMachine, "stab");
         WindUpState = new PlayerWindUpState(this, StateMachine, "windUp");
-
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
@@ -97,6 +109,27 @@ public class Player : MonoBehaviour
         {
             Controller.Flip();
         }
+    }
+
+    public void ReceiveDamage(Damage dmg)
+    {
+        if (Time.time - lastImmune > immuneTime)
+        {
+            lastImmune = Time.time;
+            hitPoint -= dmg.damageAmount;
+            pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce;
+
+            if (hitPoint <= 0)
+            {
+                hitPoint = 0;
+                Death();
+            }
+        }
+    }
+
+    public void Death()
+    {
+
     }
 
     // physics
@@ -150,6 +183,41 @@ public class Player : MonoBehaviour
     void clearStabCooldown()
     {
         canStab = true;
+    }
+
+    public void startDashGravityEffect()
+    {
+        RigidBody.gravityScale = 0f;
+        Invoke("clearDashGravityEffect", 0.5f);
+    }
+
+    void clearDashGravityEffect()
+    {
+        RigidBody.gravityScale = 3f;
+    }
+
+    public void Attack()
+    {
+       Collider2D hitEnemies =  Physics2D.OverlapCircle(attackPoint.position, attackRange, enemyLayer);
+
+        /*foreach(Collider2D enemy in hitEnemies)
+        {
+            //Debug.Log("We hit" + enemy.name);
+        }*/
+        if (hitEnemies.tag.Equals("Enemy"))
+        {
+            Debug.Log("We hit enemy");
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(attackPoint == null)
+        {
+            return;
+        }
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
 }
