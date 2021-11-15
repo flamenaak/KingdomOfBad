@@ -45,17 +45,9 @@ public class PlayerHangState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (player.Controller.ReadInputY() < 0) 
+        if (player.Controller.ReadInputY() < 0 || (player.Controller.IsTouchingLedge() && player.Controller.IsTouchingWall()))
         {
             stateMachine.ChangeState(player.FallState);
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(new Vector3(ledgePos.x, ledgePos.y), 2f);
-        Debug.Log("position of ledge " + ledgePos.x + " " + ledgePos.y );
-    }
-
 }

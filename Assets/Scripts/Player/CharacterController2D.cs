@@ -206,28 +206,12 @@ public class CharacterController2D : MonoBehaviour
         float xDist = xHit.distance;
 
         RaycastHit2D yHit = Physics2D.Raycast(
-            ledgeCheck.position + (Vector3)(Vector2.right * xDist * GetFacingDirection()),
+            ledgeCheck.position + (Vector3)(Vector2.right * wallCheckDistance * GetFacingDirection()),
             Vector2.down,
             ledgeCheck.position.y - wallCheck.position.y,
             m_WhatIsGround);
         
         float yDist = yHit.distance;
-        if (!yHit) // player probably hit ledge on the rise instead of fall
-        {
-            // yHit = Physics2D.Raycast(
-            // ledgeCheck.position + (Vector3)(Vector2.right * xDist * GetFacingDirection()),
-            // Vector2.up,
-            // ledgeCheck.position.y - wallCheck.position.y,
-            // m_WhatIsGround);
-            
-            throw new Exception("No ledge found");
-
-            // yDist = yHit.distance;
-            // Debug.Log("new yHit distance " + yDist);
-
-            // return new Vector2(wallCheck.position.x + (GetFacingDirection() * xDist), ledgeCheck.position.y + yDist);
-        }
-
         return new Vector2(wallCheck.position.x + (GetFacingDirection() * xDist), ledgeCheck.position.y - yDist);
     }
 

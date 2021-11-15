@@ -172,12 +172,12 @@ public class Player : MonoBehaviour
 
         }
 
-        if(attackPoint == null)
-        {
-            return;
-        }
+        // if(attackPoint == null)
+        // {
+        //     return;
+        // }
 
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        // Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
     public void startSlashCoolDown()
     {

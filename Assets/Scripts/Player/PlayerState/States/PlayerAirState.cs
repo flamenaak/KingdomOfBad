@@ -14,7 +14,9 @@ public class PlayerAirState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
-        ShouldHang = !player.Controller.IsTouchingLedge() && player.Controller.IsTouchingWall() && !player.Controller.m_Grounded;
+        ShouldHang = !player.Controller.IsTouchingLedge() 
+            && player.Controller.IsTouchingWall() 
+            && !player.Controller.m_Grounded;
         if (ShouldHang) {
             player.HangState.detectedPos = player.transform.position;
         }
@@ -39,13 +41,13 @@ public class PlayerAirState : PlayerState
     public override void Update()
     {
         base.Update();
+        DoChecks();
     }
 
     protected void CheckHang()
     {
         if (ShouldHang)
         {
-            player.HangState.detectedPos = player.transform.position;
             stateMachine.ChangeState(player.HangState);
         }
     }
