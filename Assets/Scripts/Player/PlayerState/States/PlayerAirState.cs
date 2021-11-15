@@ -51,4 +51,16 @@ public class PlayerAirState : PlayerState
             stateMachine.ChangeState(player.HangState);
         }
     }
+
+    protected void CheckAirInput()
+    {
+        if ((player.Controller.ReadInputX() == 1 || player.Controller.ReadInputX() == -1))
+        {
+            player.RigidBody.velocity += new Vector2(player.horJumpSpeed * player.Controller.ReadInputX(), 0);
+            if(Mathf.Abs(player.RigidBody.velocity.x) > player.RunSpeed)
+            {
+                player.RigidBody.velocity = new Vector2(player.RunSpeed * player.Controller.ReadInputX(), player.RigidBody.velocity.y);
+            }
+        }
+    }
 }

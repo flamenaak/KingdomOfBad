@@ -23,12 +23,16 @@ public class FloatState : PlayerAirState
         }
         CheckHang();
 
-        player.RigidBody.velocity += new Vector2(player.Controller.ReadInputX() * player.WalkSpeed,0);
-
-        if (player.RigidBody.velocity.y < -0.2f) {
+       // player.RigidBody.velocity += new Vector2(player.Controller.ReadInputX() * player.WalkSpeed,0);
+        CheckAirInput();
+        if (player.RigidBody.velocity.y < -0.2f)
+        {
             stateMachine.ChangeState(player.FallState);
-        } else if (player.RigidBody.velocity.y > 0.2f) {
+        }
+        else if (player.RigidBody.velocity.y > 0.2f)
+        {
             stateMachine.ChangeState(player.RiseState);
         }
+
     }
 }

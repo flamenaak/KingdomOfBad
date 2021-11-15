@@ -21,12 +21,18 @@ public class RiseState : PlayerAirState
     {
         base.FixedUpdate();
         CheckHang();
-        if (Time.time - startTime > 0.4f){
-            if (player.RigidBody.velocity.y < -0.2f) {
+        CheckAirInput();
+        if (Time.time - startTime > 0.4f)
+        {
+            if (player.RigidBody.velocity.y < -0.2f)
+            {
                 stateMachine.ChangeState(player.FallState);
-            } else if (player.RigidBody.velocity.y < 0.2f) {
+            }
+            else if (player.RigidBody.velocity.y < 0.2f)
+            {
                 stateMachine.ChangeState(player.FloatState);
             }
         }
+
     }
 }
