@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        if (StateMachine.CurrentState == HangState)
+        if (StateMachine != null && StateMachine.CurrentState == HangState)
         {
             Vector2 ledgePos = HangState.ledgePos;
             Gizmos.color = Color.blue;
