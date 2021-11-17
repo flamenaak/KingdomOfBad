@@ -1,36 +1,43 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
-
+using System.Collections.Generic;
 
 public class CharacterController2D : MonoBehaviour
 {
-    [SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
-    [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
-    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
-    [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
-    [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
-    [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
-    [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
-    [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
+    [SerializeField] private LayerMask m_WhatIsGround;                      // A mask determining what is ground to the character
+    [SerializeField] private LayerMask m_WhatIsEnemy;                          // A mask determining what is an enemy
+    public LayerMask GetEnemyLayerMask() => m_WhatIsEnemy;
 
+
+    #region ColissionCheckHelpers
+    [SerializeField]
+    // A position marking where to check if the player is grounded.
+    private Transform m_GroundCheck;
+    [SerializeField]
+    // A position marking where to check for ceilings
+    private Transform m_CeilingCheck;
     [SerializeField]
     // position for checking if there is wall ahead (chest height)
     private Transform wallCheck;
-
     [SerializeField]
     // position for checking if there is a ledge ahead (tip of the head)
     private Transform ledgeCheck;
+    [SerializeField]
+    // position for checking area for slash
+    public Transform attackPoint;
+
+    #endregion
 
     private float wallCheckDistance = 0.5f;
 
+    private float safetyOffsetX = 0.3f; // offset used for calculating a target position to prevent clipping
 
-    const float k_GroundedRadius = .3f; // Radius of the overlap circle to determine if grounded
-    public bool m_Grounded;            // Whether or not the player is grounded.
+    const float k_GroundedRadius = .25f; // Radius of the overlap circle to determine if grounded
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
-    private Rigidbody2D m_Rigidbody2D;
+
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-    private Vector3 m_Velocity = Vector3.zero;
+    public bool m_Grounded = true;            // Whether or not the player is grounded.
 
     [Header("Events")]
     [Space]
@@ -41,17 +48,20 @@ public class CharacterController2D : MonoBehaviour
     public class BoolEvent : UnityEvent<bool> { }
 
     public BoolEvent OnCrouchEvent;
-    private bool m_wasCrouching = false;
+
+    #region Debug
+        public List<Vector2> stabTargets = new List<Vector2>();
+    #endregion
 
     private void Awake()
     {
-        m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
         if (OnLandEvent == null)
             OnLandEvent = new UnityEvent();
 
         if (OnCrouchEvent == null)
             OnCrouchEvent = new BoolEvent();
+
     }
 
     private void FixedUpdate()
@@ -72,80 +82,6 @@ public class CharacterController2D : MonoBehaviour
             }
         }
     }
-
-
-    public void Move(bool crouch, bool jump)
-    {
-        // If crouching, check to see if the character can stand up
-        if (!crouch)
-        {
-            // If the character has a ceiling preventing them from standing up, keep them crouching
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-            {
-                crouch = true;
-            }
-        }
-
-        //only control the player if grounded or airControl is turned on
-        if (m_Grounded || m_AirControl)
-        {
-
-            // If crouching
-            if (crouch)
-            {
-                if (!m_wasCrouching)
-                {
-                    m_wasCrouching = true;
-                    OnCrouchEvent.Invoke(true);
-                }
-
-                // Reduce the speed by the crouchSpeed multiplier
-                //move *= m_CrouchSpeed;
-
-                // Disable one of the colliders when crouching
-                if (m_CrouchDisableCollider != null)
-                    m_CrouchDisableCollider.enabled = false;
-            }
-            else
-            {
-                // Enable the collider when not crouching
-                if (m_CrouchDisableCollider != null)
-                    m_CrouchDisableCollider.enabled = true;
-
-                if (m_wasCrouching)
-                {
-                    m_wasCrouching = false;
-                    OnCrouchEvent.Invoke(false);
-                }
-            }
-
-            // Move the character by finding the target velocity
-            /*Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
-			// And then smoothing it out and applying it to the character
-			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
-
-			// If the input is moving the player right and the player is facing left...
-			if (move > 0 && !m_FacingRight)
-			{
-				// ... flip the player.
-				Flip();
-			}
-			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (move < 0 && m_FacingRight)
-			{
-				// ... flip the player.
-				Flip();
-			}*/
-        }
-        // If the player should jump...
-        if (m_Grounded && jump)
-        {
-            // Add a vertical force to the player.
-            m_Grounded = false;
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-        }
-    }
-
 
     public void Flip()
     {
@@ -210,9 +146,91 @@ public class CharacterController2D : MonoBehaviour
             Vector2.down,
             ledgeCheck.position.y - wallCheck.position.y,
             m_WhatIsGround);
-        
+
         float yDist = yHit.distance;
         return new Vector2(wallCheck.position.x + (GetFacingDirection() * xDist), ledgeCheck.position.y - yDist);
+    }
+
+    public Vector2 DetermineDashDestination(Player player)
+    {
+        Vector2 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y)
+            + (new Vector2(player.DashForce, 0.0005f) * GetFacingDirection());
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
+            Vector2.right * GetFacingDirection(),
+            m_FacingRight ? dashPosition.x - player.transform.position.x : player.transform.position.x - dashPosition.x, 
+            (m_WhatIsEnemy | m_WhatIsGround));
+
+        if (raycastHit2D)
+        {
+            Debug.Log("raycast hit on dash");
+            if (raycastHit2D.collider.tag.Equals("Enemy"))
+            {
+                player.boxCollider2D.enabled = false;
+                player.circleCollider2D.enabled = false;
+                player.startDashGravityEffect();
+                return dashPosition;
+            }
+            else
+            {
+                return raycastHit2D.point;
+            }
+        }
+        return dashPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX);;
+    }
+
+    public Vector2 DetermineEvadePosition(Player player)
+    {
+        Vector2 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y) 
+            - (GetFacingDirection() * new Vector2(player.DashForce/5, 0));
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
+            Vector2.right * GetFacingDirection(),
+            m_FacingRight ? dashPosition.x - player.transform.position.x : player.transform.position.x - dashPosition.x, 
+            (m_WhatIsEnemy | m_WhatIsGround));
+
+        if (raycastHit2D.collider != null)
+        {
+            dashPosition = raycastHit2D.point;
+        }
+        return dashPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX);
+    }
+
+    public Vector2 DetermineSlashPosition(Player player)
+    {
+        Collider2D hitEnemies = Physics2D.OverlapCircle(attackPoint.position, player.attackRange,  m_WhatIsEnemy);
+        Vector3 slashPosition = new Vector2(player.transform.position.x, player.transform.position.y) 
+        + (new Vector2(player.SlashForce, 0) * GetFacingDirection());
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, 
+            Vector2.right * GetFacingDirection(), 
+            m_FacingRight ? slashPosition.x - player.transform.position.x : player.transform.position.x - slashPosition.x, 
+            (m_WhatIsEnemy | m_WhatIsGround));
+
+        if (raycastHit2D.collider != null)
+        {
+            slashPosition = raycastHit2D.point;     
+        }
+
+        return slashPosition;
+    }
+
+    public Vector2 DetermineStabPosition(Player player)
+    {
+        Vector2 stabPosition = new Vector2(player.transform.position.x, player.transform.position.y) 
+            + (new Vector2(player.StabForce, 0) * GetFacingDirection());
+        
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, 
+            Vector2.right * GetFacingDirection(),
+            m_FacingRight ? stabPosition.x - player.transform.position.x : player.transform.position.x - stabPosition.x,
+            (m_WhatIsGround | m_WhatIsEnemy));
+
+        if (raycastHit2D)
+        {
+            stabPosition = raycastHit2D.point;
+        }
+        stabTargets.Add(stabPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX));
+        return stabPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX);
     }
 
     public int GetFacingDirection()
@@ -225,30 +243,44 @@ public class CharacterController2D : MonoBehaviour
         Gizmos.DrawWireSphere(m_GroundCheck.position, k_GroundedRadius);
         if (!IsTouchingWall())
         {
-            Gizmos.DrawWireSphere(wallCheck.position + new Vector3(wallCheckDistance, 0) * GetFacingDirection(), k_GroundedRadius);
+            Gizmos
+                .DrawWireSphere(wallCheck.position + new Vector3(wallCheckDistance, 0) * GetFacingDirection(), k_GroundedRadius);
         }
         if (!IsTouchingLedge())
         {
-            Gizmos.DrawWireSphere(ledgeCheck.position + new Vector3(wallCheckDistance, 0) * GetFacingDirection(), k_GroundedRadius);
-        } else {
-           // Gizmos.DrawWireSphere((Vector3)DetermineLedgePosition(), k_GroundedRadius);
+            Gizmos
+                .DrawWireSphere(ledgeCheck.position + new Vector3(wallCheckDistance, 0) * GetFacingDirection(), k_GroundedRadius);
+        }
+        else
+        {
+            // Gizmos.DrawWireSphere((Vector3)DetermineLedgePosition(), k_GroundedRadius);
+        }
+        foreach (Vector2 target in stabTargets)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(target, 0.1f);
         }
     }
 
     public bool GetSlashInput()
     {
-		return Input.GetButton("Slash");
+        return Input.GetButton("Slash");
     }
 
-	public bool GetStabInput()
+    public bool GetStabInput()
     {
 
-	    return Input.GetButtonUp("Stab");
-		
+        return Input.GetButtonUp("Stab");
+
     }
 
-	public bool GetWindUpInput()
-	{
-		return Input.GetButtonDown("Stab");
-	}
+    public bool GetWindUpInput()
+    {
+        return Input.GetButtonDown("Stab");
+    }
+
+    public bool GetRespawnInput()
+    {
+        return Input.GetButtonDown("Respawn");
+    }
 }

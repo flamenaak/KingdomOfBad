@@ -37,7 +37,9 @@ public class PlayerState
     */
     public virtual void Update()
     {
-
+        if(player.Controller.GetRespawnInput()){
+            player.Respawn();
+        }
     }
 
     // every fixed update

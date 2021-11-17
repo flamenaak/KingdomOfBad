@@ -18,13 +18,30 @@ public class Player : MonoBehaviour
     public LandState LandState { get; private set; }
     public PlayerSlashState SlashState { get; private set; }
     public PlayerStabState StabState { get; private set; }
-
     public PlayerWindUpState WindUpState { get; private set; }
-
     public PlayerHangState HangState { get; private set; }
     #endregion
 
+    #region SpeedForceVariables
+    public float horJumpSpeed = 0.2f;
+    public float WalkSpeed = 2f;
+    public float RunSpeed = 5f;
+    public float SprintSpeed = 7f;
+    public float DashForce = 0.8f;
+    public float SlashForce = 0.15f;
+    public float StabForce = 1f;
+    #endregion
 
+    #region CooldownVariable
+    public float DashCooldown = 0.5f;
+    public bool canDashOrEvade = true;    
+    public float SlashCooldown = 0.5f;
+    public bool canSlash = true;
+
+    public float StabCooldown = 1.5f;
+    public bool canStab = true;
+
+    #endregion
     [SerializeField] public LayerMask layerMask;
     public Animator Anim { get; private set; }
 
@@ -35,29 +52,11 @@ public class Player : MonoBehaviour
     public CharacterController2D Controller;
     private CameraMovement camera;
 
-    public bool Crouch = false;
+    private Vector2 startPosition;
 
-    public bool Jump = false;
-    public float horJumpSpeed = 0.2f;
 
-    public float WalkSpeed = 2f;
-    public float RunSpeed = 5f;
-    public float SprintSpeed = 7f;
-
-    public float DashForce = 1f;
-    public float DashCooldown = 3f;
-    public bool canDashOrEvade = true;
-
-    public float xLedgeOffset = 0.5f;
-    public float yLedgeOffset = 0.5f;
-
-    public float SlashForce = 0.5f;
-    public float SlashCooldown = 0.5f;
-    public bool canSlash = true;
-
-    public float StabForce = 3f;
-    public float StabCooldown = 1.5f;
-    public bool canStab = true;
+    public float xLedgeOffset = 0.43f;
+    public float yLedgeOffset = 0f;
 
     public int hitPoint;
     public int maxHitPoint;
@@ -98,6 +97,8 @@ public class Player : MonoBehaviour
         SpriteRenderer = GetComponent<SpriteRenderer>();
 
         StateMachine.Initialize(IdleState);
+
+        startPosition = transform.position;
     }
 
     private void Start()
@@ -118,7 +119,6 @@ public class Player : MonoBehaviour
         {
             Controller.Flip();
         }
-        Debug.Log(velocity.x);
     }
 
     public void ReceiveDamage(Damage dmg)
@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-       Collider2D hitEnemies =  Physics2D.OverlapCircle(attackPoint.position, attackRange, enemyLayer);
+        Collider2D hitEnemies = Physics2D.OverlapCircle(attackPoint.position, attackRange, Controller.GetEnemyLayerMask());
 
         /*foreach(Collider2D enemy in hitEnemies)
         {
@@ -228,6 +228,13 @@ public class Player : MonoBehaviour
         {
             Debug.Log("We hit enemy");
         }
+    }
+
+    internal void Respawn()
+    {
+        transform.position = startPosition;
+        StateMachine.ChangeState(IdleState);
+        Controller.stabTargets = new System.Collections.Generic.List<Vector2>();
     }
 
 }
