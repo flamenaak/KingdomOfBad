@@ -158,12 +158,12 @@ public class CharacterController2D : MonoBehaviour
 
         RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
             Vector2.right * GetFacingDirection(),
-            m_FacingRight ? dashPosition.x - player.transform.position.x + 5 : player.transform.position.x - dashPosition.x - 5, 
+            m_FacingRight ? dashPosition.x - player.transform.position.x : player.transform.position.x - dashPosition.x, 
             (m_WhatIsEnemy | m_WhatIsGround));
 
-
-        /*if (raycastHit2D)
+        if (raycastHit2D)
         {
+            Debug.Log("raycast hit on dash");
             if (raycastHit2D.collider.tag.Equals("Enemy"))
             {
                 player.boxCollider2D.enabled = false;
@@ -171,37 +171,12 @@ public class CharacterController2D : MonoBehaviour
                 player.startDashGravityEffect();
                 return dashPosition;
             }
-            else if(raycastHit2D.collider.tag.Equals("Collision"))
+            else
             {
-                dashPosition = raycastHit2D.point;
-                return dashPosition;
+                return raycastHit2D.point;
             }
         }
-        return dashPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX);*/
-           /* if (raycastHit2D.collider.tag.Equals("Enemy"))
-            {
-                player.boxCollider2D.enabled = false;
-                player.circleCollider2D.enabled = false;
-                player.startDashGravityEffect();
-                return dashPosition;
-            }
-            else if(raycastHit2D.collider.tag.Equals("Collision"))
-            {
-                dashPosition = raycastHit2D.point;
-            }*/
-           if(raycastHit2D.collider == null)
-        {
-            Debug.Log(1);
-            return dashPosition;
-        }
-        else
-        {
-            Debug.Log(2);
-            dashPosition = raycastHit2D.point;
-            return dashPosition;
-        }
-          
-        return dashPosition;
+        return dashPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX);;
     }
 
     public Vector2 DetermineEvadePosition(Player player)

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerStabState : PlayerGroundedState
 {
-
     public PlayerStabState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -28,15 +27,13 @@ public class PlayerStabState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-            Vector3 stabPosition = player.Controller.DetermineStabPosition(player);
-            player.RigidBody.MovePosition(stabPosition);
-
-            if (Time.time - startTime > 0.32f)
-            {
-
-                stateMachine.ChangeState(player.IdleState);
-            }
-
+        Vector3 stabPosition = player.Controller.DetermineStabPosition(player);
+        player.RigidBody.MovePosition(stabPosition);
+        
+        if (Time.time - startTime > 0.32f)
+        {
+            stateMachine.ChangeState(player.IdleState);
+        }
     }
 
     public override void Update()
