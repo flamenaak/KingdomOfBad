@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public PlayerStabState StabState { get; private set; }
     public PlayerWindUpState WindUpState { get; private set; }
     public PlayerHangState HangState { get; private set; }
+    public PlayerClimbState ClimbState { get; private set; }
     #endregion
 
     #region SpeedForceVariables
@@ -91,6 +92,7 @@ public class Player : MonoBehaviour
         SlashState = new PlayerSlashState(this, StateMachine, "slash");
         StabState = new PlayerStabState(this, StateMachine, "stab");
         WindUpState = new PlayerWindUpState(this, StateMachine, "windUp");
+        ClimbState = new PlayerClimbState(this, StateMachine, "climb");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
