@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
     private CameraMovement camera;
+    public Animation Animation { get; set; }
 
     private Vector2 startPosition;
 
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        Animation = GetComponent<Animation>();
 
         StateMachine.Initialize(IdleState);
 

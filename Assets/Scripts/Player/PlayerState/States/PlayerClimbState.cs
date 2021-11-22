@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerClimbState : PlayerGroundedState
 {
     public Vector2 ledgePos;
-  
+      
     public PlayerClimbState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
