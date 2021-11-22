@@ -50,7 +50,7 @@ public class CharacterController2D : MonoBehaviour
     public BoolEvent OnCrouchEvent;
 
     #region Debug
-        public List<Vector2> stabTargets = new List<Vector2>();
+    public List<Vector2> stabTargets = new List<Vector2>();
     #endregion
 
     private void Awake()
@@ -158,12 +158,11 @@ public class CharacterController2D : MonoBehaviour
 
         RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
             Vector2.right * GetFacingDirection(),
-            m_FacingRight ? dashPosition.x - player.transform.position.x : player.transform.position.x - dashPosition.x, 
+            Mathf.Abs(((Vector2)player.transform.position - dashPosition).x),
             (m_WhatIsEnemy | m_WhatIsGround));
 
         if (raycastHit2D)
         {
-            Debug.Log("raycast hit on dash");
             if (raycastHit2D.collider.tag.Equals("Enemy"))
             {
                 player.boxCollider2D.enabled = false;
@@ -173,20 +172,23 @@ public class CharacterController2D : MonoBehaviour
             }
             else
             {
-                return raycastHit2D.point;
+                var distance = raycastHit2D.distance;
+                distance -= safetyOffsetX;
+                distance = distance > 0 ? distance : 0;
+                return (Vector2)player.transform.position + (Vector2.right * GetFacingDirection() * distance);
             }
         }
-        return dashPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX);;
+        return dashPosition - (Vector2.right * GetFacingDirection() * safetyOffsetX);
     }
 
     public Vector2 DetermineEvadePosition(Player player)
     {
-        Vector2 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y) 
-            - (GetFacingDirection() * new Vector2(player.DashForce/5, 0));
+        Vector2 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y)
+            - (GetFacingDirection() * new Vector2(player.DashForce / 5, 0));
 
         RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
             Vector2.right * GetFacingDirection(),
-            m_FacingRight ? dashPosition.x - player.transform.position.x : player.transform.position.x - dashPosition.x, 
+            m_FacingRight ? dashPosition.x - player.transform.position.x : player.transform.position.x - dashPosition.x,
             (m_WhatIsEnemy | m_WhatIsGround));
 
         if (raycastHit2D.collider != null)
@@ -198,18 +200,18 @@ public class CharacterController2D : MonoBehaviour
 
     public Vector2 DetermineSlashPosition(Player player)
     {
-        Collider2D hitEnemies = Physics2D.OverlapCircle(attackPoint.position, player.attackRange,  m_WhatIsEnemy);
-        Vector3 slashPosition = new Vector2(player.transform.position.x, player.transform.position.y) 
+        Collider2D hitEnemies = Physics2D.OverlapCircle(attackPoint.position, player.attackRange, m_WhatIsEnemy);
+        Vector3 slashPosition = new Vector2(player.transform.position.x, player.transform.position.y)
         + (new Vector2(player.SlashForce, 0) * GetFacingDirection());
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, 
-            Vector2.right * GetFacingDirection(), 
-            m_FacingRight ? slashPosition.x - player.transform.position.x : player.transform.position.x - slashPosition.x, 
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
+            Vector2.right * GetFacingDirection(),
+            m_FacingRight ? slashPosition.x - player.transform.position.x : player.transform.position.x - slashPosition.x,
             (m_WhatIsEnemy | m_WhatIsGround));
 
         if (raycastHit2D.collider != null)
         {
-            slashPosition = raycastHit2D.point;     
+            slashPosition = raycastHit2D.point;
         }
 
         return slashPosition;
@@ -217,10 +219,10 @@ public class CharacterController2D : MonoBehaviour
 
     public Vector2 DetermineStabPosition(Player player)
     {
-        Vector2 stabPosition = new Vector2(player.transform.position.x, player.transform.position.y) 
+        Vector2 stabPosition = new Vector2(player.transform.position.x, player.transform.position.y)
             + (new Vector2(player.StabForce, 0) * GetFacingDirection());
-        
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position, 
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
             Vector2.right * GetFacingDirection(),
             m_FacingRight ? stabPosition.x - player.transform.position.x : player.transform.position.x - stabPosition.x,
             (m_WhatIsGround | m_WhatIsEnemy));

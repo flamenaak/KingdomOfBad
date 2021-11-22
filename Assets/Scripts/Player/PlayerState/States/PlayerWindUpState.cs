@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerWindUpState : PlayerGroundedState
 {
-    float chargeTime = 0.2f;
+    public int acc = 0;
     public PlayerWindUpState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -16,18 +16,20 @@ public class PlayerWindUpState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        
+
     }
 
     public override void Exit()
     {
 
         base.Exit();
+        acc = 0;
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        acc++;
         if (jump && player.Controller.m_Grounded)
         {
             stateMachine.ChangeState(player.LiftState);
@@ -58,9 +60,14 @@ public class PlayerWindUpState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        if (Input.GetButtonUp("Stab"))
+        if (Input.GetButtonUp("Stab") && acc > 21)
         {
             stateMachine.ChangeState(player.StabState);
+        }
+        else if (Input.GetButtonUp("Stab") && acc < 21)
+        {
+            acc = 0;
+            stateMachine.ChangeState(player.IdleState);
         }
     }
 
