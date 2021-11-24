@@ -32,7 +32,7 @@ public class PlayerClimbState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        Vector2 ClimbingPosition = new Vector2(ledgePos.x + 0.25f * player.Controller.GetFacingDirection(), ledgePos.y + 0.15f);
+        Vector2 ClimbingPosition = new Vector2(ledgePos.x + player.xClimbOffset * player.Controller.GetFacingDirection(), ledgePos.y + player.yClimbOffset);
         player.RigidBody.MovePosition(ClimbingPosition);
         if (Time.time - startTime > 0.36f)
         {

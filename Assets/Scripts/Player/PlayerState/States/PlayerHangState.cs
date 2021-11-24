@@ -34,6 +34,7 @@ public class PlayerHangState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.RigidBody.gravityScale = 3f;
     }
 
     public override void FixedUpdate()
@@ -48,10 +49,9 @@ public class PlayerHangState : PlayerState
         base.Update();
         if (player.Controller.ReadInputY() < 0 || (player.Controller.IsTouchingLedge() && player.Controller.IsTouchingWall()))
         {
-            player.RigidBody.gravityScale = 3f;
             stateMachine.ChangeState(player.FallState);
         }
-        if (Input.GetButton("Climb"))
+        if (player.Controller.GetClimbInput())
         {
             stateMachine.ChangeState(player.ClimbState);
         }
