@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
     public float StabCooldown = 1.5f;
     public bool canStab = true;
 
+    // cooldown to allow fall from hanging state without continuos re-latching
+    float hangCooldown = 0.5f;
+    public bool CanHang = true;
+
     #endregion
     [SerializeField] public LayerMask layerMask;
     public Animator Anim { get; private set; }
@@ -153,18 +157,6 @@ public class Player : MonoBehaviour
         //StateMachine.ChangeState(IdleState);
     }
 
-
-    public void startDashCoolDown()
-    {
-        canDashOrEvade = false;
-        Invoke("clearDashOrEvadeCooldown", DashCooldown);
-    }
-
-    void clearDashOrEvadeCooldown()
-    {
-        canDashOrEvade = true;
-    }
-
     public void OnDrawGizmos()
     {
         if (StateMachine != null && StateMachine.CurrentState == HangState)
@@ -214,6 +206,25 @@ public class Player : MonoBehaviour
     void clearDashGravityEffect()
     {
         RigidBody.gravityScale = 3f;
+    }
+
+    public void StartHangCooldown()
+    {
+        CanHang = false;
+        Invoke("clearHangCooldown", hangCooldown);
+    }
+
+    void clearHangCooldown() => CanHang = true;
+
+    public void startDashCoolDown()
+    {
+        canDashOrEvade = false;
+        Invoke("clearDashOrEvadeCooldown", DashCooldown);
+    }
+
+    void clearDashOrEvadeCooldown()
+    {
+        canDashOrEvade = true;
     }
 
     public void Attack()
