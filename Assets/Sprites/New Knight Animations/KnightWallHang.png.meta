@@ -29,6 +29,27 @@ TextureImporter:
   - first:
       213: -5985268426156258987
     second: KnightWallHang_8
+  - first:
+      213: -9103656819174266130
+    second: KnightWallHang_9
+  - first:
+      213: -8261600549641476207
+    second: KnightWallHang_10
+  - first:
+      213: -4116278643349307104
+    second: KnightWallHang_11
+  - first:
+      213: 1956105857177234381
+    second: KnightWallHang_12
+  - first:
+      213: -7321138979995428407
+    second: KnightWallHang_13
+  - first:
+      213: -6194729517105270525
+    second: KnightWallHang_14
+  - first:
+      213: 4078670792562149940
+    second: KnightWallHang_15
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -298,6 +319,153 @@ TextureImporter:
       bones: []
       spriteID: 5594895e31e00fca0800000000000000
       internalID: -5985268426156258987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightWallHang_9
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 93
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eea2e003b5059a180800000000000000
+      internalID: -9103656819174266130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightWallHang_10
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 93
+        width: 8
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 197a27a6216e85d80800000000000000
+      internalID: -8261600549641476207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightWallHang_11
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 93
+        width: 10
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02143a2026a00e6c0800000000000000
+      internalID: -4116278643349307104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightWallHang_12
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 93
+        width: 12
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcb2c18c9eb752b10800000000000000
+      internalID: 1956105857177234381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightWallHang_13
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 93
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c95b1203e6166a90800000000000000
+      internalID: -7321138979995428407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightWallHang_14
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 93
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30130554356e70aa0800000000000000
+      internalID: -6194729517105270525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightWallHang_15
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 93
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43a8d62e9795a9830800000000000000
+      internalID: 4078670792562149940
       vertices: []
       indices: 
       edges: []

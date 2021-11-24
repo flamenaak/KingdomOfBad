@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public PlayerStabState StabState { get; private set; }
     public PlayerWindUpState WindUpState { get; private set; }
     public PlayerHangState HangState { get; private set; }
+    public PlayerClimbState ClimbState { get; private set; }
     #endregion
 
     #region SpeedForceVariables
@@ -61,6 +62,8 @@ public class Player : MonoBehaviour
 
     public float xLedgeOffset = 0.43f;
     public float yLedgeOffset = 0f;
+    public float xClimbOffset = 0.25f;
+    public float yClimbOffset = 0.15f;
 
     public int hitPoint;
     public int maxHitPoint;
@@ -95,10 +98,12 @@ public class Player : MonoBehaviour
         SlashState = new PlayerSlashState(this, StateMachine, "slash");
         StabState = new PlayerStabState(this, StateMachine, "stab");
         WindUpState = new PlayerWindUpState(this, StateMachine, "windUp");
+        ClimbState = new PlayerClimbState(this, StateMachine, "climb");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
+
 
         StateMachine.Initialize(IdleState);
 

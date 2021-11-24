@@ -120,6 +120,11 @@ public class CharacterController2D : MonoBehaviour
         return Input.GetButton("Dash");
     }
 
+    public bool GetClimbInput()
+    {
+        return Input.GetButton("Climb");
+    }
+
     public bool IsTouchingWall()
     {
         return Physics2D.Raycast(wallCheck.position,

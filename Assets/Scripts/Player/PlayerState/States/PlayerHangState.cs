@@ -58,8 +58,11 @@ public class PlayerHangState : PlayerState
         base.Update();
         if (player.Controller.ReadInputY() < 0 || (player.Controller.IsTouchingLedge() && player.Controller.IsTouchingWall()))
         {
-            player.RigidBody.gravityScale = 3f;
             stateMachine.ChangeState(player.FallState);
+        }
+        if (player.Controller.GetClimbInput())
+        {
+            stateMachine.ChangeState(player.ClimbState);
         }
     }
 }
