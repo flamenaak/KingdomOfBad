@@ -19,22 +19,31 @@ public class PlayerHangState : PlayerState
 
     public override void Enter()
     {
-        base.Enter();
-        player.transform.position = detectedPos;
-        player.RigidBody.gravityScale = 0f;
-        try{
-            ledgePos = player.Controller.DetermineLedgePosition();
-        } catch (Exception e)
+        if (!player.CanHang)
         {
             stateMachine.ChangeState(player.FallState);
         }
-        
+        else
+        {
+            base.Enter();
+            player.transform.position = detectedPos;
+            player.RigidBody.gravityScale = 0f;
+            try
+            {
+                ledgePos = player.Controller.DetermineLedgePosition();
+            }
+            catch (Exception e)
+            {
+                stateMachine.ChangeState(player.FallState);
+            }
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
         player.RigidBody.gravityScale = 3f;
+        player.StartHangCooldown();
     }
 
     public override void FixedUpdate()
