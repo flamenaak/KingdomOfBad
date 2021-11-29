@@ -73,6 +73,7 @@ public class EnemyAI : MonoBehaviour
         if (force.x >= 0.01F)
         {
             EnemyGFX.localScale = new Vector3(10f, 10f, 1f);
+            
         }
         else if (force.x <= -0.01f)
         {

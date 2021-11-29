@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region CooldownVariable
-    public float DashCooldown = 0.5f;
+    public float DashCooldown = 2.0f;
     public bool canDashOrEvade = true;    
     public float SlashCooldown = 0.5f;
     public bool canSlash = true;
