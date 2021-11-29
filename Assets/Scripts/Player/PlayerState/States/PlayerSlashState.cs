@@ -33,6 +33,7 @@ public class PlayerSlashState : PlayerGroundedState
     {
         Vector3 slashPosition = player.Controller.DetermineSlashPosition(player);
         player.RigidBody.MovePosition(slashPosition);
+        player.Attack();
         if (Time.time - startTime > 0.36f)
         {
             stateMachine.ChangeState(player.IdleState);

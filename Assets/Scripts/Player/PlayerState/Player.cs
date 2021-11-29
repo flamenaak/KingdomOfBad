@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
     public bool CanHang = true;
 
     #endregion
-    [SerializeField] public LayerMask layerMask;
     public Animator Anim { get; private set; }
 
     public Rigidbody2D RigidBody;
@@ -65,19 +64,24 @@ public class Player : MonoBehaviour
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
 
-    public int hitPoint;
-    public int maxHitPoint;
+    public float hitPoint;
+    public float maxHitPoint;
     public float pushRecoverySpeed = 0.2F;
-
+    [SerializeField]
     public Transform attackPoint;
+    public float slashDamage = 1;
     public float attackRange = 0.5f;
-    public LayerMask enemyLayer;
+
+    [SerializeField]
+    private float knockbackSpeedX, knockbackSpeedY, knockbackDuration;
+    [SerializeField]
+    private bool applyKnockback, knockback;
+    private float  knockbackStart;
 
 
     protected float immuneTime = 1.0F;
     protected float lastImmune;
 
-    protected Vector3 pushDirection;
 
 
     private void Awake()
@@ -113,7 +117,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
-
+        hitPoint = maxHitPoint;
         if (Controller == null)
             Debug.Log("no controller");
     }
@@ -122,6 +126,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.Update();
+        CheckKnockback();
         Vector2 velocity = RigidBody.velocity;
         if ((velocity.x < -0.1f && transform.localScale.x > 0)
         || (velocity.x > 0.1f && transform.localScale.x < 0))
@@ -130,26 +135,42 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ReceiveDamage(Damage dmg)
+    private void Knockback()
     {
-        if (Time.time - lastImmune > immuneTime)
-        {
-            lastImmune = Time.time;
-            hitPoint -= dmg.damageAmount;
-            pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce;
+        knockback = true;
+        knockbackStart = Time.time;
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Controller.GetFacingDirection(), knockbackSpeedY);
+    }
 
-            if (hitPoint <= 0)
-            {
-                hitPoint = 0;
-                Death();
-            }
+    private void CheckKnockback()
+    {
+        if (Time.time >= knockbackStart + knockbackDuration && knockback)
+        {
+            knockback = false;
+            RigidBody.velocity = new Vector2(0.0f, RigidBody.velocity.y);
         }
     }
 
-    public void Death()
+    public void ReceiveDamage(float dmg)
     {
-
+    
+        hitPoint -= dmg;
+        if (applyKnockback && hitPoint > 0.0f)
+        {
+            Knockback();
+        }
+        if (hitPoint >= 0.0f)
+        {
+            Die();
+        }
     }
+
+    private void Die()
+    {
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Controller.GetFacingDirection(), knockbackSpeedY);
+        Debug.Log("Player is dead");
+    }
+
 
     // physics
     private void FixedUpdate()
@@ -173,12 +194,7 @@ public class Player : MonoBehaviour
 
         }
 
-        // if(attackPoint == null)
-        // {
-        //     return;
-        // }
-
-        // Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+         //Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
     public void startSlashCoolDown()
     {
@@ -234,16 +250,13 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        Collider2D hitEnemies = Physics2D.OverlapCircle(attackPoint.position, attackRange, Controller.GetEnemyLayerMask());
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, Controller.GetEnemyLayerMask());
 
-        /*foreach(Collider2D enemy in hitEnemies)
+        foreach(Collider2D enemy in hitEnemies)
         {
-            //Debug.Log("We hit" + enemy.name);
-        }*/
-        if (hitEnemies.tag.Equals("Enemy"))
-        {
-            Debug.Log("We hit enemy");
+            enemy.SendMessage("Damage", slashDamage);
         }
+
     }
 
     internal void Respawn()

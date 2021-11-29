@@ -2843,7 +2843,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1364010161
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1561314798596654798, guid: 739ca983ba016ab4481bdd369a303053,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2955,18 +2955,7 @@ MonoBehaviour:
         m_CallState: 2
   OnCrouchEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 534308344}
-        m_MethodName: OnCrouching
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   stabTargets: []
 --- !u!58 &534308342
 CircleCollider2D:
@@ -3003,16 +2992,13 @@ MonoBehaviour:
   DashForce: 0.8
   SlashForce: 0.15
   StabForce: 1
-  DashCooldown: 0.5
+  DashCooldown: 1.5
   canDashOrEvade: 1
   SlashCooldown: 0.5
   canSlash: 1
   StabCooldown: 1.5
   canStab: 1
   CanHang: 1
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
   RigidBody: {fileID: 534308336}
   boxCollider2D: {fileID: 534308337}
   circleCollider2D: {fileID: 534308342}
@@ -3022,14 +3008,17 @@ MonoBehaviour:
   yLedgeOffset: -0.05
   xClimbOffset: 0.25
   yClimbOffset: 0.15
-  hitPoint: 50
-  maxHitPoint: 50
+  hitPoint: 5000
+  maxHitPoint: 5000
   pushRecoverySpeed: 0.2
   attackPoint: {fileID: 1545125773}
+  slashDamage: 1
   attackRange: 0.71
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 2048
+  knockbackSpeedX: 10
+  knockbackSpeedY: 5
+  knockbackDuration: 0.1
+  applyKnockback: 1
+  knockback: 0
 --- !u!43 &539265928
 Mesh:
   m_ObjectHideFlags: 0
@@ -4000,14 +3989,13 @@ GameObject:
   - component: {fileID: 914847067}
   - component: {fileID: 914847066}
   - component: {fileID: 914847065}
-  - component: {fileID: 914847071}
   m_Layer: 11
   m_Name: 'Enemy '
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &914847065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4020,9 +4008,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e304c05ff76b54ea01104858c1f78a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 5
+  knockbackSpeedX: 10
+  knockbackSpeedY: 5
+  knockbackDuration: 0.1
+  applyKnockback: 1
+  knockback: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  characterController: {fileID: 534308341}
   target: {fileID: 534308335}
   speed: 400
   nextWaypointDistance: 3
+  attackPoint: {fileID: 1655151677}
+  slashDamage: 1
+  attackRange: 0.5
   EnemyGFX: {fileID: 1067538190}
 --- !u!50 &914847066
 Rigidbody2D:
@@ -4123,27 +4124,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914847064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.29, y: -0.196, z: 0}
+  m_LocalPosition: {x: 24.68, y: -0.196, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1067538190}
+  - {fileID: 1655151677}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &914847071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914847064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28aa6c9d6e31a54193238985eb8eac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  pushForce: 5
 --- !u!1 &1067538189
 GameObject:
   m_ObjectHideFlags: 0
@@ -4231,9 +4219,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1364010161
-  m_SortingLayer: 4
-  m_SortingOrder: 2
+  m_SortingLayerID: 1447474771
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 6684111323187852848, guid: 739ca983ba016ab4481bdd369a303053,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4834,6 +4822,36 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &1655151676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1655151677}
+  m_Layer: 11
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1655151677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655151676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.18, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 914847070}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920556565
 GameObject:
   m_ObjectHideFlags: 0

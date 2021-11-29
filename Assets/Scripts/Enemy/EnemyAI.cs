@@ -5,10 +5,21 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-
+    [SerializeField]
+    private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
+    [SerializeField]
+    private bool applyKnockback, knockback;
+    [SerializeField]
+    private LayerMask layerMask;
+    private float currentHealth, knockbackStart;
+    private Player player;
+    public CharacterController2D characterController;
     public Transform target;
     public float speed = 10f;
     public float nextWaypointDistance = 3f;
+    public Transform attackPoint;
+    public float slashDamage = 1;
+    public float attackRange = 0.5f;
 
     public Transform EnemyGFX;
 
@@ -21,10 +32,52 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        player = GameObject.Find("Player").GetComponent<Player>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, .5f);
-  
+    }
+
+    private void Damage(float amount)
+    {
+        currentHealth -= amount; 
+        if(applyKnockback && currentHealth > 0.0f)
+        {
+            Knockback();
+        }
+        if(currentHealth >= 0.0f)
+        {
+            Die();
+            Debug.Log("Dead");
+        }
+    }
+
+    private void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, layerMask);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.SendMessage("ReceiveDamage", slashDamage);
+            Debug.Log("Hitting player");
+        }
+    }
+
+    private void Knockback()
+    {
+        knockback = true;
+        knockbackStart = Time.time;
+        rb.velocity = new Vector2(knockbackSpeedX * characterController.GetFacingDirection(), knockbackSpeedY);
+    }
+
+    private void CheckKnockback()
+    {
+        if(Time.time >= knockbackStart + knockbackDuration && knockback)
+        {
+            knockback = false;
+            rb.velocity = new Vector2(0.0f, rb.velocity.y);
+        }
     }
 
     void UpdatePath()
@@ -79,5 +132,16 @@ public class EnemyAI : MonoBehaviour
         {
             EnemyGFX.localScale = new Vector3(-10f, 10f, 1f);
         }
+    }
+
+    private void Update()
+    {
+        Attack();
+        CheckKnockback();
+    }
+
+    private void Die()
+    {
+        rb.velocity = new Vector2(knockbackSpeedX * characterController.GetFacingDirection(), knockbackSpeedY);
     }
 }
