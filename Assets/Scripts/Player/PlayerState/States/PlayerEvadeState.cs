@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerEvadeState : PlayerGroundedState
 {
  
-    public PlayerEvadeState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerEvadeState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

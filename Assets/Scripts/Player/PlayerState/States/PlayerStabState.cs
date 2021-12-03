@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStabState : PlayerGroundedState
 {
-    public PlayerStabState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerStabState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

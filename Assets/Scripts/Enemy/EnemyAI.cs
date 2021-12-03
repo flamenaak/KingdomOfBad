@@ -5,143 +5,49 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
+    public bool FacingRight = true;
+    public LayerMask WhatIsPlayer;
+    public LayerMask WhatIsGround;
+    public float LineOfSight;
+    public float WallCheckDistance;
     [SerializeField]
-    private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
+    private Transform playerCheck;
     [SerializeField]
-    private bool applyKnockback, knockback;
+    private Transform groundCheck;
     [SerializeField]
-    private LayerMask layerMask;
-    private float currentHealth, knockbackStart;
-    private Player player;
-    public CharacterController2D characterController;
-    public Transform target;
-    public float speed = 10f;
-    public float nextWaypointDistance = 3f;
-    public Transform attackPoint;
-    public float slashDamage = 1;
-    public float attackRange = 0.5f;
+    private Transform ledgeCheck;
 
-    public Transform EnemyGFX;
-
-    Path path;
-    int currentWaypoint = 0;
-    bool reachedEndPath = false;
-
-    Seeker seeker;
-    Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
+    public int GetFacingDirection()
     {
-        currentHealth = maxHealth;
-        player = GameObject.Find("Player").GetComponent<Player>();
-        seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
-        InvokeRepeating("UpdatePath", 0f, .5f);
+        return this.FacingRight ? 1 : -1;
     }
 
-    private void Damage(float amount)
+    public bool CanSeePlayer()
     {
-        currentHealth -= amount; 
-        if(applyKnockback && currentHealth > 0.0f)
+        RaycastHit2D raycast = Physics2D.Raycast(playerCheck.position, GetFacingDirection() * Vector2.right, LineOfSight, (WhatIsPlayer | WhatIsGround));
+        if(raycast.collider != null)
         {
-            Knockback();
+            return raycast.collider.tag.Equals("Enemy");         
         }
-        if(currentHealth >= 0.0f)
-        {
-            Die();
-            Debug.Log("Dead");
-        }
+        return false;
     }
 
-    private void Attack()
+    public bool IsTouchingWall()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, layerMask);
-
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            enemy.SendMessage("ReceiveDamage", slashDamage);
-            Debug.Log("Hitting player");
-        }
+        RaycastHit2D raycast = Physics2D.Raycast(playerCheck.position, GetFacingDirection() * Vector2.right, WallCheckDistance,  WhatIsGround);
+        return raycast.collider != null;
     }
 
-    private void Knockback()
+    public bool IsTouchingLedge()
     {
-        knockback = true;
-        knockbackStart = Time.time;
-        rb.velocity = new Vector2(knockbackSpeedX * characterController.GetFacingDirection(), knockbackSpeedY);
+        RaycastHit2D raycast = Physics2D.Raycast(ledgeCheck.position, GetFacingDirection() * Vector2.right, WallCheckDistance, WhatIsGround);
+        return raycast.collider != null;
     }
 
-    private void CheckKnockback()
+    public bool IsReachingEdge()
     {
-        if(Time.time >= knockbackStart + knockbackDuration && knockback)
-        {
-            knockback = false;
-            rb.velocity = new Vector2(0.0f, rb.velocity.y);
-        }
+        RaycastHit2D raycast = Physics2D.Raycast(groundCheck.position,Vector2.down, WallCheckDistance, WhatIsGround);
+        return raycast.collider == null;
     }
-
-    void UpdatePath()
-    {
-        if(seeker.IsDone())
-        seeker.StartPath(rb.position, target.position, OnPathComplete);
-    }
-
-    void OnPathComplete(Path p)
-    {
-        if (!p.error)
-        {
-            path = p;
-            currentWaypoint = 0;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        if(path == null)
-        {
-            return;
-        }
-        if(currentWaypoint >= path.vectorPath.Count)
-        {
-            reachedEndPath = true;
-            return;
-        }
-        else
-        {
-            reachedEndPath = false;
-        }
-
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
-
-        rb.AddForce(force);
-
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-
-        if(distance < nextWaypointDistance)
-        {
-            currentWaypoint++;
-        }
-
-        if (force.x >= 0.01F)
-        {
-            EnemyGFX.localScale = new Vector3(10f, 10f, 1f);
-            
-        }
-        else if (force.x <= -0.01f)
-        {
-            EnemyGFX.localScale = new Vector3(-10f, 10f, 1f);
-        }
-    }
-
-    private void Update()
-    {
-        Attack();
-        CheckKnockback();
-    }
-
-    private void Die()
-    {
-        rb.velocity = new Vector2(knockbackSpeedX * characterController.GetFacingDirection(), knockbackSpeedY);
-    }
+ 
 }

@@ -3,7 +3,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    public PlayerStateMachine StateMachine { get; private set; }
+    public StateMachine StateMachine { get; private set; }
 
     #region PlayerStates
     public PlayerIdleState IdleState { get; private set; }
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        StateMachine = new PlayerStateMachine();
+        StateMachine = new StateMachine();
 
         IdleState = new PlayerIdleState(this, StateMachine, "idle");
         WalkState = new PlayerWalkState(this, StateMachine, "walk");

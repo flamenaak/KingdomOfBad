@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerWindUpState : PlayerGroundedState
 {
     public int acc = 0;
-    public PlayerWindUpState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerWindUpState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
     public override void DoChecks()

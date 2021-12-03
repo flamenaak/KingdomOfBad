@@ -7,7 +7,7 @@ public class PlayerAirState : PlayerState
 {
     protected bool ShouldHang {get; set;}
 
-    public PlayerAirState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerAirState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

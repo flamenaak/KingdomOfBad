@@ -6,7 +6,7 @@ public class PlayerClimbState : PlayerGroundedState
 {
     public Vector2 ledgePos;
       
-    public PlayerClimbState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerClimbState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerGroundedState
 {
-    public PlayerDashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerDashState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

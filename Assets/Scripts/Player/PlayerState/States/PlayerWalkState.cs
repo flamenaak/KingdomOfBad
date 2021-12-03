@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerWalkState : PlayerGroundedState
 {
     public int acc = 0;
-    public PlayerWalkState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerWalkState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

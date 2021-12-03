@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerJumpState : PlayerState
 {
     private int acc;
-    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerJumpState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

@@ -8,7 +8,7 @@ public class PlayerHangState : PlayerState
     public Vector2 detectedPos;
     public Vector2 ledgePos;
 
-    public PlayerHangState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerHangState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
