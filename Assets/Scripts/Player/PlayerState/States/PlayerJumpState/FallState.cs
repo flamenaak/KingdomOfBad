@@ -27,7 +27,7 @@ public class FallState : PlayerAirState
     {
         base.FixedUpdate();
         CheckAirInput();
-        if (player.Controller.m_Grounded)
+        if (player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.LandState);
         }

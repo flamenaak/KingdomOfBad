@@ -17,7 +17,7 @@ public class FloatState : PlayerAirState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (player.Controller.m_Grounded)
+        if (player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.IdleState);
         }

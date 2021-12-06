@@ -33,7 +33,7 @@ public class PlayerJumpState : PlayerState
     {
         base.FixedUpdate();
         acc++; 
-        if (player.Controller.m_Grounded)
+        if (player.Core.CollisionSenses.IsGrounded())
         {
             Debug.Log("Grounded");
             if (Mathf.Abs(player.RigidBody.velocity.x) == player.RunSpeed)

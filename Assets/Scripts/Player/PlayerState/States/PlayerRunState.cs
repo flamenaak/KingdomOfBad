@@ -31,7 +31,7 @@ public class PlayerRunState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (jump && player.Controller.m_Grounded)
+        else if (jump && player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.RiseState);
         }

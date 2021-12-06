@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     public CircleCollider2D circleCollider2D;
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
+
+    public Core Core {get; set;}
     private CameraMovement camera;
 
     private Vector2 startPosition;
@@ -108,7 +110,7 @@ public class Player : MonoBehaviour
         RigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
 
-
+        Core = GetComponentInChildren<Core>();
         StateMachine.Initialize(IdleState);
 
         startPosition = transform.position;
@@ -131,7 +133,7 @@ public class Player : MonoBehaviour
         if ((velocity.x < -0.1f && transform.localScale.x > 0)
         || (velocity.x > 0.1f && transform.localScale.x < 0))
         {
-            Controller.Flip();
+            Core.Movement.Flip();
         }
     }
 
@@ -139,7 +141,7 @@ public class Player : MonoBehaviour
     {
         knockback = true;
         knockbackStart = Time.time;
-        RigidBody.velocity = new Vector2(knockbackSpeedX * Controller.GetFacingDirection(), knockbackSpeedY);
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
     }
 
     private void CheckKnockback()
@@ -167,7 +169,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        RigidBody.velocity = new Vector2(knockbackSpeedX * Controller.GetFacingDirection(), knockbackSpeedY);
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
         Debug.Log("Player is dead");
     }
 
@@ -176,11 +178,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         StateMachine.CurrentState.FixedUpdate();
-    }
-
-    public void OnLanding()
-    {
-        //StateMachine.ChangeState(IdleState);
     }
 
     public void OnDrawGizmos()
@@ -250,7 +247,7 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, Controller.GetEnemyLayerMask());
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, Core.Movement.Data.WhatIsEnemy);
 
         foreach(Collider2D enemy in hitEnemies)
         {
@@ -263,7 +260,6 @@ public class Player : MonoBehaviour
     {
         transform.position = startPosition;
         StateMachine.ChangeState(IdleState);
-        Controller.stabTargets = new System.Collections.Generic.List<Vector2>();
     }
 
 }

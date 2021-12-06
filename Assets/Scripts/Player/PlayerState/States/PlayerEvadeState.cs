@@ -28,7 +28,7 @@ public class PlayerEvadeState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        Vector3 dashPosition = player.Controller.DetermineEvadePosition(player);
+        Vector3 dashPosition = player.Core.Movement.DetermineEvadePosition(player);
 
         player.RigidBody.MovePosition(dashPosition);
 

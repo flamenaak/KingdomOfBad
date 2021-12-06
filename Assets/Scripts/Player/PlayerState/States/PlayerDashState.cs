@@ -29,7 +29,7 @@ public class PlayerDashState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();        
-        Vector3 dashPosition = player.Controller.DetermineDashDestination(player);
+        Vector3 dashPosition = player.Core.Movement.DetermineDashDestination(player);
         player.RigidBody.MovePosition(dashPosition);
 
         if (Time.time - startTime > 0.52f)

@@ -14,9 +14,9 @@ public class PlayerAirState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
-        ShouldHang = !player.Controller.IsTouchingLedge() 
-            && player.Controller.IsTouchingWall() 
-            && !player.Controller.m_Grounded;
+        ShouldHang = !player.Core.CollisionSenses.IsTouchingLedge() 
+            && player.Core.CollisionSenses.IsTouchingWall() 
+            && !player.Core.CollisionSenses.IsGrounded();
         if (ShouldHang) {
             player.HangState.detectedPos = player.transform.position;
         }

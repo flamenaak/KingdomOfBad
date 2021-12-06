@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
     private float currentHealth, knockbackStart;
-    public CharacterController2D characterController;
+    public Core Core;
     public float speed = 10f;
     public float nextWaypointDistance = 3f;
     public Transform attackPoint;
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
     {
         knockback = true;
         knockbackStart = Time.time;
-        RigidBody.velocity = new Vector2(knockbackSpeedX * characterController.GetFacingDirection(), knockbackSpeedY);
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
     }
 
     private void CheckKnockback()
@@ -88,6 +88,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        RigidBody.velocity = new Vector2(knockbackSpeedX * characterController.GetFacingDirection(), knockbackSpeedY);
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
     }
 }

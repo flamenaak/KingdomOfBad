@@ -27,7 +27,7 @@ public class PlayerStabState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        Vector3 stabPosition = player.Controller.DetermineStabPosition(player);
+        Vector3 stabPosition = player.Core.Movement.DetermineStabPosition(player);
         
         player.RigidBody.MovePosition(stabPosition);
         if (Time.time - startTime > 0.32f)

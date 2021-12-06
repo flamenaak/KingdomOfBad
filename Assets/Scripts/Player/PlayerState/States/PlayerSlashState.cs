@@ -31,7 +31,7 @@ public class PlayerSlashState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        Vector3 slashPosition = player.Controller.DetermineSlashPosition(player);
+        Vector3 slashPosition = player.Core.Movement.DetermineSlashPosition(player);
         player.RigidBody.MovePosition(slashPosition);
         player.Attack();
         if (Time.time - startTime > 0.36f)

@@ -12,9 +12,7 @@ public class RiseState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
-
         player.RigidBody.velocity = new Vector2(player.RigidBody.velocity.x, 10);
-        player.Controller.m_Grounded = false;
     }
 
     public override void FixedUpdate()

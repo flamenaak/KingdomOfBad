@@ -30,7 +30,7 @@ public class PlayerWindUpState : PlayerGroundedState
     {
         base.FixedUpdate();
         acc++;
-        if (jump && player.Controller.m_Grounded)
+        if (jump && player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.LiftState);
         }
@@ -47,7 +47,7 @@ public class PlayerWindUpState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.WalkState);
         }
-        else if (!player.Controller.m_Grounded)
+        else if (!player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.FloatState);
         }
