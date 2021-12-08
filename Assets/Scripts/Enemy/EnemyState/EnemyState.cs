@@ -47,8 +47,8 @@ public class EnemyState : State
     {
         base.DoChecks();
         canSeePlayer = enemy.enemyAI.CanSeePlayer();
-        isTouchingWall = enemy.enemyAI.IsTouchingWall();
-        isTouchingLedge = enemy.enemyAI.IsTouchingLedge();
-        isReachingEdge = enemy.enemyAI.IsReachingEdge();
+        isTouchingWall = enemy.Core.CollisionSenses.IsTouchingWall();
+        isTouchingLedge = enemy.Core.CollisionSenses.IsTouchingLedge();
+        isReachingEdge = enemy.Core.CollisionSenses.IsReachingEdge();
     }
 }

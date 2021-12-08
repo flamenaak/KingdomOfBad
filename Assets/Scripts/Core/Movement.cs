@@ -31,23 +31,20 @@ public class Movement : CoreComponent
         return this.IsFacingRight ? 1 : -1;
     }
 
-        public Vector2 DetermineDashDestination(Player player)
+    public Vector2 DetermineDashDestination(Transform entityTransform)
     {
-        Vector2 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y)
-            + (new Vector2(player.DashForce, 0.0005f) * GetFacingDirection());
+        Vector2 dashPosition = new Vector2(entityTransform.transform.position.x, entityTransform.transform.position.y)
+            + (new Vector2(Data.DashForce, 0.0005f) * GetFacingDirection());
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(entityTransform.transform.position,
             Vector2.right * GetFacingDirection(),
-            Mathf.Abs(((Vector2)player.transform.position - dashPosition).x),
+            Mathf.Abs(((Vector2)entityTransform.transform.position - dashPosition).x),
             (Data.WhatIsEnemy | Data.WhatIsGround));
 
         if (raycastHit2D)
         {
             if (raycastHit2D.collider.tag.Equals("Enemy"))
             {
-                player.boxCollider2D.enabled = false;
-                player.circleCollider2D.enabled = false;
-                player.startDashGravityEffect();
                 return dashPosition;
             }
             else
@@ -55,20 +52,20 @@ public class Movement : CoreComponent
                 var distance = raycastHit2D.distance;
                 distance -= Data.SafetyOffsetX;
                 distance = distance > 0 ? distance : 0;
-                return (Vector2)player.transform.position + (Vector2.right * GetFacingDirection() * distance);
+                return (Vector2)entityTransform.transform.position + (Vector2.right * GetFacingDirection() * distance);
             }
         }
         return dashPosition - (Vector2.right * GetFacingDirection() * Data.SafetyOffsetX);
     }
 
-    public Vector2 DetermineEvadePosition(Player player)
+    public Vector2 DetermineEvadePosition(Transform entityTransform)
     {
-        Vector2 dashPosition = new Vector2(player.transform.position.x, player.transform.position.y)
-            - (GetFacingDirection() * new Vector2(player.DashForce / 5, 0));
+        Vector2 dashPosition = new Vector2(entityTransform.position.x, entityTransform.position.y)
+            - (GetFacingDirection() * new Vector2(Data.DashForce / 5, 0));
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(entityTransform.position,
             Vector2.right * GetFacingDirection(),
-            IsFacingRight ? dashPosition.x - player.transform.position.x : player.transform.position.x - dashPosition.x,
+            IsFacingRight ? dashPosition.x - entityTransform.position.x : entityTransform.position.x - dashPosition.x,
             (Data.WhatIsEnemy | Data.WhatIsGround));
 
         if (raycastHit2D.collider != null)
@@ -78,15 +75,15 @@ public class Movement : CoreComponent
         return dashPosition - (Vector2.right * GetFacingDirection() * Data.SafetyOffsetX);
     }
 
-    public Vector2 DetermineSlashPosition(Player player)
+    public Vector2 DetermineSlashPosition(Transform entityTransform)
     {
-        Collider2D hitEnemies = Physics2D.OverlapCircle(AttackPosition.position, player.attackRange, Data.WhatIsEnemy);
-        Vector3 slashPosition = new Vector2(player.transform.position.x, player.transform.position.y)
-        + (new Vector2(player.SlashForce, 0) * GetFacingDirection());
+        Collider2D hitEnemies = Physics2D.OverlapCircle(AttackPosition.position, Data.AttackRange, Data.WhatIsEnemy);
+        Vector3 slashPosition = new Vector2(entityTransform.position.x, entityTransform.position.y)
+        + (new Vector2(Data.SlashForce, 0) * GetFacingDirection());
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(entityTransform.position,
             Vector2.right * GetFacingDirection(),
-            IsFacingRight ? slashPosition.x - player.transform.position.x : player.transform.position.x - slashPosition.x,
+            IsFacingRight ? slashPosition.x - entityTransform.position.x : entityTransform.position.x - slashPosition.x,
             (Data.WhatIsEnemy | Data.WhatIsGround));
 
         if (raycastHit2D.collider != null)
@@ -97,14 +94,14 @@ public class Movement : CoreComponent
         return slashPosition;
     }
 
-    public Vector2 DetermineStabPosition(Player player)
+    public Vector2 DetermineStabPosition(Transform entityTransform)
     {
-        Vector2 stabPosition = new Vector2(player.transform.position.x, player.transform.position.y)
-            + (new Vector2(player.StabForce, 0) * GetFacingDirection());
+        Vector2 stabPosition = new Vector2(entityTransform.position.x, entityTransform.position.y)
+            + (new Vector2(Data.StabForce, 0) * GetFacingDirection());
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(player.transform.position,
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(entityTransform.position,
             Vector2.right * GetFacingDirection(),
-            IsFacingRight ? stabPosition.x - player.transform.position.x : player.transform.position.x - stabPosition.x,
+            IsFacingRight ? stabPosition.x - entityTransform.position.x : entityTransform.position.x - stabPosition.x,
             (Data.WhatIsEnemy | Data.WhatIsGround));
 
         if (raycastHit2D)

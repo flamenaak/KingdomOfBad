@@ -17,19 +17,20 @@ public class PlayerDashState : PlayerGroundedState
     {
         base.Enter();
         player.startDashCoolDown();
+        player.startDashGravityEffect();
+        Physics2D.IgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.boxCollider2D.enabled = true;
-        player.circleCollider2D.enabled = true;
+        Physics2D.IgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();        
-        Vector3 dashPosition = player.Core.Movement.DetermineDashDestination(player);
+        Vector3 dashPosition = player.Core.Movement.DetermineDashDestination(player.transform);
         player.RigidBody.MovePosition(dashPosition);
 
         if (Time.time - startTime > 0.52f)

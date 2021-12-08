@@ -261,5 +261,4 @@ public class Player : MonoBehaviour
         transform.position = startPosition;
         StateMachine.ChangeState(IdleState);
     }
-
 }

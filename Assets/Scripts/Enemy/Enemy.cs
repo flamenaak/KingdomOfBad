@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour
     public Core Core;
     public float speed = 10f;
     public float nextWaypointDistance = 3f;
-    public Transform attackPoint;
     public float slashDamage = 1;
     public float attackRange = 0.5f;
     public Animator Anim { get; private set; }
@@ -31,12 +30,12 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         Anim = GetComponent<Animator>();
+        RigidBody = GetComponent<Rigidbody2D>();
     }
 
     void Start()
     {
         currentHealth = maxHealth;
-        RigidBody = GetComponent<Rigidbody2D>();
     }
 
     private void Damage(float amount)
@@ -55,7 +54,7 @@ public class Enemy : MonoBehaviour
 
     private void Attack()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, layerMask);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(Core.Movement.AttackPosition.position, attackRange, layerMask);
 
         foreach (Collider2D enemy in hitEnemies)
         {

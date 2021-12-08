@@ -87,6 +87,12 @@ public class CollisionSenses : CoreComponent
             Vector2.right * Core.Movement.GetFacingDirection(), Data.WallCheckDistance, Data.WhatIsGround);
     }
 
+    public bool IsReachingEdge()
+    {
+        RaycastHit2D raycast = Physics2D.Raycast(groundCheck.position,Vector2.down, Data.WallCheckDistance, Data.WhatIsGround);
+        return raycast.collider == null;
+    }
+
     public bool IsGrounded()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, Data.GroundedRadius, Data.WhatIsGround);

@@ -18,18 +18,17 @@ public class PlayerEvadeState : PlayerGroundedState
     {
         base.Enter();
         player.startDashCoolDown();
+        player.startDashGravityEffect();
     }
 
     public override void Exit()
     {
-       base.Exit();
-      
+        base.Exit();    
     }
 
     public override void FixedUpdate()
     {
-        Vector3 dashPosition = player.Core.Movement.DetermineEvadePosition(player);
-
+        Vector3 dashPosition = player.Core.Movement.DetermineEvadePosition(player.transform);
         player.RigidBody.MovePosition(dashPosition);
 
         if(Time.time - startTime > 0.3f)
