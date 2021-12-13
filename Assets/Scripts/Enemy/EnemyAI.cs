@@ -6,26 +6,27 @@ using Pathfinding;
 public class EnemyAI : MonoBehaviour
 {
     public LayerMask WhatIsPlayer;
-    public LayerMask WhatIsGround;
     public float LineOfSight;
     [SerializeField]
     private Transform playerCheck;
-    [SerializeField]
 
-    private Core core;
+    private Enemy enemy;
 
     void Awake()
     {
-        core = GetComponentInParent<Core>();
+        enemy = GetComponentInParent<Enemy>();
+        if (enemy == null)
+            Debug.LogError("Enemy AI awake cannot find enemy");
     }
 
     public bool CanSeePlayer()
     {
-        RaycastHit2D raycast = Physics2D.Raycast(playerCheck.position, core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, (WhatIsPlayer | WhatIsGround));
-        if(raycast.collider != null)
-        {
-            return raycast.collider.tag.Equals("Enemy");         
-        }
-        return false;
+        return Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
+        
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(playerCheck.position, playerCheck.position + (Vector3)(enemy.Core.Movement.GetFacingDirection() * Vector2.right * LineOfSight));
     }
 }

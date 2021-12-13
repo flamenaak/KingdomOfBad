@@ -41,6 +41,11 @@ public class EnemyState : State
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        if(canSeePlayer)
+        {
+            Debug.Log("Can see player");
+        }
     }
 
     public override void DoChecks()

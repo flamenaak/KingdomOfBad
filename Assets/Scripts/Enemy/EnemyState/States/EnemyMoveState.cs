@@ -2,17 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMoveState : MonoBehaviour
+public class EnemyMoveState : EnemyState
 {
-    // Start is called before the first frame update
-    void Start()
+    public float duration = 3f;
+    public EnemyMoveState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void DoChecks()
     {
-        
+        base.DoChecks();
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        if (enemy.Core.CollisionSenses.IsGrounded())
+        {
+            var isEdge = enemy.Core.CollisionSenses.IsReachingEdge();
+            var isWall = enemy.Core.CollisionSenses.IsTouchingWall();
+            var canGoForward = !isEdge && !isWall;
+
+            if (canGoForward)
+            {
+                enemy.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.WalkSpeed);
+            }
+            else
+            {
+                if (isWall) {
+                    enemy.Core.Movement.Flip();
+                } else {
+                    enemy.IdleState.FlipAfterIdle = true;
+                    stateMachine.ChangeState(enemy.IdleState);
+                    return;
+                }                
+            }
+            if (Time.time - startTime > duration)
+            {
+                stateMachine.ChangeState(enemy.IdleState);
+                return;
+            }
+        }
+        else
+        {
+
+        }
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
     }
 }

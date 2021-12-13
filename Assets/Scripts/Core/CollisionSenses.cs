@@ -32,7 +32,7 @@ public class CollisionSenses : CoreComponent
 
         private set { ceilingCheck = value; }
     }
-    
+
     // position for checking if there is wall ahead (chest height)
     public Transform WallCheck
     {
@@ -60,7 +60,7 @@ public class CollisionSenses : CoreComponent
 
         private set { ledgeCheck = value; }
     }
-    
+
     [SerializeField]
     private Transform ceilingCheck;
     [SerializeField]
@@ -89,7 +89,10 @@ public class CollisionSenses : CoreComponent
 
     public bool IsReachingEdge()
     {
-        RaycastHit2D raycast = Physics2D.Raycast(groundCheck.position,Vector2.down, Data.WallCheckDistance, Data.WhatIsGround);
+        RaycastHit2D raycast = Physics2D.Raycast(groundCheck.position + (Vector3)(Vector2.right * Core.Movement.GetFacingDirection() * Data.WallCheckDistance),
+            Vector2.down,
+            Data.WallCheckDistance,
+            Data.WhatIsGround);
         return raycast.collider == null;
     }
 

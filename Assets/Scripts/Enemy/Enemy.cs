@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public StateMachine stateMachine { get; private set; }
+    public StateMachine StateMachine { get; private set; }
+
+    public EnemyIdleState IdleState {get ;set;}
+    public EnemyMoveState MoveState {get; set;}
+
+
     [SerializeField]
     private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
     [SerializeField]
@@ -13,17 +18,12 @@ public class Enemy : MonoBehaviour
     private LayerMask layerMask;
     private float currentHealth, knockbackStart;
     public Core Core;
-    public float speed = 10f;
-    public float nextWaypointDistance = 3f;
+    
     public float slashDamage = 1;
     public float attackRange = 0.5f;
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
 
-    public Transform EnemyGFX;
-
-    int currentWaypoint = 0;
-    bool reachedEndPath = false;
 
     public Rigidbody2D RigidBody;
     // Start is called before the first frame update
@@ -31,11 +31,16 @@ public class Enemy : MonoBehaviour
     {
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
+
+        StateMachine = new StateMachine();
+        IdleState = new EnemyIdleState(this, StateMachine, "idle");
+        MoveState = new EnemyMoveState(this, StateMachine, "walk");
     }
 
     void Start()
     {
         currentHealth = maxHealth;
+        StateMachine.Initialize(IdleState);
     }
 
     private void Damage(float amount)
@@ -81,8 +86,14 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        StateMachine.CurrentState.Update();
         Attack();
         CheckKnockback();
+    }
+
+    private void FixedUpdate()
+    {
+        StateMachine.CurrentState.FixedUpdate();
     }
 
     private void Die()

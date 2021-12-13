@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : EnemyState { 
+public class EnemyIdleState : EnemyState {
+    public bool FlipAfterIdle {get; set;}
+
     public EnemyIdleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        duration = 3.0f;
+        duration = 1.5f;
     }
 
     public override void DoChecks()
@@ -22,6 +24,7 @@ public class EnemyIdleState : EnemyState {
     public override void Exit()
     {
         base.Exit();
+        FlipAfterIdle = false;
     }
 
     public override void FixedUpdate()
@@ -32,9 +35,14 @@ public class EnemyIdleState : EnemyState {
         {
             //charge/attack
         }
-        if(Time.time - startTime < duration)
+        else if(Time.time - startTime > duration)
         {
-            //do something/start wandering around
+            if (FlipAfterIdle)
+            {
+                enemy.Core.Movement.Flip();
+            }
+            stateMachine.ChangeState(enemy.MoveState);
+            return;
         }
     }
 
