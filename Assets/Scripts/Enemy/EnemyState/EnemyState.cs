@@ -44,7 +44,6 @@ public class EnemyState : State
 
         if(canSeePlayer)
         {
-            Debug.Log("Can see player");
         }
     }
 

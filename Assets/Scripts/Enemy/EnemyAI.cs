@@ -27,6 +27,7 @@ public class EnemyAI : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        Gizmos.DrawLine(playerCheck.position, playerCheck.position + (Vector3)(enemy.Core.Movement.GetFacingDirection() * Vector2.right * LineOfSight));
+        if(playerCheck && enemy && enemy.Core && enemy.Core.Movement)
+            Gizmos.DrawLine(playerCheck.position, playerCheck.position + (Vector3)(enemy.Core.Movement.GetFacingDirection() * Vector2.right * LineOfSight));
     }
 }

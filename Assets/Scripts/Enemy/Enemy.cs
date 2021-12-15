@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public StateMachine StateMachine { get; private set; }
-
     public EnemyIdleState IdleState {get ;set;}
     public EnemyMoveState MoveState {get; set;}
 
@@ -14,8 +13,6 @@ public class Enemy : MonoBehaviour
     private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
     [SerializeField]
     private bool applyKnockback, knockback;
-    [SerializeField]
-    private LayerMask layerMask;
     private float currentHealth, knockbackStart;
     public Core Core;
     
@@ -59,7 +56,7 @@ public class Enemy : MonoBehaviour
 
     private void Attack()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(Core.Movement.AttackPosition.position, attackRange, layerMask);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(Core.Movement.AttackPosition.position, attackRange, enemyAI.WhatIsPlayer);
 
         foreach (Collider2D enemy in hitEnemies)
         {
