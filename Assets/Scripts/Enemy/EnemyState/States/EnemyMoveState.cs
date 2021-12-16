@@ -56,7 +56,16 @@ public class EnemyMoveState : EnemyState
         }
         else
         {
-
+            if (enemy.enemyAI.PlayerDistance() <= 5f)
+            {
+                stateMachine.ChangeState(enemy.PreSlashState);
+                return;
+            }
+            else if (enemy.enemyAI.PlayerDistance() >= 10f)
+            {
+                stateMachine.ChangeState(enemy.WindUpState);
+                return;
+            }
         }
     }
 

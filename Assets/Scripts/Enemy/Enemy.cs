@@ -7,7 +7,11 @@ public class Enemy : MonoBehaviour
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}
     public EnemyMoveState MoveState {get; set;}
-
+    public SpearmanSlashState SlashState { get; set; }
+    public SpearmanStabState StabState { get; set; }
+    public SpearmanPreSlashState PreSlashState { get; set; }
+    public SpearmanAfterStabState AfterStabState { get; set; }
+    public SpearmanWindUpState WindUpState { get; set; }
 
     [SerializeField]
     private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
@@ -31,7 +35,12 @@ public class Enemy : MonoBehaviour
 
         StateMachine = new StateMachine();
         IdleState = new EnemyIdleState(this, StateMachine, "idle");
-        MoveState = new EnemyMoveState(this, StateMachine, "walk");
+        MoveState = new EnemyMoveState(this, StateMachine, "move");
+        SlashState = new SpearmanSlashState(this, StateMachine, "slash");
+        PreSlashState = new SpearmanPreSlashState(this, StateMachine, "preSlash");
+        StabState = new SpearmanStabState(this, StateMachine, "stab");
+        AfterStabState = new SpearmanAfterStabState(this, StateMachine, "afterStab");
+        WindUpState = new SpearmanWindUpState(this, StateMachine, "windUp");
     }
 
     void Start()
@@ -54,7 +63,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Attack()
+    public void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(Core.Movement.AttackPosition.position, attackRange, enemyAI.WhatIsPlayer);
 
@@ -84,7 +93,6 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.Update();
-        Attack();
         CheckKnockback();
     }
 
