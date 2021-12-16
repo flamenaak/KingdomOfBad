@@ -3,7 +3,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    public PlayerStateMachine StateMachine { get; private set; }
+    public StateMachine StateMachine { get; private set; }
 
     #region PlayerStates
     public PlayerIdleState IdleState { get; private set; }
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region CooldownVariable
-    public float DashCooldown = 0.5f;
+    public float DashCooldown = 2.0f;
     public bool canDashOrEvade = true;    
     public float SlashCooldown = 0.5f;
     public bool canSlash = true;
@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
     public bool CanHang = true;
 
     #endregion
-    [SerializeField] public LayerMask layerMask;
     public Animator Anim { get; private set; }
 
     public Rigidbody2D RigidBody;
@@ -55,6 +54,8 @@ public class Player : MonoBehaviour
     public CircleCollider2D circleCollider2D;
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
+
+    public Core Core {get; set;}
     private CameraMovement camera;
 
     private Vector2 startPosition;
@@ -65,24 +66,29 @@ public class Player : MonoBehaviour
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
 
-    public int hitPoint;
-    public int maxHitPoint;
+    public float hitPoint;
+    public float maxHitPoint;
     public float pushRecoverySpeed = 0.2F;
-
+    [SerializeField]
     public Transform attackPoint;
+    public float slashDamage = 1;
     public float attackRange = 0.5f;
-    public LayerMask enemyLayer;
+
+    [SerializeField]
+    private float knockbackSpeedX, knockbackSpeedY, knockbackDuration;
+    [SerializeField]
+    private bool applyKnockback, knockback;
+    private float  knockbackStart;
 
 
     protected float immuneTime = 1.0F;
     protected float lastImmune;
 
-    protected Vector3 pushDirection;
 
 
     private void Awake()
     {
-        StateMachine = new PlayerStateMachine();
+        StateMachine = new StateMachine();
 
         IdleState = new PlayerIdleState(this, StateMachine, "idle");
         WalkState = new PlayerWalkState(this, StateMachine, "walk");
@@ -104,7 +110,7 @@ public class Player : MonoBehaviour
         RigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
 
-
+        Core = GetComponentInChildren<Core>();
         StateMachine.Initialize(IdleState);
 
         startPosition = transform.position;
@@ -113,7 +119,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
-
+        hitPoint = maxHitPoint;
         if (Controller == null)
             Debug.Log("no controller");
     }
@@ -122,44 +128,56 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.Update();
+        CheckKnockback();
         Vector2 velocity = RigidBody.velocity;
         if ((velocity.x < -0.1f && transform.localScale.x > 0)
         || (velocity.x > 0.1f && transform.localScale.x < 0))
         {
-            Controller.Flip();
+            Core.Movement.Flip();
         }
     }
 
-    public void ReceiveDamage(Damage dmg)
+    private void Knockback()
     {
-        if (Time.time - lastImmune > immuneTime)
+        knockback = true;
+        knockbackStart = Time.time;
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
+    }
+
+    private void CheckKnockback()
+    {
+        if (Time.time >= knockbackStart + knockbackDuration && knockback)
         {
-            lastImmune = Time.time;
-            hitPoint -= dmg.damageAmount;
-            pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce;
-
-            if (hitPoint <= 0)
-            {
-                hitPoint = 0;
-                Death();
-            }
+            knockback = false;
+            RigidBody.velocity = new Vector2(0.0f, RigidBody.velocity.y);
         }
     }
 
-    public void Death()
+    public void ReceiveDamage(float dmg)
     {
-
+    
+        hitPoint -= dmg;
+        if (applyKnockback && hitPoint > 0.0f)
+        {
+            Knockback();
+        }
+        if (hitPoint >= 0.0f)
+        {
+            Die();
+        }
     }
+
+    private void Die()
+    {
+        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
+        Debug.Log("Player is dead");
+    }
+
 
     // physics
     private void FixedUpdate()
     {
         StateMachine.CurrentState.FixedUpdate();
-    }
-
-    public void OnLanding()
-    {
-        //StateMachine.ChangeState(IdleState);
     }
 
     public void OnDrawGizmos()
@@ -173,12 +191,7 @@ public class Player : MonoBehaviour
 
         }
 
-        // if(attackPoint == null)
-        // {
-        //     return;
-        // }
-
-        // Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+         //Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
     public void startSlashCoolDown()
     {
@@ -234,23 +247,18 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        Collider2D hitEnemies = Physics2D.OverlapCircle(attackPoint.position, attackRange, Controller.GetEnemyLayerMask());
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, Core.Movement.Data.WhatIsEnemy);
 
-        /*foreach(Collider2D enemy in hitEnemies)
+        foreach(Collider2D enemy in hitEnemies)
         {
-            //Debug.Log("We hit" + enemy.name);
-        }*/
-        if (hitEnemies.tag.Equals("Enemy"))
-        {
-            Debug.Log("We hit enemy");
+            enemy.SendMessage("Damage", slashDamage);
         }
+
     }
 
     internal void Respawn()
     {
         transform.position = startPosition;
         StateMachine.ChangeState(IdleState);
-        Controller.stabTargets = new System.Collections.Generic.List<Vector2>();
     }
-
 }

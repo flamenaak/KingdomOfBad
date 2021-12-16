@@ -10,7 +10,7 @@ public class PlayerGroundedState : PlayerState
     protected bool stab;
     protected bool windUp;
     protected int xInput;
-    public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerGroundedState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

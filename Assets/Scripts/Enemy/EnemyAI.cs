@@ -5,78 +5,29 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
+    public LayerMask WhatIsPlayer;
+    public float LineOfSight;
+    [SerializeField]
+    private Transform playerCheck;
 
-    public Transform target;
-    public float speed = 10f;
-    public float nextWaypointDistance = 3f;
+    private Enemy enemy;
 
-    public Transform EnemyGFX;
-
-    Path path;
-    int currentWaypoint = 0;
-    bool reachedEndPath = false;
-
-    Seeker seeker;
-    Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
-        InvokeRepeating("UpdatePath", 0f, .5f);
-  
+        enemy = GetComponentInParent<Enemy>();
+        if (enemy == null)
+            Debug.LogError("Enemy AI awake cannot find enemy");
     }
 
-    void UpdatePath()
+    public bool CanSeePlayer()
     {
-        if(seeker.IsDone())
-        seeker.StartPath(rb.position, target.position, OnPathComplete);
+        return Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
+        
     }
 
-    void OnPathComplete(Path p)
+    public void OnDrawGizmos()
     {
-        if (!p.error)
-        {
-            path = p;
-            currentWaypoint = 0;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        if(path == null)
-        {
-            return;
-        }
-        if(currentWaypoint >= path.vectorPath.Count)
-        {
-            reachedEndPath = true;
-            return;
-        }
-        else
-        {
-            reachedEndPath = false;
-        }
-
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
-
-        rb.AddForce(force);
-
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-
-        if(distance < nextWaypointDistance)
-        {
-            currentWaypoint++;
-        }
-
-        if (force.x >= 0.01F)
-        {
-            EnemyGFX.localScale = new Vector3(10f, 10f, 1f);
-        }
-        else if (force.x <= -0.01f)
-        {
-            EnemyGFX.localScale = new Vector3(-10f, 10f, 1f);
-        }
+        if(playerCheck && enemy && enemy.Core && enemy.Core.Movement)
+            Gizmos.DrawLine(playerCheck.position, playerCheck.position + (Vector3)(enemy.Core.Movement.GetFacingDirection() * Vector2.right * LineOfSight));
     }
 }

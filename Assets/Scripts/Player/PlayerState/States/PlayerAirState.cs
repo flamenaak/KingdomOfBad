@@ -7,16 +7,16 @@ public class PlayerAirState : PlayerState
 {
     protected bool ShouldHang {get; set;}
 
-    public PlayerAirState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerAirState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
     public override void DoChecks()
     {
         base.DoChecks();
-        ShouldHang = !player.Controller.IsTouchingLedge() 
-            && player.Controller.IsTouchingWall() 
-            && !player.Controller.m_Grounded;
+        ShouldHang = !player.Core.CollisionSenses.IsTouchingLedge() 
+            && player.Core.CollisionSenses.IsTouchingWall() 
+            && !player.Core.CollisionSenses.IsGrounded();
         if (ShouldHang) {
             player.HangState.detectedPos = player.transform.position;
         }

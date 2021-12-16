@@ -2,32 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState
+public class PlayerState : State
 {
     protected Player player;
-    protected PlayerStateMachine stateMachine;
     protected Input input;
 
-    protected float startTime;
-    private string animBoolName;
 
-    public PlayerState(Player player, PlayerStateMachine stateMachine, string animBoolName)
+    public PlayerState(Player player, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
     {
         this.player = player;
-        this.stateMachine = stateMachine;
-        this.animBoolName = animBoolName;
     }
 
-    public virtual void Enter()
+    public override void Enter()
     {
-        DoChecks();
-        startTime = Time.time;
+        base.Enter();
         player.Anim.SetBool(animBoolName, true);
     }
 
-    public virtual void Exit()
+    public override void Exit()
     {
-        startTime = -1f;
+        base.Exit();
         player.Anim.SetBool(animBoolName, false);
     }
 
@@ -35,21 +29,22 @@ public class PlayerState
     /**
     * stuff
     */
-    public virtual void Update()
+    public override void Update()
     {
+        base.Update();
         if(player.Controller.GetRespawnInput()){
             player.Respawn();
         }
     }
 
     // every fixed update
-    public virtual void FixedUpdate()
+    public override void FixedUpdate()
     {
-        DoChecks();
+        base.FixedUpdate();
     }
 
-    public virtual void DoChecks()
+    public override void DoChecks()
     {
-
+        base.DoChecks();
     }
 }

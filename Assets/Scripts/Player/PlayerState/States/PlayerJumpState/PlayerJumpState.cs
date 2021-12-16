@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerJumpState : PlayerState
 {
     private int acc;
-    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerJumpState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -33,7 +33,7 @@ public class PlayerJumpState : PlayerState
     {
         base.FixedUpdate();
         acc++; 
-        if (player.Controller.m_Grounded)
+        if (player.Core.CollisionSenses.IsGrounded())
         {
             Debug.Log("Grounded");
             if (Mathf.Abs(player.RigidBody.velocity.x) == player.RunSpeed)

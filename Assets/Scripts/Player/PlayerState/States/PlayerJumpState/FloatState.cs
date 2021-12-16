@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloatState : PlayerAirState
 {
-    public FloatState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public FloatState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -17,7 +17,7 @@ public class FloatState : PlayerAirState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (player.Controller.m_Grounded)
+        if (player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.IdleState);
         }

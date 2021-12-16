@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FallState : PlayerAirState
 {
-    public FallState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public FallState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -27,7 +27,7 @@ public class FallState : PlayerAirState
     {
         base.FixedUpdate();
         CheckAirInput();
-        if (player.Controller.m_Grounded)
+        if (player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.LandState);
         }

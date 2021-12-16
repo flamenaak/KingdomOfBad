@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerRunState : PlayerGroundedState
 {
-    public PlayerRunState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerRunState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -31,7 +31,7 @@ public class PlayerRunState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (jump && player.Controller.m_Grounded)
+        else if (jump && player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.RiseState);
         }

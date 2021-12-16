@@ -7,7 +7,7 @@ public class PlayerSlashState : PlayerGroundedState
     public int damagePoint = 1;
     public float pushForce = 2.0F;
     // Start is called before the first frame update
-    public PlayerSlashState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerSlashState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -31,8 +31,9 @@ public class PlayerSlashState : PlayerGroundedState
 
     public override void FixedUpdate()
     {
-        Vector3 slashPosition = player.Controller.DetermineSlashPosition(player);
+        Vector3 slashPosition = player.Core.Movement.DetermineSlashPosition(player.transform);
         player.RigidBody.MovePosition(slashPosition);
+        player.Attack();
         if (Time.time - startTime > 0.36f)
         {
             stateMachine.ChangeState(player.IdleState);

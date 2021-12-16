@@ -8,7 +8,7 @@ public class PlayerHangState : PlayerState
     public Vector2 detectedPos;
     public Vector2 ledgePos;
 
-    public PlayerHangState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerHangState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -30,7 +30,7 @@ public class PlayerHangState : PlayerState
             player.RigidBody.gravityScale = 0f;
             try
             {
-                ledgePos = player.Controller.DetermineLedgePosition();
+                ledgePos = player.Core.CollisionSenses.DetermineLedgePosition();
             }
             catch (Exception e)
             {
@@ -50,13 +50,13 @@ public class PlayerHangState : PlayerState
     {
         base.FixedUpdate();
         player.RigidBody.velocity = Vector2.zero;
-        player.transform.position = ledgePos - new Vector2(player.xLedgeOffset * player.Controller.GetFacingDirection(), player.yLedgeOffset);
+        player.transform.position = ledgePos - new Vector2(player.xLedgeOffset * player.Core.Movement.GetFacingDirection(), player.yLedgeOffset);
     }
 
     public override void Update()
     {
         base.Update();
-        if (player.Controller.ReadInputY() < 0 || (player.Controller.IsTouchingLedge() && player.Controller.IsTouchingWall()))
+        if (player.Controller.ReadInputY() < 0 || (player.Core.CollisionSenses.IsTouchingLedge() && player.Core.CollisionSenses.IsTouchingWall()))
         {
             stateMachine.ChangeState(player.FallState);
         }

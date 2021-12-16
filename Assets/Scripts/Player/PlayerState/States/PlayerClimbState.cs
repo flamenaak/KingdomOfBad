@@ -6,7 +6,7 @@ public class PlayerClimbState : PlayerGroundedState
 {
     public Vector2 ledgePos;
       
-    public PlayerClimbState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerClimbState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -19,7 +19,7 @@ public class PlayerClimbState : PlayerGroundedState
     {
         base.Enter();
         player.RigidBody.gravityScale = 0f;
-        ledgePos = player.Controller.DetermineLedgePosition();
+        ledgePos = player.Core.CollisionSenses.DetermineLedgePosition();
 
     }
 
@@ -32,7 +32,7 @@ public class PlayerClimbState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        Vector2 ClimbingPosition = new Vector2(ledgePos.x + player.xClimbOffset * player.Controller.GetFacingDirection(), ledgePos.y + player.yClimbOffset);
+        Vector2 ClimbingPosition = new Vector2(ledgePos.x + player.xClimbOffset * player.Core.Movement.GetFacingDirection(), ledgePos.y + player.yClimbOffset);
         player.RigidBody.MovePosition(ClimbingPosition);
         if (Time.time - startTime > 0.36f)
         {

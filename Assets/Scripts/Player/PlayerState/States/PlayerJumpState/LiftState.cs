@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LiftState : PlayerAirState
 {
-    public LiftState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public LiftState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

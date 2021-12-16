@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedState
 {
-    public PlayerIdleState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerIdleState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -27,7 +27,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (jump && player.Controller.m_Grounded)
+        if (jump && player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.LiftState);
         } 
@@ -44,7 +44,7 @@ public class PlayerIdleState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.WalkState);
         } 
-        else if (!player.Controller.m_Grounded)
+        else if (!player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.FloatState);
         }
