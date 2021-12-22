@@ -8,11 +8,11 @@ public class EnemyAI : MonoBehaviour
     public LayerMask WhatIsPlayer;
     public float LineOfSight;
     [SerializeField]
-    private Transform playerCheck;
+    protected Transform playerCheck;
 
-    private Enemy enemy;
+    protected Enemy enemy;
 
-    void Awake()
+    public virtual void Awake()
     {
         enemy = GetComponentInParent<Enemy>();
         if (enemy == null)
@@ -21,8 +21,42 @@ public class EnemyAI : MonoBehaviour
 
     public bool CanSeePlayer()
     {
-        return Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
-        
+        return Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);        
+    }
+
+    public virtual Transform DetectHostile()
+    {
+        RaycastHit2D hostileHit = Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
+        if (hostileHit)
+        {
+            return hostileHit.collider.transform;
+        }
+        return null;
+    }
+
+    public virtual bool ShouldChase(Transform entity)
+    {
+        return true;
+    }
+
+    public virtual bool ShouldDodge(Transform entity)
+    {
+        return false;
+    }
+
+    public virtual bool ShouldMelleeAttack(Transform entity)
+    {
+        return true;
+    }
+
+    public virtual bool ShouldRangeAttack(Transform entity)
+    {
+        return false;
+    }
+
+    public virtual Vector2 DetermineDodgePosition(Vector2 target)
+    {
+        return Vector2.zero;
     }
 
     public void OnDrawGizmos()

@@ -19,4 +19,6 @@ public class DataMovement : MonoBehaviour
     public float StabForce = 1f;
 
     public float WalkSpeed = 10f;
+
+    public float RunSpeed = 20f;
 }

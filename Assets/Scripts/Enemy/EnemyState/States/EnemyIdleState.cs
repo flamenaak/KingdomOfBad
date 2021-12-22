@@ -31,9 +31,10 @@ public class EnemyIdleState : EnemyState {
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        if (canSeePlayer)
+        if (detectedHostile)
         {
-            //charge/attack
+            stateMachine.ChangeState(enemy.HostileSpottedState);
+            return;
         }
         else if(Time.time - startTime > duration)
         {

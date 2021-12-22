@@ -7,13 +7,17 @@ public class Enemy : MonoBehaviour
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}
     public EnemyMoveState MoveState {get; set;}
-
+    public EnemyMeleeAttackState MeleeAttackState {get; set;}
+    public EnemyChargeState ChargeState {get; set;}
+    public EnemyHostileSpottedState HostileSpottedState {get; set;}
+    public EnemyRangedAttackState RangedAttackState {get; set;}
+    public EnemyDodgeState DodgeState {get; set;}
 
     [SerializeField]
-    private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
+    protected float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
     [SerializeField]
-    private bool applyKnockback, knockback;
-    private float currentHealth, knockbackStart;
+    protected bool applyKnockback, knockback;
+    protected float currentHealth, knockbackStart;
     public Core Core;
     
     public float slashDamage = 1;
@@ -24,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     public Rigidbody2D RigidBody;
     // Start is called before the first frame update
-    private void Awake()
+    protected void Awake()
     {
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
@@ -32,6 +36,11 @@ public class Enemy : MonoBehaviour
         StateMachine = new StateMachine();
         IdleState = new EnemyIdleState(this, StateMachine, "idle");
         MoveState = new EnemyMoveState(this, StateMachine, "walk");
+        MeleeAttackState = new EnemyMeleeAttackState(this, StateMachine, "melee");
+        ChargeState = new EnemyChargeState(this, StateMachine, "charge");
+        HostileSpottedState = new EnemyHostileSpottedState(this, StateMachine, "hostileSpotted");
+        RangedAttackState = new EnemyRangedAttackState(this, StateMachine, "ranged");
+        DodgeState = new EnemyDodgeState(this, StateMachine, "dodge");
     }
 
     void Start()
@@ -84,8 +93,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.Update();
-        Attack();
-        CheckKnockback();
+        // Attack();
+        // CheckKnockback();
     }
 
     private void FixedUpdate()

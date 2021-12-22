@@ -27,6 +27,11 @@ public class EnemyMoveState : EnemyState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (detectedHostile)
+        {
+            stateMachine.ChangeState(enemy.HostileSpottedState);
+            return;
+        }
 
         if (enemy.Core.CollisionSenses.IsGrounded())
         {

@@ -11,6 +11,8 @@ public class EnemyState : State
     protected bool isTouchingLedge;
     protected bool isReachingEdge;
 
+    protected Transform detectedHostile;
+
     public EnemyState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(stateMachine, animBoolName)
     {
         this.enemy = enemy;
@@ -50,7 +52,8 @@ public class EnemyState : State
     public override void DoChecks()
     {
         base.DoChecks();
-        canSeePlayer = enemy.enemyAI.CanSeePlayer();
+        detectedHostile = enemy.enemyAI.DetectHostile();
+        
         isTouchingWall = enemy.Core.CollisionSenses.IsTouchingWall();
         isTouchingLedge = enemy.Core.CollisionSenses.IsTouchingLedge();
         isReachingEdge = enemy.Core.CollisionSenses.IsReachingEdge();
