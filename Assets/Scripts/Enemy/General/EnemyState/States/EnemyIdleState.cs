@@ -31,20 +31,7 @@ public class EnemyIdleState : EnemyState {
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        if (canSeePlayer)
-        {
-            if (enemy.enemyAI.PlayerDistance() <= 5f)
-            {
-                stateMachine.ChangeState(enemy.PreSlashState);
-                return;
-            }
-            else if(enemy.enemyAI.PlayerDistance() >= 10f)
-            {
-                stateMachine.ChangeState(enemy.WindUpState);
-                return;
-            }
-        }
-        else if(Time.time - startTime > duration)
+        if(Time.time - startTime > duration)
         {
             if (FlipAfterIdle)
             {

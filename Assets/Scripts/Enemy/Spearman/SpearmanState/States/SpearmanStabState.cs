@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpearmanWindUpState : EnemyState
+public class SpearmanStabState : EnemyState
 {
-    public SpearmanWindUpState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    Spearman spearman;
+    public SpearmanStabState(Spearman enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        duration = 2f;
+        duration = 0.2f;
+        spearman = enemy;
     }
 
     public override void DoChecks()
@@ -28,12 +30,15 @@ public class SpearmanWindUpState : EnemyState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        Vector3 stabPosition = enemy.Core.Movement.DetermineStabPosition(enemy.transform);
+        enemy.Attack();
+        enemy.RigidBody.MovePosition(stabPosition);
         if (Time.time - startTime > duration)
         {
-            stateMachine.ChangeState(enemy.StabState);
-            return;
+           stateMachine.ChangeState(spearman.AfterStabState);
+           return;
         }
-
+        
     }
 
     public override void Update()

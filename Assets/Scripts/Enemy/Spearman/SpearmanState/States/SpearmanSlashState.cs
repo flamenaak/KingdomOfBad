@@ -28,7 +28,7 @@ public class SpearmanSlashState : EnemyState
     {
         base.FixedUpdate();
         enemy.Attack();
-        if (enemy.enemyAI.PlayerDistance() == 0 && !canSeePlayer)
+        if (!canSeePlayer || enemy.enemyAI.PlayerDistance() > 5)
         {
             stateMachine.ChangeState(enemy.IdleState);
             return;

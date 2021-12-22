@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     private Enemy enemy;
 
-    void Awake()
+    public virtual void Awake()
     {
         enemy = GetComponentInParent<Enemy>();
         if (enemy == null)
