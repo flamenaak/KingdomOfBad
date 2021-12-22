@@ -21,8 +21,13 @@ public class EnemyAI : MonoBehaviour
 
     public bool CanSeePlayer()
     {
-        return Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
-        
+        return Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);       
+    }
+
+    public Vector2 PlayersPosition()
+    {
+        var position = Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
+        return position.point;
     }
 
     public void OnDrawGizmos()

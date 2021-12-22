@@ -31,7 +31,23 @@ public class EnemyIdleState : EnemyState {
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        if(Time.time - startTime > duration)
+        if(canSeePlayer && !enemy.aware) {
+            enemy.aware = true;
+            enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Spotted", 0, 0);
+            stateMachine.ChangeState(enemy.MoveState);
+            return;
+        }
+        else if (!canSeePlayer && enemy.aware)
+        {
+            searchDuration = 3f;
+            enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Searching", 0, 0);
+            if (Time.time - startTime > searchDuration)
+            {
+                enemy.aware = false;
+                return;
+            }
+        }
+        else if (Time.time - startTime > duration)
         {
             if (FlipAfterIdle)
             {

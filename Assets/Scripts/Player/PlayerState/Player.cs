@@ -253,7 +253,6 @@ public class Player : MonoBehaviour
         {
             enemy.SendMessage("Damage", slashDamage);
         }
-
     }
 
     internal void Respawn()

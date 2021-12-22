@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyMoveState : EnemyState
 {
-    public float duration = 3f;
     public EnemyMoveState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+        duration = 3f;
     }
 
     public override void DoChecks()
@@ -47,7 +47,23 @@ public class EnemyMoveState : EnemyState
                     return;
                 }                
             }
-            if (Time.time - startTime > duration)
+            if (canSeePlayer && !enemy.aware)
+            {
+                enemy.aware = true;
+                enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Spotted", 0, 0);
+            }
+            else if (!canSeePlayer && enemy.aware)
+            {
+                searchDuration = 3f;
+                enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Searching", 0, 0);
+                if (Time.time - startTime > searchDuration)
+                {
+                    enemy.aware = false;
+                    return;
+                }
+
+            }
+            else if (Time.time - startTime > duration)
             {
                 stateMachine.ChangeState(enemy.IdleState);
                 return;

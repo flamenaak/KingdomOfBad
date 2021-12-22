@@ -33,17 +33,21 @@ public class SpearmanMoveState : EnemyMoveState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (canSeePlayer)
+        if (enemy.aware && canSeePlayer)
         {
             if (spearman.spearmanAI.PlayerDistance() <= 5f)
             {
                 stateMachine.ChangeState(spearman.PreSlashState);
                 return;
             }
-            else if (spearman.spearmanAI.PlayerDistance() >= 5f)
+            else if (spearman.spearmanAI.PlayerDistance() >= 5f && spearman.spearmanAI.PlayerDistance() <= 10f)
             {
                 stateMachine.ChangeState(spearman.WindUpState);
                 return;
+            }
+            else
+            {
+                enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.enemyAI.PlayersPosition(), 0.05f);
             }
         }
     }

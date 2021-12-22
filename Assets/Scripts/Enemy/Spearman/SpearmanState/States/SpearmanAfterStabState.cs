@@ -30,12 +30,16 @@ public class SpearmanAfterStabState : EnemyState
         base.FixedUpdate();
         if (Time.time - startTime > duration)
         {
-            stateMachine.ChangeState(enemy.IdleState);
+            if(!canSeePlayer)
+            {
+                enemy.Core.Movement.Flip();
+                stateMachine.ChangeState(enemy.IdleState);
+            }
+            else
+            {
+                stateMachine.ChangeState(enemy.IdleState);
+            }
         }
-    }
-
-    public override void Update()
-    {
-        base.Update();
+        
     }
 }

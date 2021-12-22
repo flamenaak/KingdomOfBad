@@ -8,12 +8,14 @@ public class Enemy : MonoBehaviour
     public EnemyIdleState IdleState {get ;set;}
     public EnemyMoveState MoveState {get; set;}
     public EnemyDeathState DeathState { get; set; }
+    public EnemyDamagedState DamagedState { get; set; }
 
     [SerializeField]
-    private float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
+    private float currentHealth, maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
     [SerializeField]
     private bool applyKnockback, knockback;
-    private float currentHealth, knockbackStart;
+    private float knockbackStart;
+    public bool aware;
     public Core Core;
     
     public float slashDamage = 1;
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
     public GameObject BloodSplash;
+    public GameObject Awarness;
 
     public Rigidbody2D RigidBody;
     // Start is called before the first frame update
@@ -33,22 +36,26 @@ public class Enemy : MonoBehaviour
         IdleState = new EnemyIdleState(this, StateMachine, "idle");
         MoveState = new EnemyMoveState(this, StateMachine, "move");
         DeathState = new EnemyDeathState(this, StateMachine, "death");
+        DamagedState = new EnemyDamagedState(this, StateMachine, "damaged");
     }
 
     void Start()
     {
         currentHealth = maxHealth;
+        aware = false;
         StateMachine.Initialize(IdleState);
     }
 
     private void Damage(float amount)
     {
         currentHealth -= amount;
-        if (applyKnockback && currentHealth > 0.0f)
+        Debug.Log(amount);
+        if (currentHealth > 0.0f)
         {
             Knockback();
+            StateMachine.ChangeState(this.DamagedState);
         }
-        if (currentHealth >= 0.0f)
+        if (currentHealth <= 0.0f)
         {
             Die();
         }

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpearmanIdleState : EnemyIdleState
+public class EnemyDamagedState : EnemyState
 {
-    Spearman spearman;
-    public SpearmanIdleState(Spearman enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public EnemyDamagedState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        spearman = enemy;
+        duration = 0.35f;
     }
 
     public override void DoChecks()
@@ -33,18 +32,10 @@ public class SpearmanIdleState : EnemyIdleState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (enemy.aware && canSeePlayer)
+        if (Time.time - startTime > duration)
         {
-            if (spearman.spearmanAI.PlayerDistance() <= 5f)
-            {
-                stateMachine.ChangeState(spearman.PreSlashState);
-                return;
-            }
-            else if (spearman.spearmanAI.PlayerDistance() >= 5f && spearman.spearmanAI.PlayerDistance() <= 10f)
-            {
-                stateMachine.ChangeState(spearman.WindUpState);
-                return;
-            }
+            stateMachine.ChangeState(enemy.IdleState);
+            return;
         }
     }
 
@@ -62,5 +53,4 @@ public class SpearmanIdleState : EnemyIdleState
     {
         base.Update();
     }
-
 }
