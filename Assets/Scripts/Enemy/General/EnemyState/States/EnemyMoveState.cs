@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyMoveState : EnemyState
 {
-    public float duration = 3f;
     public EnemyMoveState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+        duration = 3f;
     }
 
     public override void DoChecks()
@@ -29,6 +29,7 @@ public class EnemyMoveState : EnemyState
         base.FixedUpdate();
         if (detectedHostile)
         {
+            enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Spotted", 0, 0);
             stateMachine.ChangeState(enemy.HostileSpottedState);
             return;
         }
@@ -58,10 +59,6 @@ public class EnemyMoveState : EnemyState
                 stateMachine.ChangeState(enemy.IdleState);
                 return;
             }
-        }
-        else
-        {
-
         }
     }
 

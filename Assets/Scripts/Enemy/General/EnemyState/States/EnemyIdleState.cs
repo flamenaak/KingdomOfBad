@@ -33,10 +33,11 @@ public class EnemyIdleState : EnemyState {
         enemy.RigidBody.velocity = Vector2.zero;
         if (detectedHostile)
         {
+            enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Spotted", 0, 0);
             stateMachine.ChangeState(enemy.HostileSpottedState);
             return;
         }
-        else if(Time.time - startTime > duration)
+        else if (Time.time - startTime > duration)
         {
             if (FlipAfterIdle)
             {

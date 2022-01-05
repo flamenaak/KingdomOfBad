@@ -69,4 +69,10 @@ public class EnemyAI : MonoBehaviour
         if(playerCheck && enemy && enemy.Core && enemy.Core.Movement)
             Gizmos.DrawLine(playerCheck.position, playerCheck.position + (Vector3)(enemy.Core.Movement.GetFacingDirection() * Vector2.right * LineOfSight));
     }
+
+    public float PlayerDistance()
+    {
+        var distance = Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
+        return distance.distance;
+    }
 }

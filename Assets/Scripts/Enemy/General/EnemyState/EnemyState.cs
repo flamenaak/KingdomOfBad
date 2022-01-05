@@ -6,6 +6,7 @@ public class EnemyState : State
 {
     protected Enemy enemy;
     protected float duration;
+    protected float searchDuration;
     protected bool canSeePlayer;
     protected bool isTouchingWall;
     protected bool isTouchingLedge;
