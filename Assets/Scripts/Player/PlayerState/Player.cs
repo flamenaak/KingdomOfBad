@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class Player : MonoBehaviour
+public class Player : Fighter
 {
     public StateMachine StateMachine { get; private set; }
 
@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public PlayerWindUpState WindUpState { get; private set; }
     public PlayerHangState HangState { get; private set; }
     public PlayerClimbState ClimbState { get; private set; }
+    public PlayerDamagedState DamagedState { get; private set; }
+    public PlayerDeathState DeathState { get; private set; }
     #endregion
 
     #region SpeedForceVariables
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
 
-    public Core Core {get; set;}
+    public Core Core { get; set; }
     private CameraMovement camera;
 
     private Vector2 startPosition;
@@ -66,20 +68,9 @@ public class Player : MonoBehaviour
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
 
-    public float hitPoint;
-    public float maxHitPoint;
     public float pushRecoverySpeed = 0.2F;
-    [SerializeField]
-    public Transform attackPoint;
     public float slashDamage = 1;
     public float attackRange = 0.5f;
-
-    [SerializeField]
-    private float knockbackSpeedX, knockbackSpeedY, knockbackDuration;
-    [SerializeField]
-    private bool applyKnockback, knockback;
-    private float  knockbackStart;
-
 
     protected float immuneTime = 1.0F;
     protected float lastImmune;
@@ -105,6 +96,8 @@ public class Player : MonoBehaviour
         StabState = new PlayerStabState(this, StateMachine, "stab");
         WindUpState = new PlayerWindUpState(this, StateMachine, "windUp");
         ClimbState = new PlayerClimbState(this, StateMachine, "climb");
+        DeathState = new PlayerDeathState(this, StateMachine, "death");
+        DamagedState = new PlayerDamagedState(this, StateMachine, "damaged");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
@@ -119,7 +112,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
-        hitPoint = maxHitPoint;
+        Core.Combat.Data.currentHealth = Core.Combat.Data.maxHealth;
         if (Controller == null)
             Debug.Log("no controller");
     }
@@ -128,51 +121,23 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.Update();
-        CheckKnockback();
+        Core.Combat.CheckKnockback();
         Vector2 velocity = RigidBody.velocity;
         if ((velocity.x < -0.1f && transform.localScale.x > 0)
         || (velocity.x > 0.1f && transform.localScale.x < 0))
         {
             Core.Movement.Flip();
         }
-    }
-
-    private void Knockback()
-    {
-        knockback = true;
-        knockbackStart = Time.time;
-        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
-    }
-
-    private void CheckKnockback()
-    {
-        if (Time.time >= knockbackStart + knockbackDuration && knockback)
+        if (Core.Combat.damaged)
         {
-            knockback = false;
-            RigidBody.velocity = new Vector2(0.0f, RigidBody.velocity.y);
+            StateMachine.ChangeState(DamagedState);
         }
-    }
-
-    public void ReceiveDamage(float dmg)
-    {
-    
-        hitPoint -= dmg;
-        if (applyKnockback && hitPoint > 0.0f)
+        else if (Core.Combat.Data.currentHealth <= 0)
         {
-            Knockback();
+            StateMachine.ChangeState(DeathState);
         }
-        if (hitPoint >= 0.0f)
-        {
-            Die();
-        }
-    }
 
-    private void Die()
-    {
-        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
-        Debug.Log("Player is dead");
     }
-
 
     // physics
     private void FixedUpdate()
@@ -245,20 +210,14 @@ public class Player : MonoBehaviour
         canDashOrEvade = true;
     }
 
-    public void Attack()
-    {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, Core.Movement.Data.WhatIsEnemy);
-
-        foreach(Collider2D enemy in hitEnemies)
-        {
-            enemy.SendMessage("Damage", slashDamage);
-        }
-
-    }
-
     internal void Respawn()
     {
         transform.position = startPosition;
         StateMachine.ChangeState(IdleState);
+    }
+
+    private void Damage(float dmg)
+    {
+        Core.Combat.Damage(dmg);
     }
 }

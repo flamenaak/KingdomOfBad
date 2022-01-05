@@ -6,6 +6,7 @@ public class Core : MonoBehaviour
 {
     private CollisionSenses collisionSenses;
     private Movement movement;
+    private Combat combat;
 
     public CollisionSenses CollisionSenses {
         get {
@@ -16,6 +17,19 @@ public class Core : MonoBehaviour
         }
 
         private set { collisionSenses = value; }
+    }
+
+    public Combat Combat
+    {
+        get
+        {
+            if (combat)
+                return combat;
+            Debug.LogError("missing combat on " + transform.parent.name);
+            return null;
+        }
+
+        private set { combat = value; }
     }
 
     public Movement Movement {
@@ -33,6 +47,7 @@ public class Core : MonoBehaviour
     {
         collisionSenses = GetComponentInChildren<CollisionSenses>();
         movement = GetComponentInChildren<Movement>();
+        combat = GetComponentInChildren<Combat>();
     }
 
     // Start is called before the first frame update

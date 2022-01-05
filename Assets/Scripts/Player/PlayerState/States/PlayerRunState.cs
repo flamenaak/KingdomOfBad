@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerRunState : PlayerGroundedState
 {
+    ParticleSystem Dust;
     public PlayerRunState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -16,17 +17,19 @@ public class PlayerRunState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        Dust = GameObject.Find("Dust").GetComponent<ParticleSystem>();
+        Dust.Play();
     }
 
     public override void Exit()
     {
+        Dust.Stop();
         base.Exit();
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-
         if (xInput == 0)
         {
             stateMachine.ChangeState(player.IdleState);
