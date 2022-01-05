@@ -27,6 +27,8 @@ public class EnemyHostileSpottedState : EnemyState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (!detectedHostile)
+            stateMachine.ChangeState(enemy.SearchState);
 
         if (enemy.enemyAI.ShouldDodge(detectedHostile))
         {
@@ -42,7 +44,7 @@ public class EnemyHostileSpottedState : EnemyState
             return;
         } else if (enemy.enemyAI.ShouldChase(detectedHostile))
         {
-            stateMachine.ChangeState(enemy.ChargeState);
+            stateMachine.ChangeState(enemy.ChaseState);
             return;
         }
 

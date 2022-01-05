@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -41,7 +40,7 @@ public class EnemyAI : MonoBehaviour
 
     public virtual bool ShouldChase(Transform entity)
     {
-        return true;
+        return !!entity;
     }
 
     public virtual bool ShouldDodge(Transform entity)
@@ -51,7 +50,10 @@ public class EnemyAI : MonoBehaviour
 
     public virtual bool ShouldMelleeAttack(Transform entity)
     {
-        return true;
+        if (entity != null)
+            return Distance(entity) <= 1;
+
+        return false;
     }
 
     public virtual bool ShouldRangeAttack(Transform entity)
@@ -70,9 +72,10 @@ public class EnemyAI : MonoBehaviour
             Gizmos.DrawLine(playerCheck.position, playerCheck.position + (Vector3)(enemy.Core.Movement.GetFacingDirection() * Vector2.right * LineOfSight));
     }
 
-    public float PlayerDistance()
+    public float Distance(Transform entity)
     {
-        var distance = Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
-        return distance.distance;
+        if (!entity)
+            return -1;
+        return Mathf.Abs(enemy.transform.position.x - entity.position.x);
     }
 }

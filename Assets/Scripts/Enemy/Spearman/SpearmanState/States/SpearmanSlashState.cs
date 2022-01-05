@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpearmanSlashState : EnemyState
+public class SpearmanSlashState : EnemyHostileSpottedState
 {
-    public SpearmanSlashState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    Spearman spearman;
+    public SpearmanSlashState(Spearman enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+        spearman = enemy;
     }
 
     public override void DoChecks()
@@ -26,11 +28,15 @@ public class SpearmanSlashState : EnemyState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
-        enemy.Core.Combat.Attack();
-        if (!canSeePlayer || enemy.enemyAI.PlayerDistance() > 5)
+        DoChecks();
+        if (detectedHostile && spearman.spearmanAI.ShouldSlash(detectedHostile))
         {
-            stateMachine.ChangeState(enemy.IdleState);
+            enemy.Core.Combat.Attack();
+            return;
+        }
+        else
+        {
+            base.FixedUpdate();
             return;
         }
     }

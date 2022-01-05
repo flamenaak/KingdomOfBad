@@ -7,7 +7,6 @@ public class EnemyState : State
     protected Enemy enemy;
     protected float duration;
     protected float searchDuration;
-    protected bool canSeePlayer;
     protected bool isTouchingWall;
     protected bool isTouchingLedge;
     protected bool isReachingEdge;
@@ -44,10 +43,7 @@ public class EnemyState : State
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        if(canSeePlayer)
-        {
-        }
+        DoChecks();
     }
 
     public override void DoChecks()

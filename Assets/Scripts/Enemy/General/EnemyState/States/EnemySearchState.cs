@@ -20,6 +20,7 @@ public class EnemySearchState : EnemyHostileSpottedState
         base.Enter();
         flipCountCurrent = 0;
         lastFlipTime = startTime;
+        enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Searching", 0, 0);
     }
 
     public override void Exit()

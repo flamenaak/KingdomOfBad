@@ -9,6 +9,13 @@ public class Enemy : Fighter
     public EnemyMoveState MoveState {get; set;}
     public EnemyDeathState DeathState { get; set; }
     public EnemyDamagedState DamagedState { get; set; }
+    public EnemyMeleeAttackState MeleeAttackState { get; set; }
+    public EnemyChargeState ChaseState { get; set; }
+    public EnemyHostileSpottedState HostileSpottedState { get; set; }
+    public EnemyRangedAttackState RangedAttackState { get; set; }
+    public EnemyDodgeState DodgeState { get; set; }
+    public EnemySearchState SearchState { get; set; }
+
 
     public bool aware;
     public Core Core;
@@ -33,6 +40,13 @@ public class Enemy : Fighter
         MoveState = new EnemyMoveState(this, StateMachine, "move");
         DeathState = new EnemyDeathState(this, StateMachine, "death");
         DamagedState = new EnemyDamagedState(this, StateMachine, "damaged");
+
+        MeleeAttackState = new EnemyMeleeAttackState(this, StateMachine, "melee");
+        ChaseState = new EnemyChargeState(this, StateMachine, "charge");
+        HostileSpottedState = new EnemyHostileSpottedState(this, StateMachine, "hostileSpotted");
+        RangedAttackState = new EnemyRangedAttackState(this, StateMachine, "ranged");
+        DodgeState = new EnemyDodgeState(this, StateMachine, "dodge");
+        SearchState = new EnemySearchState(this, StateMachine, "idle");
     }
 
     void Start()

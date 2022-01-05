@@ -21,7 +21,7 @@ public class Spearman : Enemy
         StabState = new SpearmanStabState(this, StateMachine, "stab");
         AfterStabState = new SpearmanAfterStabState(this, StateMachine, "afterStab");
         WindUpState = new SpearmanWindUpState(this, StateMachine, "windUp");
-        MoveState = new SpearmanMoveState(this, StateMachine, "move");
-        IdleState = new SpearmanIdleState(this, StateMachine, "idle");
+        ChaseState = new EnemyChargeState(this, StateMachine, "move");
+        MeleeAttackState = new SpearmanMeleeAttackState(this, StateMachine, "melee");
     }
 }
