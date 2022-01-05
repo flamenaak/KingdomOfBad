@@ -4,24 +4,6 @@ using UnityEngine;
 
 public class Movement : CoreComponent
 {
-    #region Various collision check spots
-    public Transform AttackPosition {
-        get {
-            if (attackPosition)
-                return attackPosition;
-
-            Debug.LogError("Missing attack postion on " + Core.transform.parent.name);
-            return null;
-        }
-
-        private set { attackPosition = value; }
-    }
-
-    [SerializeField]
-    private Transform attackPosition;
-
-    #endregion
-
     public bool IsFacingRight = true;
 
     public DataMovement Data;
@@ -77,7 +59,7 @@ public class Movement : CoreComponent
 
     public Vector2 DetermineSlashPosition(Transform entityTransform)
     {
-        Collider2D hitEnemies = Physics2D.OverlapCircle(AttackPosition.position, Data.AttackRange, Data.WhatIsEnemy);
+        //Collider2D hitEnemies = Physics2D.OverlapCircle(AttackPosition.position, Data.AttackRange, Data.WhatIsEnemy);
         Vector3 slashPosition = new Vector2(entityTransform.position.x, entityTransform.position.y)
         + (new Vector2(Data.SlashForce, 0) * GetFacingDirection());
 

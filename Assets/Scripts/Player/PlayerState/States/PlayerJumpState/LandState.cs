@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class LandState : PlayerState
 {
+    ParticleSystem LandDust;
     public LandState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
-        
+        base.Enter();
+        LandDust = GameObject.Find("LandDust").GetComponent<ParticleSystem>();
+        LandDust.Play();
+    }
+
+    public override void Exit()
+    {
+        LandDust.Stop();
+        base.Exit();
     }
 
     public override void FixedUpdate()

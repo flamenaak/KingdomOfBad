@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDamagedState : EnemyState
+public class PlayerDeathState : PlayerGroundedState
 {
-    public EnemyDamagedState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    public PlayerDeathState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        duration = 0.35f;
     }
 
     public override void DoChecks()
@@ -26,18 +25,13 @@ public class EnemyDamagedState : EnemyState
 
     public override void Exit()
     {
-        enemy.Core.Combat.damaged = false;
         base.Exit();
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (Time.time - startTime > duration)
-        {
-            stateMachine.ChangeState(enemy.IdleState);
-            return;
-        }
+        player.RigidBody.velocity = Vector2.zero;
     }
 
     public override int GetHashCode()

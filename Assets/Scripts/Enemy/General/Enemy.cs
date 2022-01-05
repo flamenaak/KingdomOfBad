@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Fighter
 {
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}
@@ -10,11 +10,6 @@ public class Enemy : MonoBehaviour
     public EnemyDeathState DeathState { get; set; }
     public EnemyDamagedState DamagedState { get; set; }
 
-    [SerializeField]
-    private float currentHealth, maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
-    [SerializeField]
-    private bool applyKnockback, knockback;
-    private float knockbackStart;
     public bool aware;
     public Core Core;
     
@@ -22,7 +17,6 @@ public class Enemy : MonoBehaviour
     public float attackRange = 0.5f;
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
-    public GameObject BloodSplash;
     public GameObject Awarness;
 
     public Rigidbody2D RigidBody;
@@ -31,6 +25,8 @@ public class Enemy : MonoBehaviour
     {
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
+
+        Core = GetComponentInChildren<Core>();
 
         StateMachine = new StateMachine();
         IdleState = new EnemyIdleState(this, StateMachine, "idle");
@@ -41,57 +37,22 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+        Core.Combat.Data.currentHealth = Core.Combat.Data.maxHealth;
         aware = false;
         StateMachine.Initialize(IdleState);
-    }
-
-    private void Damage(float amount)
-    {
-        currentHealth -= amount;
-        Debug.Log(amount);
-        if (currentHealth > 0.0f)
-        {
-            Knockback();
-            StateMachine.ChangeState(this.DamagedState);
-        }
-        if (currentHealth <= 0.0f)
-        {
-            Die();
-        }
-    }
-
-    public void Attack()
-    {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(Core.Movement.AttackPosition.position, attackRange, enemyAI.WhatIsPlayer);
-
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            enemy.SendMessage("ReceiveDamage", slashDamage);
-            Debug.Log("Hitting player");
-        }
-    }
-
-    private void Knockback()
-    {
-        knockback = true;
-        knockbackStart = Time.time;
-        RigidBody.velocity = new Vector2(knockbackSpeedX * Core.Movement.GetFacingDirection(), knockbackSpeedY);
-    }
-
-    private void CheckKnockback()
-    {
-        if (Time.time >= knockbackStart + knockbackDuration && knockback)
-        {
-            knockback = false;
-            RigidBody.velocity = new Vector2(0.0f, RigidBody.velocity.y);
-        }
     }
 
     private void Update()
     {
         StateMachine.CurrentState.Update();
-        CheckKnockback();
+        if(Core.Combat.damaged)
+        {
+            StateMachine.ChangeState(DamagedState);
+        }
+        else if (Core.Combat.Data.currentHealth <= 0)
+        {
+            StateMachine.ChangeState(DeathState);
+        }
     }
 
     private void FixedUpdate()
@@ -99,10 +60,9 @@ public class Enemy : MonoBehaviour
         StateMachine.CurrentState.FixedUpdate();
     }
 
-    private void Die()
+    private void Damage(float dmg)
     {
-        Instantiate(BloodSplash, transform.position, Quaternion.identity);
-        StateMachine.ChangeState(this.DeathState);
-        Debug.Log("Dead");
+        Core.Combat.Damage(dmg);
     }
+
 }

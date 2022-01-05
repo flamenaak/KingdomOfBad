@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDamagedState : EnemyState
+public class PlayerDamagedState : PlayerGroundedState
 {
-    public EnemyDamagedState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    float duration;
+    public PlayerDamagedState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
         duration = 0.35f;
     }
@@ -26,7 +27,7 @@ public class EnemyDamagedState : EnemyState
 
     public override void Exit()
     {
-        enemy.Core.Combat.damaged = false;
+        player.Core.Combat.damaged = false;
         base.Exit();
     }
 
@@ -35,7 +36,7 @@ public class EnemyDamagedState : EnemyState
         base.FixedUpdate();
         if (Time.time - startTime > duration)
         {
-            stateMachine.ChangeState(enemy.IdleState);
+            stateMachine.ChangeState(player.IdleState);
             return;
         }
     }

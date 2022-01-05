@@ -5,12 +5,6 @@ using System.Collections.Generic;
 
 public class CharacterController2D : MonoBehaviour
 {
-    #region ColissionCheckHelpers
-    [SerializeField]
-    // position for checking area for slash
-    public Transform attackPoint;
-
-    #endregion
     private void Awake()
     {
 
