@@ -46,7 +46,7 @@ public class EnemyHostileSpottedState : EnemyState
             return;
         }
 
-        stateMachine.ChangeState(enemy.IdleState);
+        stateMachine.ChangeState(enemy.SearchState);
     }
 
     public override void DoChecks()

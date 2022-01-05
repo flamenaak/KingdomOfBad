@@ -34,6 +34,11 @@ public class EnemyAI : MonoBehaviour
         return null;
     }
 
+    public virtual Transform SearchForHostile()
+    {
+        return DetectHostile();
+    }
+
     public virtual bool ShouldChase(Transform entity)
     {
         return true;

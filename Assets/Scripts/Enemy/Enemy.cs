@@ -5,13 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public StateMachine StateMachine { get; private set; }
-    public EnemyIdleState IdleState {get ;set;}
-    public EnemyMoveState MoveState {get; set;}
-    public EnemyMeleeAttackState MeleeAttackState {get; set;}
-    public EnemyChargeState ChargeState {get; set;}
-    public EnemyHostileSpottedState HostileSpottedState {get; set;}
-    public EnemyRangedAttackState RangedAttackState {get; set;}
-    public EnemyDodgeState DodgeState {get; set;}
+    public EnemyIdleState IdleState { get; set; }
+    public EnemyMoveState MoveState { get; set; }
+    public EnemyMeleeAttackState MeleeAttackState { get; set; }
+    public EnemyChargeState ChargeState { get; set; }
+    public EnemyHostileSpottedState HostileSpottedState { get; set; }
+    public EnemyRangedAttackState RangedAttackState { get; set; }
+    public EnemyDodgeState DodgeState { get; set; }
+    public EnemySearchState SearchState { get; set; }
 
     [SerializeField]
     protected float maxHealth, knockbackSpeedX, knockbackSpeedY, knockbackDuration;
@@ -19,7 +20,7 @@ public class Enemy : MonoBehaviour
     protected bool applyKnockback, knockback;
     protected float currentHealth, knockbackStart;
     public Core Core;
-    
+
     public float slashDamage = 1;
     public float attackRange = 0.5f;
     public Animator Anim { get; private set; }
@@ -41,6 +42,7 @@ public class Enemy : MonoBehaviour
         HostileSpottedState = new EnemyHostileSpottedState(this, StateMachine, "hostileSpotted");
         RangedAttackState = new EnemyRangedAttackState(this, StateMachine, "ranged");
         DodgeState = new EnemyDodgeState(this, StateMachine, "dodge");
+        SearchState = new EnemySearchState(this, StateMachine, "idle");
     }
 
     void Start()
