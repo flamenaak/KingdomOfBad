@@ -18,13 +18,13 @@ public class PlayerDashState : PlayerGroundedState
         base.Enter();
         player.startDashCoolDown();
         player.startDashGravityEffect();
-        Physics2D.IgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+        Physics2D.IgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("EnemyWeapon"), true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        Physics2D.IgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Enemy"), false);
+        Physics2D.IgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("EnemyWeapon"), false);
     }
 
     public override void FixedUpdate()

@@ -28,44 +28,61 @@ public class Combat : CoreComponent
 
     public bool damaged;
 
+    public float canTakeDamageCooldown = 0.2f;
+
+    public bool canTakeDamage = true;
+
     [SerializeField]
     private Transform attackPosition;
 
     public void Damage(float amount)
     {
-        Data.currentHealth -= amount;
-        Healthbar.transform.localScale -= new Vector3(Data.maxHealth/100, 0 ,0);
-        if (Data.currentHealth > 0.0f)
+        if (canTakeDamage)
         {
-            Knockback();
-            damaged = true;
+            Data.currentHealth -= amount;
+            startCanTakeDamageCoolDown();
+            Healthbar.transform.localScale -= new Vector3(Data.maxHealth / 100, 0, 0);
+            if (Data.currentHealth > 0.0f)
+            {
+                Knockback();
+                damaged = true;
+            }
+            else if (Data.currentHealth <= 0.0f)
+            {
+                Healthbar.transform.localScale = new Vector3(0, 0, 0);
+                Die();
+            }
         }
-        else if (Data.currentHealth <= 0.0f)
-        {
-            Healthbar.transform.localScale = new Vector3(0, 0, 0);
-            Die();
-        }
+       
     }
 
     public void Attack()
     {
         Collider2D collision = attackPosition.GetComponent<CircleCollider2D>();
+        if (!collision.enabled)
+        {
+            return;
+        }
+        else
+        {
             ContactFilter2D filter = new ContactFilter2D();
             filter.layerMask = Data.WhatIsEnemy;
             List<Collider2D> colliders = new List<Collider2D>();
             collision.GetContacts(filter, colliders);
-        if(colliders.Count > 0)
-        {
-            if (Entity.tag.Equals("Player"))
+            if (colliders.Count > 0 && collision.enabled)
             {
-                colliders[0].GetComponentInParent<Enemy>().SendMessage("Damage", Data.damage);
-            }
-            else
-            {
-                colliders[0].GetComponentInParent<Player>().SendMessage("Damage", Data.damage);
+                if (Entity.tag.Equals("Player"))
+                {
+                    colliders[0].GetComponentInParent<Enemy>().SendMessage("Damage", Data.damage);
+                }
+                else
+                {
+                    colliders[0].GetComponentInParent<Player>().SendMessage("Damage", Data.damage);
+                }
+
             }
         }
-
+    
     }
 
     private void Knockback()
@@ -87,6 +104,17 @@ public class Combat : CoreComponent
     private void Die()
     {
         Instantiate(BloodSplash, transform.position, Quaternion.identity);
+    }
+
+    public void startCanTakeDamageCoolDown()
+    {
+        canTakeDamage = false;
+        Invoke("clearSlashCooldown", canTakeDamageCooldown);
+    }
+
+    void clearSlashCooldown()
+    {
+        canTakeDamage = true;
     }
 
 }
