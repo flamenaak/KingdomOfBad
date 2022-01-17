@@ -6,6 +6,9 @@ public class ThiefAI : EnemyAI
 {
     protected Thief thief;
 
+    Vector2 candidatePoint = new Vector2();
+    Vector2 sizeOfGizmo = new Vector2();
+
     public override void Awake()
     {
         base.Awake();
@@ -56,34 +59,36 @@ public class ThiefAI : EnemyAI
     }
 
     public override Vector2 DetermineDodgePosition(Vector2 target)
-    {   
-        if (thief.evadeDodge)
-            return DetermineEvadePosition(target);
+    {
+        Vector2 candidate = thief.evadeDodge ?
+        target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
+        target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
 
-        Vector2 candidate = target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
-        if (Physics2D.Linecast(enemy.RigidBody.transform.position, candidate, enemy.Core.CollisionSenses.Data.WhatIsGround))
+        candidatePoint = candidate;
+        sizeOfGizmo = thief.GetComponent<BoxCollider2D>().bounds.size;
+
+        if (isValidDodgeTargetPosition(candidate))
         {
-            candidate = target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
+            return candidate;
         }
-        if (Physics2D.Linecast(enemy.RigidBody.transform.position, candidate, enemy.Core.CollisionSenses.Data.WhatIsGround))
+        else
         {
-            return enemy.RigidBody.transform.position;
+            candidate = thief.evadeDodge ?
+            target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
+            target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
+
+            return isValidDodgeTargetPosition(candidate) ? candidate : (Vector2) enemy.RigidBody.transform.position;
         }
-        return candidate;
     }
 
-    public Vector2 DetermineEvadePosition(Vector2 target)
+    private bool isValidDodgeTargetPosition(Vector2 target)
     {
-        Vector2 candidate = target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5);
-        if (Physics2D.Linecast(enemy.RigidBody.transform.position, candidate, enemy.Core.CollisionSenses.Data.WhatIsGround))
-        {
-            candidate =  target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5);
-        }
-        if (Physics2D.Linecast(enemy.RigidBody.transform.position, candidate, enemy.Core.CollisionSenses.Data.WhatIsGround))
-        {
-            Debug.Log("candidates suck");
-            return enemy.RigidBody.transform.position; 
-        }
-        return candidate;
+        return (enemy.Core.Movement.CanFit(target, thief.GetComponent<BoxCollider2D>(), new Vector2(0, -0.2f)))
+        && (enemy.Core.Movement.HasClearPath(thief.transform, target));
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(candidatePoint, sizeOfGizmo);
     }
 }

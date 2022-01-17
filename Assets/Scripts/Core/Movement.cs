@@ -103,4 +103,33 @@ public class Movement : CoreComponent
         theScale.x *= -1;
         Core.transform.parent.transform.localScale = theScale;
     }
+
+    /// <summary>
+    /// Projects the collider into space, returning false, if it collides with Data.WhatIsGround layer mask
+    /// </summary>
+    /// <param name="targetLocation">
+    ///     Location to which to project the collider
+    /// </param>
+    /// <param name="collider">
+    ///     Main body collider for the entity
+    /// </param>
+    /// <param name="adjustment">
+    ///     Describes how the collider should be adjusted. E.g. Vector2(-1,-1) will reduced width and height of the projection by 1 (0.5 on each side from the targetLocation)
+    /// </param>    
+    public bool CanFit(Vector2 targetLocation, Collider2D collider, Vector2 adjustment)
+    {
+        Vector2 size = (Vector2)collider.bounds.size + adjustment;
+        return !Physics2D.OverlapBox(targetLocation, size, 0, Data.WhatIsGround);
+    }
+
+    /// <summary>
+    /// Determines whether there is a ground-type obstacle
+    /// </summary>
+    /// <param name="currentBody"></param>
+    /// <param name="targetLocation"></param>
+    /// <returns> True if the path between current position and the targetLocation does not intercept Data.WhatIsGround layer mast</returns>
+    public bool HasClearPath(Transform currentBody, Vector2 targetLocation)
+    {
+        return !Physics2D.Linecast(currentBody.position, targetLocation, Data.WhatIsGround);
+    }
 }
