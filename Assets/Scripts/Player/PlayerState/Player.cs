@@ -115,6 +115,7 @@ public class Player : Fighter
         Core.Combat.Data.currentHealth = Core.Combat.Data.maxHealth;
         if (Controller == null)
             Debug.Log("no controller");
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
     }
 
     // logic

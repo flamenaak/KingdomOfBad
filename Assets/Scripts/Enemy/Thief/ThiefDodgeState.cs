@@ -13,7 +13,7 @@ public class ThiefDodgeState : EnemyDodgeState
     public override void Exit()
     {
         base.Exit();
-        Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("Actor"), false);
+        Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("PlayerWeapon"), false);
         target = Vector2.zero;
         thief.StartDodgeCooldown();
         thief.evadeDodge = false;
@@ -52,7 +52,7 @@ public class ThiefDodgeState : EnemyDodgeState
         }
         else // when animation if done and target is still available
         {
-            Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("Actor"), true);
+            Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("PlayerWeapon"), true);
             Vector2 dodgePos = enemy.enemyAI.DetermineDodgePosition(target);
             enemy.RigidBody.MovePosition(dodgePos);
 

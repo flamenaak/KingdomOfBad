@@ -54,6 +54,7 @@ public class Enemy : Fighter
         Core.Combat.Data.currentHealth = Core.Combat.Data.maxHealth;
         aware = false;
         StateMachine.Initialize(IdleState);
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Actor"), true);
     }
 
     private void Update()
