@@ -30,14 +30,14 @@ public class SpearmanStabState : EnemyState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        Vector3 stabPosition = enemy.Core.Movement.DetermineStabPosition(enemy.transform);
-        enemy.Core.Combat.Attack();
-        enemy.RigidBody.MovePosition(stabPosition);
-        if (Time.time - startTime > duration)
-        {
-           stateMachine.ChangeState(spearman.AfterStabState);
-           return;
-        }
+            Vector3 stabPosition = enemy.Core.Movement.DetermineStabPosition(enemy.transform);
+            enemy.RigidBody.MovePosition(stabPosition);
+            enemy.Core.Combat.Attack();
+            if (Time.time - startTime > duration)
+            {
+                stateMachine.ChangeState(spearman.AfterStabState);
+                return;
+            }
         
     }
 
