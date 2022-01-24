@@ -15,8 +15,7 @@ public class ThiefDodgeState : EnemyDodgeState
         base.Exit();
         Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("PlayerWeapon"), false);
         target = Vector2.zero;
-        thief.StartDodgeCooldown();
-        thief.evadeDodge = false;
+        thief.shouldEvade = false;
     }
 
     public override void Enter()
@@ -55,6 +54,9 @@ public class ThiefDodgeState : EnemyDodgeState
             Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("PlayerWeapon"), true);
             Vector2 dodgePos = enemy.enemyAI.DetermineDodgePosition(target);
             enemy.RigidBody.MovePosition(dodgePos);
+            
+            thief.CanLunge.StartCooldownTimer();
+            thief.CanDodge.StartCooldownTimer();
 
             RaycastHit2D hit = Physics2D.Raycast(dodgePos,
                 Vector2.right * enemy.Core.Movement.GetFacingDirection(),
@@ -64,8 +66,6 @@ public class ThiefDodgeState : EnemyDodgeState
             if (!hit)
             {
                 enemy.Core.Movement.Flip();
-            } else {
-                Debug.Log("facing enemy at " + hit.point.x + " " + hit.point.y);
             }
 
             enemy.enemyAI.DetectHostile();

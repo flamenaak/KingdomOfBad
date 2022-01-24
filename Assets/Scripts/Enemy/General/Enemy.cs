@@ -49,7 +49,7 @@ public class Enemy : Fighter
         SearchState = new EnemySearchState(this, StateMachine, "idle");
     }
 
-    void Start()
+    public virtual void Start()
     {
         Core.Combat.Data.currentHealth = Core.Combat.Data.maxHealth;
         aware = false;

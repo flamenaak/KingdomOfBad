@@ -4,29 +4,27 @@ using UnityEngine;
 
 public class Thief : Enemy
 {
-    [SerializeField]
-    private float dodgeCooldown = 2f;
-    public bool canDodge = true;
-    public bool evadeDodge = false;
+    public CooldownComponent CanDodge;
+    public CooldownComponent CanLunge;
+
+    public bool shouldEvade = false;
 
     [SerializeField]
     public Vector2 LungeForce = new Vector2(50,100);
 
-    public new void Awake()
+    public override void Awake()
     {
         base.Awake();
         DodgeState = new ThiefDodgeState(this, StateMachine, "dodge");
         MeleeAttackState = new ThiefMeleeAttackState(this, StateMachine, "melee");
     }
 
-    private void resetDodge()
+    public override void Start()
     {
-        canDodge = true;
-    }
-
-    public void StartDodgeCooldown()
-    {
-        canDodge = false;
-        Invoke("resetDodge", dodgeCooldown);
+        base.Start();
+        if (CanLunge)
+            Debug.Log("canLunge ");
+        if (CanDodge)
+            Debug.Log("canDodge ");
     }
 }
