@@ -23,19 +23,14 @@ public class ThiefAI : EnemyAI
     }
 
     /// <summary>
-    /// Thief should chase if it is further than 3 or if it cannot lunge or dodge behind the entity
+    /// Thief should chase if it sees entity but ai says not to attack it and not to dodge
     /// </summary>
     public override bool ShouldChase(Transform entity)
     {
         if (!entity)
             return false;
-        float distance = Mathf.Abs(enemy.transform.position.x - entity.position.x);
-        if (distance > 3)
-            return true;
-        else if (distance > 1 && !(thief.CanLunge || thief.CanDodge))
-            return true;
-        else
-            return false;
+
+        return !(ShouldDodge(entity) || ShouldMelleeAttack(entity));
     }
 
     public override bool ShouldDodge(Transform entity)
@@ -43,9 +38,9 @@ public class ThiefAI : EnemyAI
         if (!entity)
             return false;
 
-        if (Mathf.Abs(enemy.transform.position.x - entity.position.x) < 4 && thief.CanDodge)
+        if (Mathf.Abs(enemy.transform.position.x - entity.position.x) < 4)
         {
-            return Random.Range(0f, 1f) > 0 && thief.CanDodge;
+            return thief.shouldEvade || (Random.Range(0f, 1f) > 0.6f && thief.CanDodge);
         }
         else
         {
@@ -59,7 +54,14 @@ public class ThiefAI : EnemyAI
         if (!entity)
             return false;
         
-        return !ShouldChase(entity);
+        float distance = Vector2.Distance(enemy.transform.position, entity.position);
+
+        if (thief.CanLunge && distance <= thief.Core.Movement.Data.StabDistance)
+            return true;
+        if (distance <= 1)
+            return true;
+
+        return false;
     }
 
     public override bool ShouldRangeAttack(Transform entity)

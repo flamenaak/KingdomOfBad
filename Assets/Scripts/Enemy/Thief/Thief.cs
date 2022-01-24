@@ -9,22 +9,18 @@ public class Thief : Enemy
 
     public bool shouldEvade = false;
 
-    [SerializeField]
-    public Vector2 LungeForce = new Vector2(50,100);
+    public ThiefLungeState LungeState;
 
     public override void Awake()
     {
         base.Awake();
         DodgeState = new ThiefDodgeState(this, StateMachine, "dodge");
         MeleeAttackState = new ThiefMeleeAttackState(this, StateMachine, "melee");
+        LungeState = new ThiefLungeState(this, StateMachine, "melee");
     }
 
     public override void Start()
     {
         base.Start();
-        if (CanLunge)
-            Debug.Log("canLunge ");
-        if (CanDodge)
-            Debug.Log("canDodge ");
     }
 }

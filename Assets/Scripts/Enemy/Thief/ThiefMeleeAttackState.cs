@@ -31,37 +31,37 @@ public class ThiefMeleeAttackState : EnemyMeleeAttackState
     public override void FixedUpdate()
     {
         DoChecks();
-        if (detectedHostile == null){
+        if (detectedHostile == null)
+        {
             base.FixedUpdate();
             return;
         }
 
-        if (Mathf.Abs(thief.transform.position.x - detectedHostile.position.x) > 1)
+        if (Mathf.Abs(thief.transform.position.x - detectedHostile.position.x) > 1.5f)
         {
             if (thief.CanLunge)
             {
-                Vector2 forceVct = new Vector2(thief.Core.Movement.GetFacingDirection(), 1);
-                forceVct.Scale(thief.LungeForce);
-                // lunge
-                Debug.Log("lunging " + forceVct.ToString());
-                thief.RigidBody.AddForce(forceVct);
-                thief.CanLunge.StartCooldownTimer();
+                stateMachine.ChangeState(thief.LungeState);
+                return;
             }
-        } else {
+        }
+        else
+        {
+            thief.Core.Combat.Attack();
             if (proximityAttackStartTime == 0)
             {
                 proximityAttackStartTime = Time.time;
             }
-            else if (Time.time - proximityAttackStartTime > proximityAttackTimeMax)
+            else if (Time.time - proximityAttackStartTime > proximityAttackTimeMax && thief.CanDodge)
             {
                 thief.shouldEvade = true;
                 stateMachine.ChangeState(thief.DodgeState);
                 return;
-            } 
-            // do attack
+            }
         }
-        if (Time.time - startTime >= duration){
-            base.FixedUpdate();    
+        if (Time.time - startTime >= duration)
+        {
+            stateMachine.ChangeState(thief.HostileSpottedState);
         }
     }
 

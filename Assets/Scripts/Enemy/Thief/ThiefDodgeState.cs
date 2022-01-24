@@ -69,7 +69,7 @@ public class ThiefDodgeState : EnemyDodgeState
             }
 
             enemy.enemyAI.DetectHostile();
-            if (enemy.enemyAI.ShouldMelleeAttack(detectedHostile))
+            if (enemy.enemyAI.ShouldMelleeAttack(detectedHostile) && !thief.shouldEvade)
             {
                 stateMachine.ChangeState(enemy.MeleeAttackState);
                 return;
