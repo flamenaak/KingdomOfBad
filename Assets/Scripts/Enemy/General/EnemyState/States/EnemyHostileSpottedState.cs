@@ -27,25 +27,18 @@ public class EnemyHostileSpottedState : EnemyState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (!detectedHostile)
+        if (!detectedHostile) {
             stateMachine.ChangeState(enemy.SearchState);
+            return;
+        }
 
-        if (enemy.enemyAI.ShouldDodge(detectedHostile))
+        List<DecisionFunction_State_Tuple> decisionFunctions = enemy.DecisionFunctions;
+        foreach(DecisionFunction_State_Tuple tuple in decisionFunctions)
         {
-            stateMachine.ChangeState(enemy.DodgeState);
-            return;
-        } else if (enemy.enemyAI.ShouldRangeAttack(detectedHostile))
-        {
-            stateMachine.ChangeState(enemy.RangedAttackState);
-            return;
-        } else if (enemy.enemyAI.ShouldMelleeAttack(detectedHostile))
-        {
-            stateMachine.ChangeState(enemy.MeleeAttackState);
-            return;
-        } else if (enemy.enemyAI.ShouldChase(detectedHostile))
-        {
-            stateMachine.ChangeState(enemy.ChaseState);
-            return;
+            if (tuple.DecisionFunction(detectedHostile)){
+                stateMachine.ChangeState(tuple.NextState);
+                return;
+            }
         }
 
         stateMachine.ChangeState(enemy.SearchState);

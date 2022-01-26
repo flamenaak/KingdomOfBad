@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
@@ -77,5 +78,22 @@ public class EnemyAI : MonoBehaviour
         if (!entity)
             return -1;
         return Mathf.Abs(enemy.transform.position.x - entity.position.x);
+    }
+}
+
+public delegate bool AIDecisionFunction(Transform detectedHostile);
+
+public class DecisionFunction_State_Tuple : System.Tuple<AIDecisionFunction, State>
+{
+     public AIDecisionFunction DecisionFunction{
+        get => Item1;
+    }
+
+    public State NextState {
+        get => Item2;
+    }
+
+    public DecisionFunction_State_Tuple(AIDecisionFunction item1, State item2) : base(item1, item2)
+    {
     }
 }
