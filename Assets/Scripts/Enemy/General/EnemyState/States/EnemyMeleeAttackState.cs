@@ -25,9 +25,14 @@ public class EnemyMeleeAttackState : EnemyHostileSpottedState
 
     public override void FixedUpdate()
     {
+        if (detectedHostile == null)
+        {
+            base.FixedUpdate();
+        }
+
         if (enemy.enemyAI.ShouldMelleeAttack(detectedHostile))
         {
-            // do attack
+            enemy.Core.Combat.Attack();
             DoChecks();
         } else {
             base.FixedUpdate();

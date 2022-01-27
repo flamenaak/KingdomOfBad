@@ -22,11 +22,15 @@ public class ThiefAI : EnemyAI
         return base.DetectHostile();
     }
 
+    /// <summary>
+    /// Thief should chase if it sees entity but ai says not to attack it and not to dodge
+    /// </summary>
     public override bool ShouldChase(Transform entity)
     {
         if (!entity)
             return false;
-        return Mathf.Abs(enemy.transform.position.x - entity.position.x) > 3;
+
+        return !(ShouldDodge(entity) || ShouldMelleeAttack(entity));
     }
 
     public override bool ShouldDodge(Transform entity)
@@ -34,9 +38,9 @@ public class ThiefAI : EnemyAI
         if (!entity)
             return false;
 
-        if (Mathf.Abs(enemy.transform.position.x - entity.position.x) < 4 && thief.canDodge)
+        if (Mathf.Abs(enemy.transform.position.x - entity.position.x) < 4)
         {
-            return Random.Range(0f, 1f) > 0 && thief.canDodge;
+            return thief.shouldEvade || (Random.Range(0f, 1f) > 0.6f && thief.CanDodge);
         }
         else
         {
@@ -49,8 +53,15 @@ public class ThiefAI : EnemyAI
     {
         if (!entity)
             return false;
+        
+        float distance = Vector2.Distance(enemy.transform.position, entity.position);
 
-        return !ShouldChase(entity);
+        if (thief.CanLunge && distance <= thief.Core.Movement.Data.StabDistance)
+            return true;
+        if (distance <= 1)
+            return true;
+
+        return false;
     }
 
     public override bool ShouldRangeAttack(Transform entity)
@@ -60,7 +71,7 @@ public class ThiefAI : EnemyAI
 
     public override Vector2 DetermineDodgePosition(Vector2 target)
     {
-        Vector2 candidate = thief.evadeDodge ?
+        Vector2 candidate = thief.shouldEvade ?
         target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
         target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
 
@@ -73,7 +84,7 @@ public class ThiefAI : EnemyAI
         }
         else
         {
-            candidate = thief.evadeDodge ?
+            candidate = thief.shouldEvade ?
             target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
             target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
 
@@ -85,10 +96,5 @@ public class ThiefAI : EnemyAI
     {
         return (enemy.Core.Movement.CanFit(target, thief.GetComponent<BoxCollider2D>(), new Vector2(0, -0.2f)))
         && (enemy.Core.Movement.HasClearPath(thief.transform, target));
-    }
-
-    public void OnDrawGizmos()
-    {
-        Gizmos.DrawCube(candidatePoint, sizeOfGizmo);
     }
 }
