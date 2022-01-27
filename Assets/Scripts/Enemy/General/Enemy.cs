@@ -27,6 +27,17 @@ public class Enemy : Fighter
     public GameObject Awarness;
 
     public Rigidbody2D RigidBody;
+    public List<DecisionFunction_State_Tuple> DecisionFunctions {
+        get {
+           return new List<DecisionFunction_State_Tuple> { 
+               new (enemyAI.ShouldDodge, DodgeState),
+               new (enemyAI.ShouldRangeAttack, RangedAttackState),
+               new (enemyAI.ShouldMelleeAttack, MeleeAttackState),
+               new (enemyAI.ShouldChase, ChaseState)
+               };
+        }
+    }
+
     // Start is called before the first frame update
     public virtual void Awake()
     {
