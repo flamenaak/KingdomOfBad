@@ -58,6 +58,11 @@ public class Combat : CoreComponent
 
     public void Attack()
     {
+
+    }
+
+    public void FixedUpdate()
+    {
         Collider2D collision = attackPosition.GetComponent<CircleCollider2D>();
         if (!collision.enabled)
         {
