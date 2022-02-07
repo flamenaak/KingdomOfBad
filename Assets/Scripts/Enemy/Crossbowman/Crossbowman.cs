@@ -24,6 +24,5 @@ public class Crossbowman : Enemy
     {
         Instantiate(bolt, base.Core.Combat.AttackPosition.position, Quaternion.identity);
         bolt.transform.position = base.Core.Combat.AttackPosition.transform.position;
-        //bolt.GetComponent<Rigidbody2D>().AddForce(new Vector2(base.Core.Movement.GetFacingDirection() * 20f, 0f));       
     }
 }
