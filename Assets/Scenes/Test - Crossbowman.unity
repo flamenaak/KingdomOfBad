@@ -3357,7 +3357,7 @@ MonoBehaviour:
   BloodSplash: {fileID: 753124951}
   Healthbar: {fileID: 1170222079}
   damaged: 0
-  canTakeDamageCooldown: 0.2
+  canTakeDamageCooldown: 0.4
   canTakeDamage: 1
   attackPosition: {fileID: 1118043539}
 --- !u!1 &231745268
