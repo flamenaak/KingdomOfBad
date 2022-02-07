@@ -29,19 +29,24 @@ public class CrossbowmanDodgeState : EnemyDodgeState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        //Check if the wall is in the way, if so flip and dodge other way
+        //i'm aware the HasClearPath method should be used, but couldn't determine the target location
+        RaycastHit2D wallInTheWay = Physics2D.Raycast(crossbowman.transform.position, Vector2.right * enemy.Core.Movement.GetFacingDirection(), 3f, crossbowman.Core.Movement.Data.WhatIsGround);
+        if (wallInTheWay)
+        {
+            enemy.Core.Movement.Flip();
+        }
         crossbowman.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.RunSpeed);
         crossbowman.CanDodge.StartCooldownTimer();
-        if (crossbowman.enemyAI.Distance(detectedHostile) >= 8f)
+        if (crossbowman.enemyAI.Distance(detectedHostile) >= 7.5f)
         {
             enemy.Core.Movement.Flip();
             if (crossbowman.canShoot)
             {
-                Debug.Log("Shooting");
                 stateMachine.ChangeState(crossbowman.RangedAttackState);
             }
             else if(!crossbowman.canShoot)
             {
-                Debug.Log("Reloading");
                 stateMachine.ChangeState(crossbowman.CrossbowmanReloadState);
             }
         }
