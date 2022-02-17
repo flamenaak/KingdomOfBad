@@ -6,10 +6,20 @@ public class Bolt : MonoBehaviour
 {
     public float speed = 20f;
     public Rigidbody2D rb;
+    GameObject Player;
     void Start()
     {
-        rb.velocity = transform.right * speed;
-    }
+        Player = GameObject.Find("Crossbowman");
+        if (Player.GetComponent<Crossbowman>().Core.Movement.IsFacingRight)
+        {
+            rb.velocity = transform.right * speed;
+        }
+        else
+        {
+            rb.velocity = -transform.right * speed;
+
+        }
+   }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
