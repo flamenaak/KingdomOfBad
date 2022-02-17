@@ -16,6 +16,7 @@ public class PlayerDashState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.DepleteStamina(1);
         player.startDashCoolDown();
         player.startDashGravityEffect();
         Physics2D.IgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("EnemyWeapon"), true);
@@ -32,7 +33,6 @@ public class PlayerDashState : PlayerGroundedState
         base.FixedUpdate();        
         Vector3 dashPosition = player.Core.Movement.DetermineDashDestination(player.transform);
         player.RigidBody.MovePosition(dashPosition);
-
         if (Time.time - startTime > 0.52f)
         {
             stateMachine.ChangeState(player.IdleState);

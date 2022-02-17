@@ -8,12 +8,6 @@ public class FloatState : PlayerAirState
     {
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -34,5 +28,11 @@ public class FloatState : PlayerAirState
             stateMachine.ChangeState(player.RiseState);
         }
 
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        player.DepleteStamina(1);
     }
 }

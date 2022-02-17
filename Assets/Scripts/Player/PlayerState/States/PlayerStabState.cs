@@ -16,6 +16,7 @@ public class PlayerStabState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.DepleteStamina(1);
         player.startStabCoolDown();
     }
 
