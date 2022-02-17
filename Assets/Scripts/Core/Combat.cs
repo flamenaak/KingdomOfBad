@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Combat : CoreComponent
 {
@@ -41,7 +42,14 @@ public class Combat : CoreComponent
         {
             Data.currentHealth -= amount;
             startCanTakeDamageCoolDown();
-            Healthbar.transform.localScale -= new Vector3(Data.maxHealth / 100, 0, 0);
+            if (Entity.tag.Equals("Player"))
+            {
+                Healthbar.GetComponent<Slider>().value = Data.currentHealth;
+            }
+            else
+            {
+                Healthbar.transform.localScale -= new Vector3(Data.maxHealth / 100, 0, 0);
+            }
             if (Data.currentHealth > 0.0f)
             {
                 Knockback();

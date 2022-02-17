@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using System.Collections;
 
 public class Player : Fighter
 {
@@ -47,6 +49,10 @@ public class Player : Fighter
     // cooldown to allow fall from hanging state without continuos re-latching
     float hangCooldown = 0.5f;
     public bool CanHang = true;
+
+    float StaminaCooldown = 3f;
+    private WaitForSeconds staminaRegenTick = new WaitForSeconds(0.1f);
+    private Coroutine staminaRegen;
 
     #endregion
     public Animator Anim { get; private set; }
@@ -137,7 +143,6 @@ public class Player : Fighter
         {
             StateMachine.ChangeState(DeathState);
         }
-
     }
 
     // physics
@@ -220,5 +225,30 @@ public class Player : Fighter
     private void Damage(float dmg)
     {
         Core.Combat.Damage(dmg);
+    }
+
+    public void DepleteStamina(float amount)
+    {
+        Core.Combat.Data.currentHealth -= amount;
+        Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
+
+        if(staminaRegen != null)
+        {
+            StopCoroutine(staminaRegen);
+        }
+        staminaRegen = StartCoroutine(RegenStamina());
+    }
+
+    private IEnumerator RegenStamina()
+    {
+        yield return new WaitForSeconds(StaminaCooldown);
+
+        while(Core.Combat.Data.currentHealth < Core.Combat.Data.maxHealth)
+        {
+            Core.Combat.Data.currentHealth += Core.Combat.Data.maxHealth / 100;
+            Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
+            yield return staminaRegenTick;
+        }
+        staminaRegen = null;
     }
 }
