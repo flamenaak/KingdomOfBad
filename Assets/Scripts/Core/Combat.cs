@@ -21,7 +21,7 @@ public class Combat : CoreComponent
 
     public CombatData Data;
 
-    public GameObject Entity;
+    public IHasCombat Entity;
 
     public GameObject BloodSplash;
 
@@ -42,31 +42,8 @@ public class Combat : CoreComponent
         {
             Data.currentHealth -= amount;
             startCanTakeDamageCoolDown();
-            if (Entity.tag.Equals("Player"))
-            {
-                Healthbar.GetComponent<Slider>().value = Data.currentHealth;
-            }
-            else
-            {
-                Healthbar.transform.localScale -= new Vector3(Data.maxHealth / 100, 0, 0);
-            }
-            if (Data.currentHealth > 0.0f)
-            {
-                Knockback();
-                damaged = true;
-            }
-            else if (Data.currentHealth <= 0.0f)
-            {
-                Healthbar.transform.localScale = new Vector3(0, 0, 0);
-                Die();
-            }
         }
        
-    }
-
-    public void Attack()
-    {
-
     }
 
     public void FixedUpdate()
@@ -84,37 +61,19 @@ public class Combat : CoreComponent
             collision.GetContacts(filter, colliders);
             if (colliders.Count > 0 && collision.enabled)
             {
-                if (Entity.tag.Equals("Player"))
-                {
-                    colliders[0].GetComponentInParent<Enemy>().SendMessage("Damage", Data.damage);
-                }
-                else
-                {
-                    colliders[0].GetComponentInParent<Player>().SendMessage("Damage", Data.damage);
-                }
-
+                colliders[0].GetComponentInParent<IHasCombat>().Damage(Data.damage);
             }
         }
     
     }
 
-    private void Knockback()
+    public void Knockback()
     {
         Data.knockback = true;
         Data.knockbackStart = Time.time;
-        Entity.GetComponent<Rigidbody2D>().velocity = new Vector2(Data.knockbackSpeedX * -Core.Movement.GetFacingDirection(), Data.knockbackSpeedY);
     }
 
-    public void CheckKnockback()
-    {
-        if (Time.time >= Data.knockbackStart + Data.knockbackDuration && Data.knockback)
-        {
-            Data.knockback = false;
-            Entity.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, Entity.GetComponent<Rigidbody2D>().velocity.y);
-        }
-    }
-
-    private void Die()
+    public void Die()
     {
         Instantiate(BloodSplash, transform.position, Quaternion.identity);
     }
@@ -130,4 +89,13 @@ public class Combat : CoreComponent
         canTakeDamage = true;
     }
 
+}
+
+public interface IHasCombat
+{
+    void Damage(float amount);
+
+    void Die();
+
+    void Knockback();
 }

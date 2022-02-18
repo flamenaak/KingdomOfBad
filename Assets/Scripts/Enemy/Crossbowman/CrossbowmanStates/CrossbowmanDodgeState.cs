@@ -41,11 +41,11 @@ public class CrossbowmanDodgeState : EnemyDodgeState
         if (crossbowman.enemyAI.Distance(detectedHostile) >= 7.5f)
         {
             enemy.Core.Movement.Flip();
-            if (crossbowman.canShoot)
+            if (crossbowman.reloaded)
             {
                 stateMachine.ChangeState(crossbowman.RangedAttackState);
             }
-            else if(!crossbowman.canShoot)
+            else if(!crossbowman.reloaded)
             {
                 stateMachine.ChangeState(crossbowman.CrossbowmanReloadState);
             }

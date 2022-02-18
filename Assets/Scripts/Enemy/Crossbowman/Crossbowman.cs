@@ -8,7 +8,7 @@ public class Crossbowman : Enemy
     public CooldownComponent CanShoot;
 
     public bool shouldEvade = true;
-    public bool canShoot = true;
+    public bool reloaded = true;
     public GameObject bolt;
     public CrossbowmanReloadState CrossbowmanReloadState { get; set; }
 

@@ -38,11 +38,11 @@ public class PlayerRunState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.RiseState);
         }
-        else if (dashAndEvade && player.canDashOrEvade)
+        else if (dashAndEvade && player.canDashOrEvade && player.HaveEnoughStamina())
         {
             stateMachine.ChangeState(player.DashState);
         }
-        else if (slash && player.canSlash)
+        else if (slash && player.canSlash && player.HaveEnoughStamina())
         {
             player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
             stateMachine.ChangeState(player.SlashState);

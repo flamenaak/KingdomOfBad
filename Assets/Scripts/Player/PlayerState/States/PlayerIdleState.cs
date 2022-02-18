@@ -31,11 +31,11 @@ public class PlayerIdleState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.LiftState);
         } 
-        else if (dashAndEvade && player.canDashOrEvade)
+        else if (dashAndEvade && player.canDashOrEvade && player.HaveEnoughStamina())
         {
             stateMachine.ChangeState(player.EvadeState);           
         } 
-        else if (slash && player.canSlash)
+        else if (slash && player.canSlash && player.Core.Combat.Data.currentHealth > 0.0)
         {
             stateMachine.ChangeState(player.SlashState);
             player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
@@ -57,7 +57,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        if (Input.GetButtonDown("Stab") && player.canStab)
+        if (Input.GetButtonDown("Stab") && player.canStab && player.HaveEnoughStamina())
         {
             stateMachine.ChangeState(player.WindUpState);
         }
