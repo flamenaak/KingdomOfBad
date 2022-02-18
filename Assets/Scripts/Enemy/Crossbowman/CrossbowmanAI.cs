@@ -41,9 +41,12 @@ public class CrossbowmanAI : EnemyAI
     {
         if (!entity)
             return false;
-
-        float dist = Distance(entity);
-        return (dist < 5f);
+        if (crossbowman.CanDodge)
+        {
+            float dist = Distance(entity);
+            return (dist < 5f);
+        }
+        return false;
     }
 
     public override bool ShouldMelleeAttack(Transform entity)
@@ -53,8 +56,12 @@ public class CrossbowmanAI : EnemyAI
 
     public override bool ShouldRangeAttack(Transform entity)
     {
-        float dist = Distance(entity);
-        return (dist >= 7.5f);
+        if (crossbowman.CanShoot)
+        {
+            float dist = Distance(entity);
+            return (dist >= 7.5f);
+        }
+        return false;
     }
 
 }

@@ -31,7 +31,7 @@ public class PlayerStabState : PlayerGroundedState
         Vector3 stabPosition = player.Core.Movement.DetermineStabPosition(player.transform);
         
         player.RigidBody.MovePosition(stabPosition);
-        player.Core.Combat.Attack();
+        //player.Core.Combat.Attack();
         if (Time.time - startTime > 0.32f)
         {
             stateMachine.ChangeState(player.IdleState);

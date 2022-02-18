@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Fighter
+public class Enemy : Fighter, IHasCombat
 {
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}
@@ -75,9 +75,33 @@ public class Enemy : Fighter
         StateMachine.CurrentState.FixedUpdate();
     }
 
-    private void Damage(float dmg)
+    public void Damage(float amount)
     {
-        Core.Combat.Damage(dmg);
+        Core.Combat.Damage(amount);
+        Core.Combat.Healthbar.transform.localScale -= new Vector3(Core.Combat.Data.maxHealth / 500, 0, 0);
+        if (Core.Combat.Data.currentHealth > 0.0f)
+        {
+            Core.Combat.Knockback();
+            Core.Combat.damaged = true;
+        }
+        else if (Core.Combat.Data.currentHealth <= 0.0f)
+        {
+            Die();
+        }
     }
 
+    public void Die()
+    {
+        Core.Combat.Die();
+        Core.Combat.Healthbar.SetActive(false);
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+    }
+
+    public void Knockback()
+    {
+        Core.Combat.Knockback();
+        RigidBody.velocity = new Vector2(Core.Combat.Data.knockbackSpeedX * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+    }
 }

@@ -33,7 +33,7 @@ public class CrossbowmanShootState : EnemyRangedAttackState
         base.FixedUpdate();
         if (Time.time - startTime >= duration)
         {
-            crossbowman.canShoot = false;
+            crossbowman.reloaded = false;
             stateMachine.ChangeState(crossbowman.CrossbowmanReloadState);
         }
     }
