@@ -62,8 +62,7 @@ public class Combat : CoreComponent
             if (colliders.Count > 0 && collision.enabled)
             {
                 IHasCombat IHasCombat = colliders[0].GetComponentInParent<IHasCombat>();
-                Debug.Log("attack from: " + this.tag + " attack to: " + IHasCombat.tag);
-                IHasCombat.Knockback(attackPosition, Data.knockbackSpeedX);
+                IHasCombat.Knockback(attackPosition, Data.knockbackSpeedX);               
                 IHasCombat.Damage(Data.damage);
             }
         }
@@ -102,6 +101,4 @@ public interface IHasCombat
 
     //Applies knockback to itself depending on the position of the attacker and facing direction of the receiver
     void Knockback(Transform attacker, float amount);
-
-    string tag { get; set; }
 }

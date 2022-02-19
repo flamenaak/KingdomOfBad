@@ -31,8 +31,7 @@ public class CrossbowmanDodgeState : EnemyDodgeState
         base.FixedUpdate();
         //Check if the wall is in the way, if so flip and dodge other way
         //i'm aware the HasClearPath method should be used, but couldn't determine the target location
-        RaycastHit2D wallInTheWay = Physics2D.Raycast(crossbowman.transform.position, Vector2.right * enemy.Core.Movement.GetFacingDirection(), 3f, crossbowman.Core.Movement.Data.WhatIsGround);
-        if (wallInTheWay)
+        if (crossbowman.Core.Movement.HasClearPath(crossbowman.transform, Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 15))
         {
             enemy.Core.Movement.Flip();
         }
