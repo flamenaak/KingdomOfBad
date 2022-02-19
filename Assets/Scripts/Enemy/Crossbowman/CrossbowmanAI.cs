@@ -59,9 +59,8 @@ public class CrossbowmanAI : EnemyAI
         if (crossbowman.CanShoot)
         {
             float dist = Distance(entity);
-            return (dist >= 7.5f);
+            return (dist >= 5f);
         }
         return false;
     }
-
 }
