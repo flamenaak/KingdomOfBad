@@ -7,7 +7,6 @@ public class Crossbowman : Enemy
     public CooldownComponent CanDodge;
     public CooldownComponent CanShoot;
 
-    public bool shouldEvade = true;
     public bool reloaded = true;
     public GameObject bolt;
     public CrossbowmanReloadState CrossbowmanReloadState { get; set; }
@@ -24,5 +23,16 @@ public class Crossbowman : Enemy
     {
         Instantiate(bolt, base.Core.Combat.AttackPosition.position, Quaternion.identity);
         bolt.transform.position = base.Core.Combat.AttackPosition.transform.position;
+    }
+
+    public void startDashGravityEffect()
+    {
+        RigidBody.gravityScale = 0f;
+        Invoke("clearDashGravityEffect", 0.5f);
+    }
+
+    void clearDashGravityEffect()
+    {
+        RigidBody.gravityScale = 3f;
     }
 }

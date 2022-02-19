@@ -18,7 +18,8 @@ public class CrossbowmanDodgeState : EnemyDodgeState
     public override void Enter()
     {
         base.Enter();
-        enemy.Core.Movement.Flip();
+        crossbowman.startDashGravityEffect();
+        crossbowman.CanDodge.StartCooldownTimer();
     }
 
     public override void Exit()
@@ -29,25 +30,27 @@ public class CrossbowmanDodgeState : EnemyDodgeState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        //Check if the wall is in the way, if so flip and dodge other way
-        //i'm aware the HasClearPath method should be used, but couldn't determine the target location
-        if (crossbowman.Core.Movement.HasClearPath(crossbowman.transform, Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 15))
+        if (!crossbowman.Core.Movement.HasClearPath(crossbowman.transform, Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 5))
         {
             enemy.Core.Movement.Flip();
         }
         crossbowman.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.RunSpeed);
-        crossbowman.CanDodge.StartCooldownTimer();
-        if (crossbowman.enemyAI.Distance(detectedHostile) >= 7.5f)
+
+        if (crossbowman.enemyAI.ShouldRangeAttack(detectedHostile))
         {
             enemy.Core.Movement.Flip();
             if (crossbowman.reloaded)
             {
                 stateMachine.ChangeState(crossbowman.RangedAttackState);
             }
-            else if(!crossbowman.reloaded)
+            else if (!crossbowman.reloaded)
             {
                 stateMachine.ChangeState(crossbowman.CrossbowmanReloadState);
             }
+        }
+        else if (Time.time - startTime >= 1.56f)
+        {
+            stateMachine.ChangeState(crossbowman.HostileSpottedState);
         }
     }
 
