@@ -6,11 +6,11 @@ public class Bolt : MonoBehaviour
 {
     public float speed = 20f;
     public Rigidbody2D rb;
-    GameObject Player;
+    GameObject Entity;
     void Start()
     {
-        Player = GameObject.Find("Crossbowman");
-        if (Player.GetComponent<Crossbowman>().Core.Movement.IsFacingRight)
+        Entity = GameObject.Find("Crossbowman");
+        if (Entity.GetComponent<Crossbowman>().Core.Movement.IsFacingRight)
         {
             rb.velocity = transform.right * speed;
         }
@@ -25,7 +25,7 @@ public class Bolt : MonoBehaviour
     {
         if (collision.tag.Equals("Player"))
         {
-            collision.GetComponentInParent<Player>().SendMessage("Damage", 1f);
+            collision.GetComponentInParent<IHasCombat>().Damage(1);
             Destroy(gameObject);
         }
     }

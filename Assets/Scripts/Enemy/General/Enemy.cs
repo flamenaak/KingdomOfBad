@@ -81,7 +81,6 @@ public class Enemy : Fighter, IHasCombat
         Core.Combat.Healthbar.transform.localScale -= new Vector3(Core.Combat.Data.maxHealth / 500, 0, 0);
         if (Core.Combat.Data.currentHealth > 0.0f)
         {
-            Core.Combat.Knockback();
             Core.Combat.damaged = true;
         }
         else if (Core.Combat.Data.currentHealth <= 0.0f)
@@ -95,13 +94,34 @@ public class Enemy : Fighter, IHasCombat
         Core.Combat.Die();
         Core.Combat.Healthbar.SetActive(false);
         GetComponent<BoxCollider2D>().enabled = false;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionX;
+        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;
     }
 
-    public void Knockback()
+    public void Knockback(Transform attacker, float amount)
     {
         Core.Combat.Knockback();
-        RigidBody.velocity = new Vector2(Core.Combat.Data.knockbackSpeedX * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+        if (attacker.position.x < this.transform.position.x)
+        {
+            if (Core.Movement.IsFacingRight)
+            {
+                RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+            else
+            {
+                RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+        }
+        else if (attacker.position.x > this.transform.position.x)
+        {
+            if (Core.Movement.IsFacingRight)
+            {
+                RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+            else
+            {
+                RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+        }
     }
 }

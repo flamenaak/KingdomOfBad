@@ -61,7 +61,10 @@ public class Combat : CoreComponent
             collision.GetContacts(filter, colliders);
             if (colliders.Count > 0 && collision.enabled)
             {
-                colliders[0].GetComponentInParent<IHasCombat>().Damage(Data.damage);
+                IHasCombat IHasCombat = colliders[0].GetComponentInParent<IHasCombat>();
+                Debug.Log("attack from: " + this.tag + " attack to: " + IHasCombat.tag);
+                IHasCombat.Knockback(attackPosition, Data.knockbackSpeedX);
+                IHasCombat.Damage(Data.damage);
             }
         }
     
@@ -69,8 +72,8 @@ public class Combat : CoreComponent
 
     public void Knockback()
     {
-        Data.knockback = true;
-        Data.knockbackStart = Time.time;
+        Core.Combat.Data.knockback = true;
+        Core.Combat.Data.knockbackStart = Time.time;
     }
 
     public void Die()
@@ -91,11 +94,14 @@ public class Combat : CoreComponent
 
 }
 
-public interface IHasCombat
+public interface IHasCombat 
 {
     void Damage(float amount);
 
     void Die();
 
-    void Knockback();
+    //Applies knockback to itself depending on the position of the attacker and facing direction of the receiver
+    void Knockback(Transform attacker, float amount);
+
+    string tag { get; set; }
 }
