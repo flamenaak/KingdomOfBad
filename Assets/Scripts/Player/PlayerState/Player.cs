@@ -262,7 +262,6 @@ public class Player : Fighter, IHasCombat
 
     public void Damage(float amount)
     {
-        Debug.Log("Damage");
         Core.Combat.Damage(amount);
         Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
         ResetRegen();
@@ -286,18 +285,15 @@ public class Player : Fighter, IHasCombat
 
     public void Knockback(Transform attacker, float amount)
     {
-        Debug.Log("Knockback");
         Core.Combat.Knockback();
         if(attacker.position.x < this.transform.position.x)
         {
             if (Core.Movement.IsFacingRight)
             {
-                Debug.Log(1);
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
             else
             {
-                Debug.Log(2);
                 RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
@@ -305,12 +301,10 @@ public class Player : Fighter, IHasCombat
         {
             if (Core.Movement.IsFacingRight)
             {
-                Debug.Log(3);
                 RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
             else
             {
-                Debug.Log(4);
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }

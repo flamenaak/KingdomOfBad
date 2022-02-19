@@ -31,6 +31,7 @@ public class CrossbowmanReloadState : EnemyRangedAttackState
         base.FixedUpdate();
         if (crossbowman.enemyAI.ShouldDodge(detectedHostile))
         {
+            startTime = Time.time;
             stateMachine.ChangeState(crossbowman.DodgeState);
         }
         else if(Time.time - startTime >= duration)

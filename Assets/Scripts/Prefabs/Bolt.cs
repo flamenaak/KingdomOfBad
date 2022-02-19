@@ -26,6 +26,7 @@ public class Bolt : MonoBehaviour
         if (collision.tag.Equals("Player"))
         {
             collision.GetComponentInParent<IHasCombat>().Damage(1);
+            collision.GetComponentInParent<IHasCombat>().Knockback(Entity.transform, 10);
             Destroy(gameObject);
         }
     }
