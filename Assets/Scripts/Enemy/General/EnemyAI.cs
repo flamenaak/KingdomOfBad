@@ -19,18 +19,21 @@ public class EnemyAI : MonoBehaviour
             Debug.LogError("Enemy AI awake cannot find enemy");
     }
 
-    public bool CanSeePlayer()
-    {
-        return Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);        
-    }
-
     public virtual Transform DetectHostile()
     {
-        RaycastHit2D hostileHit = Physics2D.Raycast(playerCheck.position, enemy.Core.Movement.GetFacingDirection() * Vector2.right, LineOfSight, WhatIsPlayer);
-        if (hostileHit)
-        {
-            return hostileHit.collider.transform;
-        }
+        Collider2D possibleHit = Physics2D.OverlapCircle(playerCheck.position, LineOfSight, WhatIsPlayer);
+
+        if (!possibleHit) return null;
+
+        Vector2 enemyToHostile = possibleHit.transform.position - enemy.transform.position;
+
+        float angle = Vector2.Angle(Vector2.right * enemy.Core.Movement.GetFacingDirection(), enemyToHostile);
+        if (angle > 90) return null;
+
+        RaycastHit2D wallHit = Physics2D.Linecast(enemy.transform.position, possibleHit.transform.position, enemy.Core.Movement.Data.WhatIsGround);
+
+        if (!wallHit) return possibleHit.transform;
+
         return null;
     }
 
@@ -69,7 +72,7 @@ public class EnemyAI : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        if(playerCheck && enemy && enemy.Core && enemy.Core.Movement)
+        if (playerCheck && enemy && enemy.Core && enemy.Core.Movement)
             Gizmos.DrawLine(playerCheck.position, playerCheck.position + (Vector3)(enemy.Core.Movement.GetFacingDirection() * Vector2.right * LineOfSight));
     }
 
@@ -85,11 +88,13 @@ public delegate bool AIDecisionFunction(Transform detectedHostile);
 
 public class DecisionFunction_State_Tuple : System.Tuple<AIDecisionFunction, State>
 {
-     public AIDecisionFunction DecisionFunction{
+    public AIDecisionFunction DecisionFunction
+    {
         get => Item1;
     }
 
-    public State NextState {
+    public State NextState
+    {
         get => Item2;
     }
 
