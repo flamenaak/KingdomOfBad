@@ -21,8 +21,7 @@ public class CrossbowmanAI : EnemyAI
 
     public override Vector2 DetermineDodgePosition(Vector2 target)
     {
-        return Vector2.zero;
-        
+        return base.DetermineDodgePosition(target);
     }
 
     public override Transform SearchForHostile()
@@ -34,33 +33,26 @@ public class CrossbowmanAI : EnemyAI
     {
         if (!entity)
             return false;
-        return Distance(entity) > 9;
+        return Distance(entity) > 9 && crossbowman.CanShoot && crossbowman.reloaded;
     }
 
     public override bool ShouldDodge(Transform entity)
     {
         if (!entity)
             return false;
-        if (crossbowman.CanDodge)
-        {
-            float dist = Distance(entity);
-            return (dist < 5f);
-        }
-        return false;
+        return Distance(entity) < 5 && crossbowman.CanDodge;
     }
 
     public override bool ShouldMelleeAttack(Transform entity)
     {
-        return base.ShouldMelleeAttack(entity);
+        return false;
     }
 
     public override bool ShouldRangeAttack(Transform entity)
     {
-        if (crossbowman.CanShoot)
-        {
-            float dist = Distance(entity);
-            return (dist >= 5f);
-        }
-        return false;
+        if (!entity)
+            return false;
+        return Distance(entity) >= 5 && crossbowman.CanShoot && crossbowman.reloaded;
     }
+
 }

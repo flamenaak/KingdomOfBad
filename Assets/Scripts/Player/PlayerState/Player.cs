@@ -248,13 +248,20 @@ public class Player : Fighter, IHasCombat
 
             while (Core.Combat.Data.currentHealth < Core.Combat.Data.maxHealth)
             {
-                Core.Combat.Data.currentHealth += Core.Combat.Data.maxHealth / 100;
-                Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
-                yield return staminaRegenTick;
+                if (Core.Combat.Data.currentHealth == Core.Combat.Data.maxHealth)
+                {
+                    yield return null;
+                }
+                else
+                {
+                    Core.Combat.Data.currentHealth += Core.Combat.Data.maxHealth / 100;
+                    Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
+                    yield return staminaRegenTick;
+                }
             }
             staminaRegen = null;
         }
-        else
+        else 
         {
             yield return null;
         }

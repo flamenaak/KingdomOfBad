@@ -7,7 +7,7 @@ public class CrossbowmanReloadState : EnemyRangedAttackState
     Crossbowman crossbowman;
     public CrossbowmanReloadState(Crossbowman enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        duration = 3f;
+        duration = 2;
         crossbowman = enemy;
     }
 
@@ -19,6 +19,7 @@ public class CrossbowmanReloadState : EnemyRangedAttackState
     public override void Enter()
     {
         base.Enter();
+        crossbowman.CanShoot.StartCooldownTimer();
     }
 
     public override void Exit()
@@ -31,10 +32,9 @@ public class CrossbowmanReloadState : EnemyRangedAttackState
         base.FixedUpdate();
         if (crossbowman.enemyAI.ShouldDodge(detectedHostile))
         {
-            startTime = Time.time;
             stateMachine.ChangeState(crossbowman.DodgeState);
         }
-        else if(Time.time - startTime >= duration)
+        if(Time.time - startTime >= duration)
         {
             crossbowman.reloaded = true;
             stateMachine.ChangeState(crossbowman.HostileSpottedState);

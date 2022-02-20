@@ -33,6 +33,5 @@ public class FloatState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
-        player.DepleteStamina(1);
     }
 }

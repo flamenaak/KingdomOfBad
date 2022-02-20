@@ -18,7 +18,6 @@ public class CrossbowmanDodgeState : EnemyDodgeState
     public override void Enter()
     {
         base.Enter();
-        crossbowman.startDashGravityEffect();
         crossbowman.CanDodge.StartCooldownTimer();
     }
 
@@ -30,25 +29,27 @@ public class CrossbowmanDodgeState : EnemyDodgeState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (!crossbowman.Core.Movement.HasClearPath(crossbowman.transform, Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 5))
+        if(Time.time - startTime < 0.45f)
         {
-            enemy.Core.Movement.Flip();
-        }
-        crossbowman.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.RunSpeed);
+            if (!crossbowman.Core.Movement.HasClearPath(crossbowman.transform, Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 2))
+            {
+                enemy.Core.Movement.Flip();
+            }
+            crossbowman.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.RunSpeed);
+            return;
+        }      
 
-        if (crossbowman.enemyAI.ShouldRangeAttack(detectedHostile))
+        if (crossbowman.enemyAI.Distance(detectedHostile) >= 5 && !crossbowman.CanShoot && !crossbowman.reloaded)
         {
-            enemy.Core.Movement.Flip();
-            if (crossbowman.reloaded)
-            {
-                stateMachine.ChangeState(crossbowman.RangedAttackState);
-            }
-            else if (!crossbowman.reloaded)
-            {
-                stateMachine.ChangeState(crossbowman.CrossbowmanReloadState);
-            }
+            stateMachine.ChangeState(crossbowman.CrossbowmanReloadState);
         }
-        else if (Time.time - startTime >= 1.56f)
+
+        else if (crossbowman.enemyAI.ShouldRangeAttack(detectedHostile))
+        {
+            stateMachine.ChangeState(crossbowman.RangedAttackState);
+        }
+
+        if (Time.time - startTime >= 0.45f)
         {
             stateMachine.ChangeState(crossbowman.HostileSpottedState);
         }
