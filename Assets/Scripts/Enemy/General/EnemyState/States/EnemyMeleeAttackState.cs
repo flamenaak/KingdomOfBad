@@ -32,7 +32,6 @@ public class EnemyMeleeAttackState : EnemyHostileSpottedState
 
         if (enemy.enemyAI.ShouldMelleeAttack(detectedHostile))
         {
-            enemy.Core.Combat.Attack();
             DoChecks();
         } else {
             base.FixedUpdate();

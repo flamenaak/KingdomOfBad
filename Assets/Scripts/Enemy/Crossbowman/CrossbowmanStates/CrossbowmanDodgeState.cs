@@ -18,7 +18,7 @@ public class CrossbowmanDodgeState : EnemyDodgeState
     public override void Enter()
     {
         base.Enter();
-        crossbowman.CanDodge.StartCooldownTimer();
+        enemy.Core.Movement.Flip();
     }
 
     public override void Exit()
@@ -28,31 +28,21 @@ public class CrossbowmanDodgeState : EnemyDodgeState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        //DoChecks();
         if(Time.time - startTime < 0.45f)
         {
-            if (!crossbowman.Core.Movement.HasClearPath(crossbowman.transform, Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 2))
+            Vector2 dashPos = crossbowman.Core.Movement.DetermineDashDestination(crossbowman.transform);
+            crossbowman.CanDodge.StartCooldownTimer();
+            if (!crossbowman.Core.Movement.HasClearPath(crossbowman.transform, (Vector2)crossbowman.transform.position + Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 1f) 
+                || crossbowman.Core.CollisionSenses.IsReachingEdge())
             {
                 enemy.Core.Movement.Flip();
+                dashPos = crossbowman.Core.Movement.DetermineDashDestination(crossbowman.transform);
             }
-            crossbowman.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.RunSpeed);
+            crossbowman.RigidBody.MovePosition(dashPos);
             return;
-        }      
-
-        if (crossbowman.enemyAI.Distance(detectedHostile) >= 5 && !crossbowman.CanShoot && !crossbowman.reloaded)
-        {
-            stateMachine.ChangeState(crossbowman.CrossbowmanReloadState);
         }
-
-        else if (crossbowman.enemyAI.ShouldRangeAttack(detectedHostile))
-        {
-            stateMachine.ChangeState(crossbowman.RangedAttackState);
-        }
-
-        if (Time.time - startTime >= 0.45f)
-        {
-            stateMachine.ChangeState(crossbowman.HostileSpottedState);
-        }
+        stateMachine.ChangeState(crossbowman.HostileSpottedState);     
     }
 
     public override void Update()

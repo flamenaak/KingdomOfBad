@@ -33,7 +33,7 @@ public class CrossbowmanAI : EnemyAI
     {
         if (!entity)
             return false;
-        return Distance(entity) > 9 && crossbowman.CanShoot && crossbowman.reloaded;
+        return Distance(entity) > 9 && crossbowman.reloaded;
     }
 
     public override bool ShouldDodge(Transform entity)
@@ -52,7 +52,7 @@ public class CrossbowmanAI : EnemyAI
     {
         if (!entity)
             return false;
-        return Distance(entity) >= 5 && crossbowman.CanShoot && crossbowman.reloaded;
+        return Distance(entity) >= 5 && crossbowman.reloaded;
     }
 
 }

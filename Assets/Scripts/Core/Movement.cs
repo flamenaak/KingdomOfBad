@@ -6,6 +6,10 @@ public class Movement : CoreComponent
 {
     public bool IsFacingRight = true;
 
+    public Vector2 from;
+
+    public Vector2 to;
+
     public DataMovement Data;
 
     public int GetFacingDirection()
@@ -21,21 +25,14 @@ public class Movement : CoreComponent
         RaycastHit2D raycastHit2D = Physics2D.Raycast(entityTransform.transform.position,
             Vector2.right * GetFacingDirection(),
             Mathf.Abs(((Vector2)entityTransform.transform.position - dashPosition).x),
-            (Data.WhatIsEnemy | Data.WhatIsGround));
+            Data.WhatIsGround);
 
         if (raycastHit2D)
         {
-            if (raycastHit2D.collider.tag.Equals("Enemy"))
-            {
-                return dashPosition;
-            }
-            else
-            {
                 var distance = raycastHit2D.distance;
                 distance -= Data.SafetyOffsetX;
                 distance = distance > 0 ? distance : 0;
                 return (Vector2)entityTransform.transform.position + (Vector2.right * GetFacingDirection() * distance);
-            }
         }
         return dashPosition - (Vector2.right * GetFacingDirection() * Data.SafetyOffsetX);
     }
@@ -130,6 +127,13 @@ public class Movement : CoreComponent
     /// <returns> True if the path between current position and the targetLocation does not intercept Data.WhatIsGround layer mast</returns>
     public bool HasClearPath(Transform currentBody, Vector2 targetLocation)
     {
+        from = currentBody.position;
+        to = targetLocation;
         return !Physics2D.Linecast(currentBody.position, targetLocation, Data.WhatIsGround);
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(from, to);
     }
 }

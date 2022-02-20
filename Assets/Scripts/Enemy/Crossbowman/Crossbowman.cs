@@ -5,11 +5,31 @@ using UnityEngine;
 public class Crossbowman : Enemy
 {
     public CooldownComponent CanDodge;
-    public CooldownComponent CanShoot;
 
     public bool reloaded = true;
     public GameObject bolt;
     public CrossbowmanReloadState CrossbowmanReloadState { get; set; }
+    public override List<DecisionFunction_State_Tuple> DecisionFunctions
+    {
+        get
+        {
+            return new List<DecisionFunction_State_Tuple> {
+               new DecisionFunction_State_Tuple(ShouldReload, CrossbowmanReloadState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldRangeAttack, RangedAttackState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldDodge, DodgeState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldChase, ChaseState)
+               };
+        }
+    }
+
+    private bool ShouldReload(Transform entity)
+    {
+        if(!entity)
+        {
+            return false;
+        }
+        return enemyAI.Distance(entity) >= 5 && !reloaded;
+    }
 
     public override void Awake()
     {

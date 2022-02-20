@@ -27,13 +27,13 @@ public class Enemy : Fighter, IHasCombat
     public GameObject Awarness;
 
     public Rigidbody2D RigidBody;
-    public List<DecisionFunction_State_Tuple> DecisionFunctions {
+    public virtual List<DecisionFunction_State_Tuple> DecisionFunctions {
         get {
            return new List<DecisionFunction_State_Tuple> { 
-               new (enemyAI.ShouldDodge, DodgeState),
-               new (enemyAI.ShouldRangeAttack, RangedAttackState),
-               new (enemyAI.ShouldMelleeAttack, MeleeAttackState),
-               new (enemyAI.ShouldChase, ChaseState)
+               new DecisionFunction_State_Tuple(enemyAI.ShouldDodge, DodgeState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldRangeAttack, RangedAttackState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldMelleeAttack, MeleeAttackState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldChase, ChaseState)
                };
         }
     }

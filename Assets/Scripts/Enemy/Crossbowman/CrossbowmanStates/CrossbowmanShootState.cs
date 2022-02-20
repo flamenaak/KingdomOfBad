@@ -30,7 +30,7 @@ public class CrossbowmanShootState : EnemyRangedAttackState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        DoChecks();
         if (Time.time - startTime >= duration)
         {
             crossbowman.reloaded = false;
