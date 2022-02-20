@@ -12,6 +12,7 @@ public class RiseState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
+        player.DepleteStamina(1);
         player.RigidBody.velocity = new Vector2(player.RigidBody.velocity.x, 10);
     }
 
