@@ -19,13 +19,60 @@ public class Combat : CoreComponent
         private set { attackPosition = value; }
     }
 
-    public CombatData Data;
+    public CombatData Data {
+        get
+        {
+            if (data)
+                return data;
 
-    public IHasCombat Entity;
+            Debug.LogError("Missing Data on " + Core.transform.parent.name);
+            return null;
+        }
 
-    public GameObject BloodSplash;
+        private set { data = value; }
+    }
 
-    public GameObject Healthbar;
+    public IHasCombat Entity
+    {
+        get
+        {
+            if (entity != null)
+                return entity;
+
+            Debug.LogError("Missing Entity on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { entity = value; }
+    }
+
+    public GameObject BloodSplash
+    {
+        get
+        {
+            if (bloodSplash)
+                return bloodSplash;
+
+            Debug.LogError("Missing Bloodsplash on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { bloodSplash = value; }
+    }
+
+    public GameObject Healthbar
+    {
+        get
+        {
+            if (healthbar)
+                return healthbar;
+
+            Debug.LogError("Missing Healthbar on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { healthbar = value; }
+    }
 
     public bool damaged;
 
@@ -35,6 +82,15 @@ public class Combat : CoreComponent
 
     [SerializeField]
     private Transform attackPosition;
+    [SerializeField]
+    private GameObject healthbar;
+    [SerializeField]
+    private GameObject bloodSplash;
+    [SerializeField]
+    private IHasCombat entity;
+    [SerializeField]
+    private CombatData data;
+
 
     public void Damage(float amount)
     {
