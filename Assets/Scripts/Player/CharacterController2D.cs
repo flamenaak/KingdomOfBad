@@ -74,14 +74,12 @@ public class CharacterController2D : MonoBehaviour
     {
         return Input.GetButton("Slash");
     }
-
     public bool GetStabInput()
     {
 
         return Input.GetButtonUp("Stab");
 
     }
-
     public bool GetWindUpInput()
     {
         return Input.GetButtonDown("Stab");

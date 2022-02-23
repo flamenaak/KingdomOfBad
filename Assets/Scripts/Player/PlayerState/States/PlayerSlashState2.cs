@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSlashState : PlayerGroundedState
+public class PlayerSlashState2 : PlayerGroundedState
 {
-    public PlayerSlashState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerSlashState2(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -22,32 +22,30 @@ public class PlayerSlashState : PlayerGroundedState
 
     public override void Exit()
     {
-
         base.Exit();
-        
     }
 
     public override void FixedUpdate()
     {
-        if(Time.time - startTime >= 0 && Time.time - startTime < 0.36)
+        if (Time.time - startTime >= 0 && Time.time - startTime < 0.36)
         {
             Vector3 slashPosition = player.Core.Movement.DetermineSlashPosition(player.transform);
             player.RigidBody.MovePosition(slashPosition);
         }
-        else if (Time.time - startTime > 0.36f)
+        if (Time.time - startTime > 0.36f)
         {
             player.RigidBody.velocity = new Vector2(xInput, player.RigidBody.velocity.y);
             if (Time.time - startTime >= 1.06f)
             {
-                    stateMachine.ChangeState(player.IdleState);
-            }           
+                stateMachine.ChangeState(player.IdleState);
+            }
         }
     }
     //The raw inputs are required otherwise it doesn't work
     public override void Update()
     {
         base.Update();
-       if(Time.time - startTime > 0.36f)
+        if (Time.time - startTime > 0.36f)
         {
             if (Input.GetButtonDown("Stab") && player.canStab && player.HaveEnoughStamina())
             {
@@ -55,9 +53,9 @@ public class PlayerSlashState : PlayerGroundedState
             }
             else if (Input.GetButtonDown("Slash") && player.canSlash && player.HaveEnoughStamina())
             {
-                stateMachine.ChangeState(player.SlashState2);
+                stateMachine.ChangeState(player.SlashState);
             }
-            else if(Input.GetButton("Dash") && player.canDashOrEvade && player.HaveEnoughStamina())
+            else if (Input.GetButton("Dash") && player.canDashOrEvade && player.HaveEnoughStamina())
             {
                 stateMachine.ChangeState(player.EvadeState);
             }
