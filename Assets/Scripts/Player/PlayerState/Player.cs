@@ -75,10 +75,6 @@ public class Player : MonoBehaviour, IHasCombat
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
 
-    public float pushRecoverySpeed = 0.2F;
-    public float slashDamage = 1;
-    public float attackRange = 0.5f;
-
     protected float immuneTime = 1.0F;
     protected float lastImmune;
 
@@ -131,8 +127,8 @@ public class Player : MonoBehaviour, IHasCombat
     {
         StateMachine.CurrentState.Update();
         Vector2 velocity = RigidBody.velocity;
-        if ((velocity.x < -0.1f && transform.localScale.x > 0)
-        || (velocity.x > 0.1f && transform.localScale.x < 0))
+        if ((velocity.x < -0.5f && Core.Movement.GetFacingDirection() > 0 && Controller.ReadInputX() < 0)
+        || (velocity.x > 0.5f && Core.Movement.GetFacingDirection() < 0 && Controller.ReadInputX() > 0))
         {
             Core.Movement.Flip();
         }

@@ -36,7 +36,7 @@ public class PlayerSlashState : PlayerGroundedState
         }
         else if (Time.time - startTime > 0.36f)
         {
-            player.RigidBody.velocity = new Vector2(xInput, player.RigidBody.velocity.y);
+            player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);
             if (Time.time - startTime >= 1.06f)
             {
                 stateMachine.ChangeState(player.IdleState);
@@ -55,7 +55,6 @@ public class PlayerSlashState : PlayerGroundedState
             }
             else if (Input.GetButtonDown("Slash") && player.canSlash && player.HaveEnoughStamina())
             {
-                //stateMachine.ChangeState(player.SlashState2);
                 SwitchSlashState();
             }
             else if (Input.GetButton("Dash") && player.canDashOrEvade && player.HaveEnoughStamina())

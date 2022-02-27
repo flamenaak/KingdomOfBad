@@ -28,7 +28,7 @@ public class Crossbowman : Enemy
         {
             return false;
         }
-        return enemyAI.Distance(entity) >= 5 && !reloaded;
+        return enemyAI.Distance(entity) >= 5 && !reloaded || !reloaded;
     }
 
     public override void Awake()

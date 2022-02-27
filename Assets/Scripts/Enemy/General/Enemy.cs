@@ -18,10 +18,7 @@ public class Enemy : MonoBehaviour, IHasCombat
 
 
     public bool aware;
-    public Core Core;
-    
-    public float slashDamage = 1;
-    public float attackRange = 0.5f;
+    public Core Core;    
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
     public GameObject Awarness;

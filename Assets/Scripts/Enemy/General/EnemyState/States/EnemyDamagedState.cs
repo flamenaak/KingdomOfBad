@@ -19,11 +19,6 @@ public class EnemyDamagedState : EnemyState
         base.Enter();
     }
 
-    public override bool Equals(object obj)
-    {
-        return base.Equals(obj);
-    }
-
     public override void Exit()
     {
         enemy.Core.Combat.damaged = false;
@@ -35,19 +30,13 @@ public class EnemyDamagedState : EnemyState
         base.FixedUpdate();
         if (Time.time - startTime > duration)
         {
+            if (!enemy.enemyAI.DetectHostile())
+            {
+                enemy.Core.Movement.Flip();
+            }
             stateMachine.ChangeState(enemy.IdleState);
             return;
         }
-    }
-
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
-
-    public override string ToString()
-    {
-        return base.ToString();
     }
 
     public override void Update()
