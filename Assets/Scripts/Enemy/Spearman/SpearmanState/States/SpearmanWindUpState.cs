@@ -35,6 +35,10 @@ public class SpearmanWindUpState : EnemyState
             stateMachine.ChangeState(spearman.StabState);
             return;
         }
+        if (spearman.spearmanAI.ShouldSlash(detectedHostile))
+        {
+            stateMachine.ChangeState(spearman.SlashState);
+        }
 
     }
 
