@@ -31,7 +31,6 @@ public class SpearmanSlashState : EnemyHostileSpottedState
         DoChecks();
         if (detectedHostile && spearman.spearmanAI.ShouldSlash(detectedHostile))
         {
-            enemy.Core.Combat.Attack();
             return;
         }
         else

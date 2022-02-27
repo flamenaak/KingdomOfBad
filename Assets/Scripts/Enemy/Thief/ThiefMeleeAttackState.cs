@@ -47,7 +47,6 @@ public class ThiefMeleeAttackState : EnemyMeleeAttackState
         }
         else
         {
-            thief.Core.Combat.Attack();
             if (proximityAttackStartTime == 0)
             {
                 proximityAttackStartTime = Time.time;

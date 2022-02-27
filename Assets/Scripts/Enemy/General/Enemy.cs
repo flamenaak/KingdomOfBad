@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Fighter
+public class Enemy : MonoBehaviour, IHasCombat
 {
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}
@@ -27,13 +27,13 @@ public class Enemy : Fighter
     public GameObject Awarness;
 
     public Rigidbody2D RigidBody;
-    public List<DecisionFunction_State_Tuple> DecisionFunctions {
+    public virtual List<DecisionFunction_State_Tuple> DecisionFunctions {
         get {
            return new List<DecisionFunction_State_Tuple> { 
-               new (enemyAI.ShouldDodge, DodgeState),
-               new (enemyAI.ShouldRangeAttack, RangedAttackState),
-               new (enemyAI.ShouldMelleeAttack, MeleeAttackState),
-               new (enemyAI.ShouldChase, ChaseState)
+               new DecisionFunction_State_Tuple(enemyAI.ShouldDodge, DodgeState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldRangeAttack, RangedAttackState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldMelleeAttack, MeleeAttackState),
+               new DecisionFunction_State_Tuple(enemyAI.ShouldChase, ChaseState)
                };
         }
     }
@@ -86,9 +86,53 @@ public class Enemy : Fighter
         StateMachine.CurrentState.FixedUpdate();
     }
 
-    private void Damage(float dmg)
+    public void Damage(float amount)
     {
-        Core.Combat.Damage(dmg);
+        Core.Combat.Damage(amount);
+        Core.Combat.Healthbar.transform.localScale -= new Vector3(Core.Combat.Data.maxHealth / 500, 0, 0);
+        if (Core.Combat.Data.currentHealth > 0.0f)
+        {
+            Core.Combat.damaged = true;
+        }
+        else if (Core.Combat.Data.currentHealth <= 0.0f)
+        {
+            Die();
+        }
     }
 
+    public void Die()
+    {
+        Core.Combat.Die();
+        Core.Combat.Healthbar.SetActive(false);
+        GetComponent<BoxCollider2D>().enabled = false;
+        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionX;
+        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;
+    }
+
+    public void Knockback(Transform attacker, float amount)
+    {
+        Core.Combat.Knockback();
+        if (attacker.position.x < this.transform.position.x)
+        {
+            if (Core.Movement.IsFacingRight)
+            {
+                RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+            else
+            {
+                RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+        }
+        else if (attacker.position.x > this.transform.position.x)
+        {
+            if (Core.Movement.IsFacingRight)
+            {
+                RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+            else
+            {
+                RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+        }
+    }
 }

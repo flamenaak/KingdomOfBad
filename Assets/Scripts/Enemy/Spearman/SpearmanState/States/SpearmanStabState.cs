@@ -32,7 +32,6 @@ public class SpearmanStabState : EnemyState
         base.FixedUpdate();
             Vector3 stabPosition = enemy.Core.Movement.DetermineStabPosition(enemy.transform);
             enemy.RigidBody.MovePosition(stabPosition);
-            enemy.Core.Combat.Attack();
             if (Time.time - startTime > duration)
             {
                 stateMachine.ChangeState(spearman.AfterStabState);

@@ -21,21 +21,14 @@ public class Movement : CoreComponent
         RaycastHit2D raycastHit2D = Physics2D.Raycast(entityTransform.transform.position,
             Vector2.right * GetFacingDirection(),
             Mathf.Abs(((Vector2)entityTransform.transform.position - dashPosition).x),
-            (Data.WhatIsEnemy | Data.WhatIsGround));
+            Data.WhatIsGround);
 
         if (raycastHit2D)
         {
-            if (raycastHit2D.collider.tag.Equals("Enemy"))
-            {
-                return dashPosition;
-            }
-            else
-            {
                 var distance = raycastHit2D.distance;
                 distance -= Data.SafetyOffsetX;
                 distance = distance > 0 ? distance : 0;
                 return (Vector2)entityTransform.transform.position + (Vector2.right * GetFacingDirection() * distance);
-            }
         }
         return dashPosition - (Vector2.right * GetFacingDirection() * Data.SafetyOffsetX);
     }

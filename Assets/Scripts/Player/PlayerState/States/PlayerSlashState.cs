@@ -19,6 +19,7 @@ public class PlayerSlashState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.DepleteStamina(1);
         player.startSlashCoolDown();
     }
 
@@ -33,7 +34,6 @@ public class PlayerSlashState : PlayerGroundedState
     {
         Vector3 slashPosition = player.Core.Movement.DetermineSlashPosition(player.transform);
         player.RigidBody.MovePosition(slashPosition);
-        player.Core.Combat.Attack();
         if (Time.time - startTime > 0.36f)
         {
             stateMachine.ChangeState(player.IdleState);

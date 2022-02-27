@@ -40,7 +40,6 @@ public class ThiefLungeState : EnemyHostileSpottedState
         {
             Vector2 target = thief.Core.Movement.DetermineStabPosition(enemy.transform);
             thief.RigidBody.MovePosition(target);
-            thief.Core.Combat.Attack();
             DoChecks();
         }
     }

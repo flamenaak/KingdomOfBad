@@ -34,11 +34,11 @@ public class PlayerWindUpState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.LiftState);
         }
-        else if (dashAndEvade && player.canDashOrEvade)
+        else if (dashAndEvade && player.canDashOrEvade && player.HaveEnoughStamina())
         {
             stateMachine.ChangeState(player.EvadeState);
         }
-        else if (slash && player.canSlash)
+        else if (slash && player.canSlash && player.HaveEnoughStamina())
         {
             stateMachine.ChangeState(player.SlashState);
             player.RigidBody.velocity = new Vector2(0, player.RigidBody.velocity.y);

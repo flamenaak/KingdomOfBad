@@ -1,7 +1,9 @@
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using System.Collections;
 
-public class Player : Fighter
+public class Player : MonoBehaviour, IHasCombat
 {
     public StateMachine StateMachine { get; private set; }
 
@@ -47,6 +49,11 @@ public class Player : Fighter
     // cooldown to allow fall from hanging state without continuos re-latching
     float hangCooldown = 0.5f;
     public bool CanHang = true;
+
+    float StaminaCooldown = 1.5f;
+    private WaitForSeconds staminaRegenTick = new WaitForSeconds(0.1f);
+    private Coroutine staminaRegen;
+    public bool canRegen = true;
 
     #endregion
     public Animator Anim { get; private set; }
@@ -122,22 +129,12 @@ public class Player : Fighter
     private void Update()
     {
         StateMachine.CurrentState.Update();
-        Core.Combat.CheckKnockback();
         Vector2 velocity = RigidBody.velocity;
         if ((velocity.x < -0.1f && transform.localScale.x > 0)
         || (velocity.x > 0.1f && transform.localScale.x < 0))
         {
             Core.Movement.Flip();
         }
-        if (Core.Combat.damaged)
-        {
-            StateMachine.ChangeState(DamagedState);
-        }
-        else if (Core.Combat.Data.currentHealth <= 0)
-        {
-            StateMachine.ChangeState(DeathState);
-        }
-
     }
 
     // physics
@@ -217,8 +214,106 @@ public class Player : Fighter
         StateMachine.ChangeState(IdleState);
     }
 
-    private void Damage(float dmg)
+    public bool HaveEnoughStamina()
     {
-        Core.Combat.Damage(dmg);
+        return Core.Combat.Data.currentHealth >= 1.0;    
+    }
+
+    void ResetRegen()
+    {
+        if (staminaRegen != null)
+        {
+            StopCoroutine(staminaRegen);
+        }
+        staminaRegen = StartCoroutine(RegenStamina());
+    }
+
+    public void DepleteStamina(float amount)
+    {
+        Core.Combat.Data.currentHealth -= amount;
+        if(Core.Combat.Data.currentHealth < 0.0f)
+        {
+            Core.Combat.Data.currentHealth = 0.0f;
+        }
+        Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
+    
+        ResetRegen();
+    }
+
+    private IEnumerator RegenStamina()
+    {
+        if (canRegen)
+        {
+            yield return new WaitForSeconds(StaminaCooldown);
+
+            while (Core.Combat.Data.currentHealth < Core.Combat.Data.maxHealth)
+            {
+                if (Core.Combat.Data.currentHealth == Core.Combat.Data.maxHealth)
+                {
+                    yield return null;
+                }
+                else
+                {
+                    Core.Combat.Data.currentHealth += Core.Combat.Data.maxHealth / 100;
+                    Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
+                    yield return staminaRegenTick;
+                }
+            }
+            staminaRegen = null;
+        }
+        else 
+        {
+            yield return null;
+        }
+    }
+
+    public void Damage(float amount)
+    {
+        Core.Combat.Damage(amount);
+        Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
+        ResetRegen();
+        if (Core.Combat.Data.currentHealth > 0.0f)
+        {
+            Core.Combat.damaged = true;
+            StateMachine.ChangeState(DamagedState);
+        }
+        else if (Core.Combat.Data.currentHealth <= 0.0f)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        canRegen = false;
+        Core.Combat.Die();
+        StateMachine.ChangeState(DeathState);
+    }
+
+    public void Knockback(Transform attacker, float amount)
+    {
+        Core.Combat.Knockback();
+        if(attacker.position.x < this.transform.position.x)
+        {
+            if (Core.Movement.IsFacingRight)
+            {
+                RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+            else
+            {
+                RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+        }
+        else if(attacker.position.x > this.transform.position.x)
+        {
+            if (Core.Movement.IsFacingRight)
+            {
+                RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+            else
+            {
+                RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
+            }
+        }
     }
 }

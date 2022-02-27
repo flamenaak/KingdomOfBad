@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Combat : CoreComponent
 {
@@ -18,13 +19,60 @@ public class Combat : CoreComponent
         private set { attackPosition = value; }
     }
 
-    public CombatData Data;
+    public CombatData Data {
+        get
+        {
+            if (data)
+                return data;
 
-    public GameObject Entity;
+            Debug.LogError("Missing Data on " + Core.transform.parent.name);
+            return null;
+        }
 
-    public GameObject BloodSplash;
+        private set { data = value; }
+    }
 
-    public GameObject Healthbar;
+    public IHasCombat Entity
+    {
+        get
+        {
+            if (entity != null)
+                return entity;
+
+            Debug.LogError("Missing Entity on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { entity = value; }
+    }
+
+    public GameObject BloodSplash
+    {
+        get
+        {
+            if (bloodSplash)
+                return bloodSplash;
+
+            Debug.LogError("Missing Bloodsplash on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { bloodSplash = value; }
+    }
+
+    public GameObject Healthbar
+    {
+        get
+        {
+            if (healthbar)
+                return healthbar;
+
+            Debug.LogError("Missing Healthbar on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { healthbar = value; }
+    }
 
     public bool damaged;
 
@@ -34,6 +82,15 @@ public class Combat : CoreComponent
 
     [SerializeField]
     private Transform attackPosition;
+    [SerializeField]
+    private GameObject healthbar;
+    [SerializeField]
+    private GameObject bloodSplash;
+    [SerializeField]
+    private IHasCombat entity;
+    [SerializeField]
+    private CombatData data;
+
 
     public void Damage(float amount)
     {
@@ -41,22 +98,11 @@ public class Combat : CoreComponent
         {
             Data.currentHealth -= amount;
             startCanTakeDamageCoolDown();
-            Healthbar.transform.localScale -= new Vector3(Data.maxHealth / 100, 0, 0);
-            if (Data.currentHealth > 0.0f)
-            {
-                Knockback();
-                damaged = true;
-            }
-            else if (Data.currentHealth <= 0.0f)
-            {
-                Healthbar.transform.localScale = new Vector3(0, 0, 0);
-                Die();
-            }
         }
        
     }
 
-    public void Attack()
+    public void FixedUpdate()
     {
         Collider2D collision = attackPosition.GetComponent<CircleCollider2D>();
         if (!collision.enabled)
@@ -71,37 +117,21 @@ public class Combat : CoreComponent
             collision.GetContacts(filter, colliders);
             if (colliders.Count > 0 && collision.enabled)
             {
-                if (Entity.tag.Equals("Player"))
-                {
-                    colliders[0].GetComponentInParent<Enemy>().SendMessage("Damage", Data.damage);
-                }
-                else
-                {
-                    colliders[0].GetComponentInParent<Player>().SendMessage("Damage", Data.damage);
-                }
-
+                IHasCombat IHasCombat = colliders[0].GetComponentInParent<IHasCombat>();
+                IHasCombat.Knockback(attackPosition, Data.knockbackSpeedX);               
+                IHasCombat.Damage(Data.damage);
             }
         }
     
     }
 
-    private void Knockback()
+    public void Knockback()
     {
-        Data.knockback = true;
-        Data.knockbackStart = Time.time;
-        Entity.GetComponent<Rigidbody2D>().velocity = new Vector2(Data.knockbackSpeedX * -Core.Movement.GetFacingDirection(), Data.knockbackSpeedY);
+        Core.Combat.Data.knockback = true;
+        Core.Combat.Data.knockbackStart = Time.time;
     }
 
-    public void CheckKnockback()
-    {
-        if (Time.time >= Data.knockbackStart + Data.knockbackDuration && Data.knockback)
-        {
-            Data.knockback = false;
-            Entity.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, Entity.GetComponent<Rigidbody2D>().velocity.y);
-        }
-    }
-
-    private void Die()
+    public void Die()
     {
         Instantiate(BloodSplash, transform.position, Quaternion.identity);
     }
@@ -117,4 +147,14 @@ public class Combat : CoreComponent
         canTakeDamage = true;
     }
 
+}
+
+public interface IHasCombat 
+{
+    void Damage(float amount);
+
+    void Die();
+
+    //Applies knockback to itself depending on the position of the attacker and facing direction of the receiver
+    void Knockback(Transform attacker, float amount);
 }

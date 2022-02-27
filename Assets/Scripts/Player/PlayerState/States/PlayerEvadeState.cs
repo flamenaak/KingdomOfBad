@@ -17,6 +17,7 @@ public class PlayerEvadeState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.DepleteStamina(1);
         player.startDashCoolDown();
         player.startDashGravityEffect();
     }
@@ -30,7 +31,6 @@ public class PlayerEvadeState : PlayerGroundedState
     {
         Vector3 dashPosition = player.Core.Movement.DetermineEvadePosition(player.transform);
         player.RigidBody.MovePosition(dashPosition);
-
         if(Time.time - startTime > 0.3f)
         {
             stateMachine.ChangeState(player.IdleState);
