@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Fighter, IHasCombat
+public class Enemy : MonoBehaviour, IHasCombat
 {
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}

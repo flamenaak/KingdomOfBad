@@ -6,10 +6,6 @@ public class Movement : CoreComponent
 {
     public bool IsFacingRight = true;
 
-    public Vector2 from;
-
-    public Vector2 to;
-
     public DataMovement Data;
 
     public int GetFacingDirection()
@@ -127,13 +123,6 @@ public class Movement : CoreComponent
     /// <returns> True if the path between current position and the targetLocation does not intercept Data.WhatIsGround layer mast</returns>
     public bool HasClearPath(Transform currentBody, Vector2 targetLocation)
     {
-        from = currentBody.position;
-        to = targetLocation;
         return !Physics2D.Linecast(currentBody.position, targetLocation, Data.WhatIsGround);
-    }
-
-    public void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(from, to);
     }
 }

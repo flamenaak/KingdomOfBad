@@ -3,7 +3,7 @@ using System;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Player : Fighter, IHasCombat
+public class Player : MonoBehaviour, IHasCombat
 {
     public StateMachine StateMachine { get; private set; }
 
