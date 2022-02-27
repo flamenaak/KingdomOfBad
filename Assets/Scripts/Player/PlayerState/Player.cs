@@ -19,6 +19,7 @@ public class Player : MonoBehaviour, IHasCombat
     public FallState FallState { get; private set; }
     public LandState LandState { get; private set; }
     public PlayerSlashState SlashState { get; private set; }
+    public PlayerSlashState2 SlashState2 { get; private set; }
     public PlayerStabState StabState { get; private set; }
     public PlayerWindUpState WindUpState { get; private set; }
     public PlayerHangState HangState { get; private set; }
@@ -42,7 +43,6 @@ public class Player : MonoBehaviour, IHasCombat
     public bool canDashOrEvade = true;    
     public float SlashCooldown = 0.5f;
     public bool canSlash = true;
-
     public float StabCooldown = 1.5f;
     public bool canStab = true;
 
@@ -100,6 +100,7 @@ public class Player : MonoBehaviour, IHasCombat
         LandState = new LandState(this, StateMachine, "land");
         HangState = new PlayerHangState(this, StateMachine, "hang");
         SlashState = new PlayerSlashState(this, StateMachine, "slash");
+        SlashState2 = new PlayerSlashState2(this, StateMachine, "slash2");
         StabState = new PlayerStabState(this, StateMachine, "stab");
         WindUpState = new PlayerWindUpState(this, StateMachine, "windUp");
         ClimbState = new PlayerClimbState(this, StateMachine, "climb");
