@@ -110,12 +110,10 @@ public class Combat : CoreComponent
             return;
         }
         else
-        {
-            ContactFilter2D filter = new ContactFilter2D();
-            filter.layerMask = Data.WhatIsEnemy;
-            List<Collider2D> colliders = new List<Collider2D>();
-            collision.GetContacts(filter, colliders);
-            if (colliders.Count > 0 && collision.enabled)
+        {        
+            var colliders = Physics2D.OverlapCircleAll(collision.bounds.center, collision.bounds.extents.magnitude, Data.WhatIsEnemy);
+
+            if (colliders.Length > 0)
             {
                 IHasCombat IHasCombat = colliders[0].GetComponentInParent<IHasCombat>();
                 IHasCombat.Knockback(attackPosition, Data.knockbackSpeedX);               
