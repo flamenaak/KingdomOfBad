@@ -20,11 +20,15 @@ public class PlayerEvadeState : PlayerGroundedState
         player.DepleteStamina(1);
         player.startDashCoolDown();
         player.startDashGravityEffect();
+        player.boxCollider2D.enabled = false;
+        player.circleCollider2D.enabled = false;
     }
 
     public override void Exit()
     {
-        base.Exit();    
+        base.Exit();
+        player.boxCollider2D.enabled = true;
+        player.circleCollider2D.enabled = true;
     }
 
     public override void FixedUpdate()
