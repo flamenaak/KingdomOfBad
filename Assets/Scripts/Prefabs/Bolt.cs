@@ -7,6 +7,7 @@ public class Bolt : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D rb;
     GameObject Entity;
+    public CircleCollider2D CircleCollider2D;
     void Start()
     {
         Entity = GameObject.Find("Crossbowman");
@@ -21,14 +22,24 @@ public class Bolt : MonoBehaviour
         }
    }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void FixedUpdate()
     {
-        if (collision.tag.Equals("Player"))
+        Collider2D collision = CircleCollider2D;
+        if (!collision.enabled)
         {
-            collision.GetComponentInParent<IHasCombat>().Damage(1);
-            collision.GetComponentInParent<IHasCombat>().Knockback(Entity.transform, 10);
-            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            var colliders = Physics2D.OverlapCircleAll(collision.bounds.center, collision.bounds.extents.magnitude, Entity.GetComponent<Crossbowman>().Core.Combat.Data.WhatIsEnemy);
+
+            if (colliders.Length > 0)
+            {
+                IHasCombat IHasCombat = colliders[0].GetComponentInParent<IHasCombat>();
+                IHasCombat.Knockback(Entity.transform, 10);
+                IHasCombat.Damage(1);
+                Destroy(gameObject);
+            }
         }
     }
-
 }
