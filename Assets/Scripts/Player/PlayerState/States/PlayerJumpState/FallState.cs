@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FallState : PlayerAirState
 {
+    Vector2 startPosition;
+    Vector2 endPosition;
     public FallState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -16,6 +18,7 @@ public class FallState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
+        startPosition = player.transform.position;
     }
 
     public override void Exit()
@@ -29,6 +32,18 @@ public class FallState : PlayerAirState
         CheckAirInput();
         if (player.Core.CollisionSenses.IsGrounded())
         {
+            endPosition = player.transform.position;
+            if (startPosition.y - endPosition.y >= player.allowedFallDistance)
+            {
+                player.Damage(2);
+                stateMachine.ChangeState(player.StunState);
+                return;
+            }
+            else if (startPosition.y - endPosition.y >= player.deathFallDistance)
+            {
+                player.Damage(100);
+                return;
+            }
             stateMachine.ChangeState(player.LandState);
         }
 

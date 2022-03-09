@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LandState : PlayerState
 {
-    ParticleSystem LandDust;
     public LandState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -12,13 +11,12 @@ public class LandState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        LandDust = GameObject.Find("LandDust").GetComponent<ParticleSystem>();
-        LandDust.Play();
+        player.LandDust.Play();
     }
 
     public override void Exit()
     {
-        LandDust.Stop();
+        player.LandDust.Stop();
         base.Exit();
     }
 
@@ -46,12 +44,6 @@ public class LandState : PlayerState
             stateMachine.ChangeState(player.IdleState);
             return;
         }
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 }

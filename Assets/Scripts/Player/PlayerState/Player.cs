@@ -26,6 +26,7 @@ public class Player : MonoBehaviour, IHasCombat
     public PlayerClimbState ClimbState { get; private set; }
     public PlayerDamagedState DamagedState { get; private set; }
     public PlayerDeathState DeathState { get; private set; }
+    public PlayerStunState StunState { get; private set; }
     #endregion
 
     #region SpeedForceVariables
@@ -64,11 +65,16 @@ public class Player : MonoBehaviour, IHasCombat
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
 
+    public ParticleSystem LandDust;
+
     public Core Core { get; set; }
     private CameraMovement camera;
 
     private Vector2 startPosition;
+    public float allowedFallDistance = 4f;
+    public float deathFallDistance = 10f;
 
+    public float stunLength = 1f;
 
     public float xLedgeOffset = 0.43f;
     public float yLedgeOffset = 0f;
@@ -102,6 +108,7 @@ public class Player : MonoBehaviour, IHasCombat
         ClimbState = new PlayerClimbState(this, StateMachine, "climb");
         DeathState = new PlayerDeathState(this, StateMachine, "death");
         DamagedState = new PlayerDamagedState(this, StateMachine, "damaged");
+        StunState = new PlayerStunState(this, StateMachine, "stunned");
 
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
@@ -109,7 +116,7 @@ public class Player : MonoBehaviour, IHasCombat
 
         Core = GetComponentInChildren<Core>();
         StateMachine.Initialize(IdleState);
-
+        LandDust = GameObject.Find("LandDust").GetComponent<ParticleSystem>();
         startPosition = transform.position;
     }
 
@@ -204,7 +211,6 @@ public class Player : MonoBehaviour, IHasCombat
     {
         canDashOrEvade = true;
     }
-
     internal void Respawn()
     {
         transform.position = startPosition;
