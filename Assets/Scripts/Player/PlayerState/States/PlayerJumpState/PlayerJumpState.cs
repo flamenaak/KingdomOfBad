@@ -16,11 +16,7 @@ public class PlayerJumpState : PlayerState
 
     public override void Enter()
     {
-        // base.Enter();
         stateMachine.ChangeState(player.LiftState);
-        // player.RigidBody.velocity = new Vector2(player.RigidBody.velocity.x, 10);
-        // player.Controller.m_Grounded = false;
-        // acc = 0;
     }
 
     public override void Exit()
