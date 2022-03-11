@@ -125,17 +125,4 @@ public class Movement : CoreComponent
     {
         return !Physics2D.Linecast(currentBody.position, targetLocation, Data.WhatIsGround);
     }
-
-    public bool isPlatform(Transform currentBody)
-    {
-        RaycastHit2D raycastHit = Physics2D.Raycast(currentBody.position, Vector2.down, 1f, Data.WhatIsGround);
-        if (raycastHit.collider.tag.Equals("Collision"))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 }

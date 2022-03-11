@@ -132,10 +132,6 @@ public class Player : MonoBehaviour, IHasCombat
         {
             Core.Movement.Flip();
         }
-        /*if (Input.GetKey(KeyCode.S) && Core.Movement.isPlatform(this.transform) && Core.CollisionSenses.IsGrounded())
-        {
-            startFallThroughCoolDown();
-        }*/
     }
 
     // physics
@@ -166,19 +162,6 @@ public class Player : MonoBehaviour, IHasCombat
     void clearSlashCooldown()
     {
         canSlash = true;
-    }
-
-    public void startFallThroughCoolDown()
-    {
-        boxCollider2D.enabled = false;
-        circleCollider2D.enabled = false;
-        Invoke("clearFallThroughCooldown", 0.35f);
-    }
-
-    void clearFallThroughCooldown()
-    {
-        boxCollider2D.enabled = true;
-        circleCollider2D.enabled = true;
     }
 
     public void startStabCoolDown()
