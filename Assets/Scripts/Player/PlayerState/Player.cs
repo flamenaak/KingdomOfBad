@@ -71,6 +71,7 @@ public class Player : MonoBehaviour, IHasCombat
     private CameraMovement camera;
 
     private Vector2 startPosition;
+    public float fallDamage = 2f;
     public float allowedFallDistance = 4f;
     public float deathFallDistance = 10f;
 
@@ -116,7 +117,6 @@ public class Player : MonoBehaviour, IHasCombat
 
         Core = GetComponentInChildren<Core>();
         StateMachine.Initialize(IdleState);
-        LandDust = GameObject.Find("LandDust").GetComponent<ParticleSystem>();
         startPosition = transform.position;
     }
 

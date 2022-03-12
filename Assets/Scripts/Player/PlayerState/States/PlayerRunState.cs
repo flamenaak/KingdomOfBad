@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerRunState : PlayerGroundedState
 {
-    ParticleSystem Dust;
     public PlayerRunState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -17,13 +16,12 @@ public class PlayerRunState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        Dust = GameObject.Find("Dust").GetComponent<ParticleSystem>();
-        Dust.Play();
+        player.LandDust.Play();
     }
 
     public override void Exit()
     {
-        Dust.Stop();
+        player.LandDust.Stop();
         base.Exit();
     }
 
@@ -36,7 +34,7 @@ public class PlayerRunState : PlayerGroundedState
         }
         else if (jump && player.Core.CollisionSenses.IsGrounded() && player.HaveEnoughStamina())
         {
-            stateMachine.ChangeState(player.LiftState);
+            stateMachine.ChangeState(player.RiseState);
         }
         else if (dashAndEvade && player.canDashOrEvade && player.HaveEnoughStamina())
         {

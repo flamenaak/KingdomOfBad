@@ -35,7 +35,7 @@ public class FallState : PlayerAirState
             endPosition = player.transform.position;
             if (startPosition.y - endPosition.y >= player.allowedFallDistance)
             {
-                player.Damage(2);
+                player.Damage(player.fallDamage);
                 stateMachine.ChangeState(player.StunState);
                 return;
             }
