@@ -34,7 +34,7 @@ public class PlayerWalkState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        if (jump && player.Core.CollisionSenses.IsGrounded())
+        if (jump && player.Core.CollisionSenses.IsGrounded() && player.HaveEnoughStamina())
         {
             stateMachine.ChangeState(player.LiftState);
         }
