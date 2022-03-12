@@ -18,7 +18,9 @@ public class Enemy : MonoBehaviour, IHasCombat
 
 
     public bool aware;
-    public Core Core;    
+    public Core Core;
+    public Combat Combat => Core.Combat;
+    
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
     public GameObject Awarness;

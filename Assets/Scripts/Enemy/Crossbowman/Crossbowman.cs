@@ -7,7 +7,7 @@ public class Crossbowman : Enemy
     public CooldownComponent CanDodge;
 
     public bool reloaded = true;
-    public GameObject bolt;
+    public Bolt bolt;
     public CrossbowmanReloadState CrossbowmanReloadState { get; set; }
     public override List<DecisionFunction_State_Tuple> DecisionFunctions
     {
@@ -24,7 +24,7 @@ public class Crossbowman : Enemy
 
     private bool ShouldReload(Transform entity)
     {
-        if(!entity)
+        if (!entity)
         {
             return false;
         }
@@ -41,7 +41,9 @@ public class Crossbowman : Enemy
 
     public void Fire()
     {
-        Instantiate(bolt, base.Core.Combat.AttackPosition.position, Quaternion.identity);
-        bolt.transform.position = base.Core.Combat.AttackPosition.transform.position;
+        Instantiate(bolt, Combat.AttackPosition.position, Quaternion.identity)
+        .StartBolt(
+            Core.Movement.GetFacingDirection() * Vector2.right,
+            Core.Combat.Data.WhatIsEnemyDamage | Core.CollisionSenses.Data.WhatIsGround);
     }
 }
