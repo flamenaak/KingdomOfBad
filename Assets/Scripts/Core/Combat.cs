@@ -5,6 +5,20 @@ using UnityEngine.UI;
 
 public class Combat : CoreComponent
 {
+    [SerializeField]
+    private Transform attackPosition;
+    [SerializeField]
+    private GameObject healthbar;
+    [SerializeField]
+    private GameObject bloodSplash;
+    [SerializeField]
+    private IHasCombat entity;
+    [SerializeField]
+    private CombatData data;
+
+    [SerializeField]
+    private Collider2D damageCollider;
+
     public Transform AttackPosition
     {
         get
@@ -19,7 +33,8 @@ public class Combat : CoreComponent
         private set { attackPosition = value; }
     }
 
-    public CombatData Data {
+    public CombatData Data
+    {
         get
         {
             if (data)
@@ -74,23 +89,28 @@ public class Combat : CoreComponent
         private set { healthbar = value; }
     }
 
+    /// <summary>
+    /// Colider used for detecting when parrent is hit
+    /// </summary>
+    /// <value></value>
+    public Collider2D DamageCollider
+    {
+        get
+        {
+            if (!damageCollider)
+                Debug.LogError($"Missing {nameof(damageCollider)} on {Core.transform.parent.name}");
+
+            return damageCollider ?? null;
+        }
+
+        private set { damageCollider = value; }
+    }
+
     public bool damaged;
 
     public float canTakeDamageCooldown = 0.2f;
 
     public bool canTakeDamage = true;
-
-    [SerializeField]
-    private Transform attackPosition;
-    [SerializeField]
-    private GameObject healthbar;
-    [SerializeField]
-    private GameObject bloodSplash;
-    [SerializeField]
-    private IHasCombat entity;
-    [SerializeField]
-    private CombatData data;
-
 
     public void Damage(float amount)
     {
@@ -99,7 +119,7 @@ public class Combat : CoreComponent
             Data.currentHealth -= amount;
             startCanTakeDamageCoolDown();
         }
-       
+
     }
 
     public void FixedUpdate()
@@ -111,18 +131,16 @@ public class Combat : CoreComponent
         }
         else
         {
-            ContactFilter2D filter = new ContactFilter2D();
-            filter.layerMask = Data.WhatIsEnemy;
-            List<Collider2D> colliders = new List<Collider2D>();
-            collision.GetContacts(filter, colliders);
-            if (colliders.Count > 0 && collision.enabled)
+            var colliders = Physics2D.OverlapCircleAll(collision.bounds.center, collision.bounds.extents.magnitude, Data.WhatIsEnemyDamage);
+
+            if (colliders.Length > 0)
             {
                 IHasCombat IHasCombat = colliders[0].GetComponentInParent<IHasCombat>();
-                IHasCombat.Knockback(attackPosition, Data.knockbackSpeedX);               
+                IHasCombat.Knockback(attackPosition, Data.knockbackSpeedX);
                 IHasCombat.Damage(Data.damage);
             }
         }
-    
+
     }
 
     public void Knockback()
@@ -134,6 +152,7 @@ public class Combat : CoreComponent
     public void Die()
     {
         Instantiate(BloodSplash, transform.position, Quaternion.identity);
+        damageCollider.enabled = false;
     }
 
     public void startCanTakeDamageCoolDown()
@@ -149,12 +168,16 @@ public class Combat : CoreComponent
 
 }
 
-public interface IHasCombat 
+public interface IHasCombat
 {
+    Combat Combat { get; }
+
+    // Receive damage
     void Damage(float amount);
 
     void Die();
 
     //Applies knockback to itself depending on the position of the attacker and facing direction of the receiver
     void Knockback(Transform attacker, float amount);
+
 }

@@ -65,6 +65,8 @@ public class Player : MonoBehaviour, IHasCombat
     public CharacterController2D Controller;
 
     public Core Core { get; set; }
+    public Combat Combat => Core.Combat;
+
     private CameraMovement camera;
 
     private Vector2 startPosition;
@@ -209,6 +211,7 @@ public class Player : MonoBehaviour, IHasCombat
     {
         transform.position = startPosition;
         StateMachine.ChangeState(IdleState);
+        Core.Combat.DamageCollider.enabled = true;
     }
 
     public bool HaveEnoughStamina()

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CombatData : MonoBehaviour
 {
-    public LayerMask WhatIsEnemy;
+    // layer to detect damage colliders when attacking
+    public LayerMask WhatIsEnemyDamage;
 
     public float damage;
 
