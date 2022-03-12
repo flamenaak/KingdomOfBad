@@ -23,6 +23,7 @@ public class Bolt : MonoBehaviour
     {
         rb.velocity = Vector2.right * direction * speed;
         this.whatToHit = whatToHit;
+        isReady = true;
         Start();
         return this;
     }
