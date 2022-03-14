@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpearmanAI : EnemyAI
 {
+    public Spearman spearman;
     public override void Awake()
     {
         base.Awake();
@@ -38,7 +39,7 @@ public class SpearmanAI : EnemyAI
 
     public override bool ShouldMelleeAttack(Transform entity)
     {
-        return (!!entity) && (ShouldSlash(entity) || ShouldStab(entity));
+        return (!!entity) && (ShouldSlash(entity) || ShouldStab(entity)) && entity.position.y == spearman.transform.position.y;
     }
 
     public override bool ShouldRangeAttack(Transform entity)

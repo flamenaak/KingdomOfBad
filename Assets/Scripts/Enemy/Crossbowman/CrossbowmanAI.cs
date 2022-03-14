@@ -40,7 +40,7 @@ public class CrossbowmanAI : EnemyAI
     {
         if (!entity)
             return false;
-        return Distance(entity) < 5 && crossbowman.CanDodge;
+        return Distance(entity) < 5 && crossbowman.CanDodge && entity.transform.position.y == crossbowman.transform.position.y;
     }
 
     public override bool ShouldMelleeAttack(Transform entity)
