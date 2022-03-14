@@ -21,7 +21,7 @@ public class ThiefDodgeState : EnemyDodgeState
     public override void Enter()
     {
         base.Enter();
-        if (detectedHostile)
+        if (detectedHostile && detectedHostile.GetComponent<Player>().Core.CollisionSenses.IsGrounded())
         {
             target = new Vector2(detectedHostile.position.x, detectedHostile.position.y);
             enemy.RigidBody.velocity = Vector2.zero;
@@ -54,7 +54,6 @@ public class ThiefDodgeState : EnemyDodgeState
             Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("PlayerWeapon"), true);
             Vector2 dodgePos = enemy.enemyAI.DetermineDodgePosition(target);
             enemy.RigidBody.MovePosition(dodgePos);
-            
             thief.CanLunge.StartCooldownTimer();
             thief.CanDodge.StartCooldownTimer();
 

@@ -16,12 +16,12 @@ public class PlayerRunState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        player.LandDust.Play();
+        player.Dust.Play();
     }
 
     public override void Exit()
     {
-        player.LandDust.Stop();
+        player.Dust.Stop();
         base.Exit();
     }
 

@@ -28,6 +28,7 @@ public class PlayerHangState : PlayerState
             base.Enter();
             player.transform.position = detectedPos;
             player.RigidBody.gravityScale = 0f;
+            player.Core.Combat.DamageCollider.enabled = false;
             try
             {
                 ledgePos = player.Core.CollisionSenses.DetermineLedgePosition();
@@ -43,6 +44,7 @@ public class PlayerHangState : PlayerState
     {
         base.Exit();
         player.RigidBody.gravityScale = 3f;
+        player.Core.Combat.DamageCollider.enabled = true;
         player.StartHangCooldown();
     }
 

@@ -66,6 +66,7 @@ public class Player : MonoBehaviour, IHasCombat
     public CharacterController2D Controller;
 
     public ParticleSystem LandDust;
+    public ParticleSystem Dust;
 
     public Core Core { get; set; }
     public Combat Combat => Core.Combat;
