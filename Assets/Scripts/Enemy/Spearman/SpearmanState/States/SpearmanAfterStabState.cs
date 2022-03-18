@@ -6,7 +6,7 @@ public class SpearmanAfterStabState : EnemyState
 {
     public SpearmanAfterStabState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        duration = 0.22f;
+        duration = 3f;
     }
 
     public override void DoChecks()

@@ -39,7 +39,7 @@ public class SpearmanAI : EnemyAI
 
     public override bool ShouldMelleeAttack(Transform entity)
     {
-        return (!!entity) && (ShouldSlash(entity) || ShouldStab(entity)) && entity.position.y == spearman.transform.position.y;
+        return (!!entity) && (ShouldSlash(entity) || ShouldStab(entity)) && (entity.position.y - spearman.transform.position.y) <= 1f;
     }
 
     public override bool ShouldRangeAttack(Transform entity)

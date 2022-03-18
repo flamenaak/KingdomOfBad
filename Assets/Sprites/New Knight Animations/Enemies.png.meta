@@ -347,6 +347,9 @@ TextureImporter:
   - first:
       213: 3005459295459972260
     second: Thief_Damaged_5
+  - first:
+      213: -2687233724321928115
+    second: Spearman_Stab_12
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1359,9 +1362,9 @@ TextureImporter:
       name: Spearman_Stab_10
       rect:
         serializedVersion: 2
-        x: 226
+        x: 230
         y: 288
-        width: 14
+        width: 11
         height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1380,9 +1383,9 @@ TextureImporter:
       name: Spearman_Stab_11
       rect:
         serializedVersion: 2
-        x: 241
+        x: 244
         y: 288
-        width: 14
+        width: 11
         height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -2729,7 +2732,7 @@ TextureImporter:
         width: 15
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2750,7 +2753,7 @@ TextureImporter:
         width: 15
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2771,7 +2774,7 @@ TextureImporter:
         width: 15
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2792,7 +2795,7 @@ TextureImporter:
         width: 15
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2813,7 +2816,7 @@ TextureImporter:
         width: 15
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2834,7 +2837,7 @@ TextureImporter:
         width: 15
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2842,6 +2845,27 @@ TextureImporter:
       bones: []
       spriteID: 4a499cc3e4985b920800000000000000
       internalID: 3005459295459972260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spearman_Stab_12
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 288
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4c67515a2705bad0800000000000000
+      internalID: -2687233724321928115
       vertices: []
       indices: 
       edges: []
