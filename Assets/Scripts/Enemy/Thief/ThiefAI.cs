@@ -30,7 +30,7 @@ public class ThiefAI : EnemyAI
         if (!entity)
             return false;
 
-        return !(ShouldDodge(entity) || ShouldMelleeAttack(entity));
+        return !(ShouldDodge(entity) || ShouldMelleeAttack(entity)) && !thief.Core.CollisionSenses.IsReachingEdge();
     }
 
     public override bool ShouldDodge(Transform entity)
@@ -38,7 +38,7 @@ public class ThiefAI : EnemyAI
         if (!entity)
             return false;
 
-        if (Mathf.Abs(enemy.transform.position.x - entity.position.x) < 4)
+        if (Mathf.Abs(enemy.transform.position.x - entity.position.x) < 5)
         {
             return thief.shouldEvade || (Random.Range(0f, 1f) > 0.6f && thief.CanDodge);
         }
@@ -74,8 +74,7 @@ public class ThiefAI : EnemyAI
         Vector2 candidate = thief.shouldEvade ?
         target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
         target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
-
-        RaycastHit2D isThereGround = Physics2D.Raycast(new Vector2(candidatePoint.x, candidatePoint.y), new Vector2(candidatePoint.x, candidatePoint.y - 1.2f), 0f, thief.Core.Movement.Data.WhatIsGround);
+        RaycastHit2D isThereGround = Physics2D.Linecast(new Vector2(candidate.x, candidate.y), new Vector2(candidate.x, candidate.y - 1.5f), thief.Core.Movement.Data.WhatIsGround);
         candidatePoint = candidate;
         sizeOfGizmo = thief.GetComponent<BoxCollider2D>().bounds.size;
 
@@ -88,7 +87,7 @@ public class ThiefAI : EnemyAI
             candidate = thief.shouldEvade ?
             target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
             target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
-
+            candidatePoint = candidate;
             return isValidDodgeTargetPosition(candidate) && isThereGround ? candidate : (Vector2) enemy.RigidBody.transform.position;
         }
     }
@@ -98,4 +97,5 @@ public class ThiefAI : EnemyAI
         return (enemy.Core.Movement.CanFit(target, thief.GetComponent<BoxCollider2D>(), new Vector2(0, -0.2f)))
         && (enemy.Core.Movement.HasClearPath(thief.transform, target));
     }
+
 }
