@@ -6,8 +6,8 @@ public class PlatformHandler : MonoBehaviour
 {
     public PlatformEffector2D effector;
     public LayerMask whatIsPlayer;
-    public LayerMask up;
-    public LayerMask down;
+    public LayerMask jumpThroughPlatform;
+    public LayerMask fallThroughPlatform;
 
     private void Update()
     {
@@ -17,18 +17,18 @@ public class PlatformHandler : MonoBehaviour
             if (Input.GetKey(KeyCode.S))
             {
                 //Collider mask of the enemy and other in the future important layers(excluding player)
-                effector.colliderMask = down;
+                effector.colliderMask = fallThroughPlatform;
 
             }
             else if (Input.GetKey(KeyCode.Space))
             {
                 //Collider mask of everything including enemy
-                effector.colliderMask = up;
+                effector.colliderMask = jumpThroughPlatform;
             }
         }
         else if (Input.GetKey(KeyCode.Space))
         {
-            effector.colliderMask = up;
+            effector.colliderMask = jumpThroughPlatform;
         }
     }
 

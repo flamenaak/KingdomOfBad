@@ -55,8 +55,8 @@ public class ThiefAI : EnemyAI
             return false;
         
         float distance = Vector2.Distance(enemy.transform.position, entity.position);
-
-        if (thief.CanLunge && distance <= thief.Core.Movement.Data.StabDistance)
+        //Thief doesn't lunge over gaps
+        if (thief.CanLunge && distance <= thief.Core.Movement.Data.StabDistance && !thief.Core.CollisionSenses.IsReachingEdge() && enemy.Core.Movement.HasClearPath(thief.transform, entity.position))
             return true;
         if (distance <= 1)
             return true;
@@ -75,10 +75,11 @@ public class ThiefAI : EnemyAI
         target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
         target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
 
+        RaycastHit2D isThereGround = Physics2D.Raycast(new Vector2(candidatePoint.x, candidatePoint.y), new Vector2(candidatePoint.x, candidatePoint.y - 1.2f), 0f, thief.Core.Movement.Data.WhatIsGround);
         candidatePoint = candidate;
         sizeOfGizmo = thief.GetComponent<BoxCollider2D>().bounds.size;
 
-        if (isValidDodgeTargetPosition(candidate))
+        if (isValidDodgeTargetPosition(candidate) && isThereGround)
         {
             return candidate;
         }
@@ -88,7 +89,7 @@ public class ThiefAI : EnemyAI
             target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
             target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
 
-            return isValidDodgeTargetPosition(candidate) ? candidate : (Vector2) enemy.RigidBody.transform.position;
+            return isValidDodgeTargetPosition(candidate) && isThereGround ? candidate : (Vector2) enemy.RigidBody.transform.position;
         }
     }
 
