@@ -75,8 +75,6 @@ public class ThiefAI : EnemyAI
         target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
         target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
         RaycastHit2D isThereGround = Physics2D.Linecast(new Vector2(candidate.x, candidate.y), new Vector2(candidate.x, candidate.y - 1.5f), thief.Core.Movement.Data.WhatIsGround);
-        candidatePoint = candidate;
-        sizeOfGizmo = thief.GetComponent<BoxCollider2D>().bounds.size;
 
         if (isValidDodgeTargetPosition(candidate) && isThereGround)
         {
@@ -87,7 +85,6 @@ public class ThiefAI : EnemyAI
             candidate = thief.shouldEvade ?
             target + (enemy.Core.Movement.GetFacingDirection() * Vector2.right * 5) :
             target - (enemy.Core.Movement.GetFacingDirection() * Vector2.right);
-            candidatePoint = candidate;
             return isValidDodgeTargetPosition(candidate) && isThereGround ? candidate : (Vector2) enemy.RigidBody.transform.position;
         }
     }

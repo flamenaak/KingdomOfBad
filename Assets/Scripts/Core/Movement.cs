@@ -32,7 +32,7 @@ public class Movement : CoreComponent
         }
         return dashPosition - (Vector2.right * GetFacingDirection() * Data.SafetyOffsetX);
     }
-
+        
     public Vector2 DetermineEvadePosition(Transform entityTransform)
     {
         Vector2 dashPosition = new Vector2(entityTransform.position.x, entityTransform.position.y)
