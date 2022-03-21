@@ -21,7 +21,7 @@ public class ThiefDodgeState : EnemyDodgeState
     public override void Enter()
     {
         base.Enter();
-        if (detectedHostile && detectedHostile.GetComponent<Core>().CollisionSenses.IsGrounded())
+        if (detectedHostile && detectedHostile.GetComponent<Player>().Core.CollisionSenses.IsGrounded())
         {
             target = new Vector2(detectedHostile.position.x, detectedHostile.position.y);
             enemy.RigidBody.velocity = Vector2.zero;

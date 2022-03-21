@@ -20,13 +20,13 @@ public class PlatformHandler : MonoBehaviour
                 effector.colliderMask = fallThroughPlatform;
 
             }
-            else if (Input.GetKey(KeyCode.Space))
+            else if (Input.GetButton("Jump") || Input.GetButton("Climb"))
             {
                 //Collider mask of everything including enemy
                 effector.colliderMask = jumpThroughPlatform;
             }
         }
-        else if (Input.GetKey(KeyCode.Space))
+        else if (Input.GetButton("Jump") || Input.GetButton("Climb"))
         {
             effector.colliderMask = jumpThroughPlatform;
         }
@@ -35,6 +35,5 @@ public class PlatformHandler : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawCube(this.transform.position, new Vector3(1, 1, 1));
-
     }
 }
