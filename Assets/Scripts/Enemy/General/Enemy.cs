@@ -88,7 +88,6 @@ public class Enemy : MonoBehaviour, IHasCombat
     public void Damage(float amount)
     {
         Core.Combat.Damage(amount);
-        Core.Combat.Healthbar.transform.localScale -= new Vector3(Core.Combat.Data.maxHealth / 500, 0, 0);
         if (Core.Combat.Data.currentHealth > 0.0f)
         {
             Core.Combat.damaged = true;
@@ -102,7 +101,6 @@ public class Enemy : MonoBehaviour, IHasCombat
     public void Die()
     {
         Core.Combat.Die();
-        Core.Combat.Healthbar.SetActive(false);
         GetComponent<BoxCollider2D>().enabled = false;
         RigidBody.constraints = RigidbodyConstraints2D.FreezePositionX;
         RigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;

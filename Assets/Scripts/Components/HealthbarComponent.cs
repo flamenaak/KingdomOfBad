@@ -22,5 +22,7 @@ public class HealthbarComponent : MonoBehaviour
     {
         var percentage = entity.Combat.Data.currentHealth / entity.Combat.Data.maxHealth;        
         transform.localScale = new Vector3(originalScale.x * percentage, originalScale.y, originalScale.z);
+        if (percentage == 0)
+            Destroy(this);
     }
 }

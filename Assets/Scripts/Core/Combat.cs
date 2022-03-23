@@ -117,6 +117,8 @@ public class Combat : CoreComponent
         if (canTakeDamage)
         {
             Data.currentHealth -= amount;
+            if (Data.currentHealth < 0) Data.currentHealth = 0;
+            
             startCanTakeDamageCoolDown();
         }
 
