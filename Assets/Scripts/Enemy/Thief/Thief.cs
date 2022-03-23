@@ -7,6 +7,8 @@ public class Thief : Enemy
     public CooldownComponent CanDodge;
     public CooldownComponent CanLunge;
 
+    public ParticleSystem SmokeBomb;
+
     public bool shouldEvade = false;
 
     public ThiefLungeState LungeState;

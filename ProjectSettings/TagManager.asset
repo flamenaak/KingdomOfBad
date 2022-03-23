@@ -43,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Collision
+    uniqueID: 2794002321
+    locked: 0
   - name: Wall
     uniqueID: 2614655129
     locked: 0
@@ -54,4 +57,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1364010161
+    locked: 0
+  - name: Foreground
+    uniqueID: 3306475069
     locked: 0

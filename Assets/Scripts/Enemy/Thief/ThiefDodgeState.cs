@@ -15,6 +15,7 @@ public class ThiefDodgeState : EnemyDodgeState
         base.Exit();
         Physics2D.IgnoreLayerCollision(enemy.gameObject.layer, LayerMask.NameToLayer("PlayerWeapon"), false);
         target = Vector2.zero;
+        thief.SmokeBomb.Stop();
         thief.shouldEvade = false;
     }
 
@@ -37,6 +38,11 @@ public class ThiefDodgeState : EnemyDodgeState
         DoChecks();
         if (Time.time - startTime <= duration)
         {
+            if(Time.time - startTime >= 0.42f)
+            {
+                thief.SmokeBomb.Play();
+
+            }
             // let the thief adapt a little based on the movement of the player
             if (Time.time - startTime <= duration / 2 && detectedHostile)
             {
