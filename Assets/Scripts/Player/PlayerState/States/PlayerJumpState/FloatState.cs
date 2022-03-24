@@ -34,4 +34,20 @@ public class FloatState : PlayerAirState
     {
         base.Enter();
     }
+
+    public override void Update()
+    {
+        base.Update();
+        if (Input.GetButtonDown("Interact") && player.Core.CollisionSenses.IsTouchingCarriable() != null && !player.isCarrying)
+        {
+            player.InteractButton.GetComponent<Animator>().SetBool("pressed", true);
+            player.PickUp();
+        }
+        //Dropping interactable
+        else if (Input.GetButtonUp("Interact") && player.isCarrying)
+        {
+            player.InteractButton.GetComponent<Animator>().SetBool("pressed", false);
+            player.Drop();
+        }
+    }
 }

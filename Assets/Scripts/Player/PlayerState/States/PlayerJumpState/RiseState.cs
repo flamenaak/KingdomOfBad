@@ -16,6 +16,11 @@ public class RiseState : PlayerAirState
         player.RigidBody.velocity = new Vector2(player.RigidBody.velocity.x, 10);
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -33,5 +38,22 @@ public class RiseState : PlayerAirState
             }
         }
 
+    }
+
+    public override void Update()
+    {
+        base.Update();
+            //Picking up interactable
+        if (Input.GetButtonDown("Interact") && player.Core.CollisionSenses.IsTouchingCarriable() != null && !player.isCarrying)
+        {
+            player.InteractButton.GetComponent<Animator>().SetBool("pressed", true);
+            player.PickUp();
+        }
+        //Dropping interactable
+        else if (Input.GetButtonUp("Interact") && player.isCarrying)
+        {
+            player.InteractButton.GetComponent<Animator>().SetBool("pressed", false);
+            player.Drop();
+        }
     }
 }

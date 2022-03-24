@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 27633382599786143}
   - component: {fileID: 1287716790798288397}
   - component: {fileID: 3442716871128073760}
+  - component: {fileID: -3240801398698848792}
   m_Layer: 16
   m_Name: Table
   m_TagString: Untagged
@@ -170,3 +171,24 @@ MonoBehaviour:
   m_ShapePathHash: -501144945
   m_Mesh: {fileID: 0}
   m_InstanceId: -89800
+--- !u!50 &-3240801398698848792
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8768955984417326630}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

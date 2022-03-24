@@ -345,6 +345,10 @@ public class Player : MonoBehaviour, IHasCombat
         carriable.transform.SetParent(carryPoint);
         carriable.transform.position = carryPoint.transform.position;
         carriable.GetComponent<BoxCollider2D>().enabled = false;
+        if(carriable.GetComponent<Rigidbody2D>() != null)
+        {
+            carriable.GetComponent<Rigidbody2D>().isKinematic = true;
+        }
     }
 
     public void Drop()
@@ -353,7 +357,11 @@ public class Player : MonoBehaviour, IHasCombat
         canSlash = true;
         canStab = true;
         canDashOrEvade = true;
-        carriable.GetComponent<BoxCollider2D>().enabled = true;
         carriable.transform.SetParent(null);
+        carriable.GetComponent<BoxCollider2D>().enabled = true;
+        if (carriable.GetComponent<Rigidbody2D>() != null)
+        {
+            carriable.GetComponent<Rigidbody2D>().isKinematic = false;
+        }
     }
 }
