@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowGroup: 0
-  m_HasRenderer: 1
+  m_HasRenderer: 0
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: -0.03973896, y: 0.03498521, z: 0}
   m_ShapePathHash: -1078863008
   m_Mesh: {fileID: 0}
-  m_InstanceId: 60852
+  m_InstanceId: 274810
 --- !u!1 &8267665922262366738
 GameObject:
   m_ObjectHideFlags: 0

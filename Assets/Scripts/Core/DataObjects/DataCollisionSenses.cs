@@ -9,4 +9,6 @@ public class DataCollisionSenses : MonoBehaviour
     public float GroundedRadius = 0.25f;
 
     public LayerMask WhatIsGround;
+
+    public LayerMask WhatIsInteractable;
 }

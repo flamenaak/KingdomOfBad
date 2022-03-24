@@ -109,6 +109,20 @@ public class CollisionSenses : CoreComponent
         return false;
     }
 
+    public Transform IsTouchingCarriable()
+    {
+        Collider2D interactable = Physics2D.OverlapBox(this.transform.position,
+         new Vector2(1, 1), 0, Data.WhatIsInteractable);
+        if(interactable != null)
+        {
+            return interactable.transform;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public Vector2 DetermineLedgePosition()
     {
         RaycastHit2D xHit = Physics2D.Raycast(

@@ -67,13 +67,16 @@ public class Player : MonoBehaviour, IHasCombat
 
     public ParticleSystem LandDust;
     public ParticleSystem Dust;
-
+    public GameObject InteractButton;
     public Core Core { get; set; }
     public Combat Combat => Core.Combat;
 
     private CameraMovement camera;
 
     private Vector2 startPosition;
+    public Transform carryPoint;
+    Transform carriable;
+    public bool isCarrying;
     public float fallDamage = 2f;
     public float allowedFallDistance = 4f;
     public float deathFallDistance = 10f;
@@ -87,7 +90,6 @@ public class Player : MonoBehaviour, IHasCombat
 
     protected float immuneTime = 1.0F;
     protected float lastImmune;
-
 
 
     private void Awake()
@@ -113,7 +115,6 @@ public class Player : MonoBehaviour, IHasCombat
         DeathState = new PlayerDeathState(this, StateMachine, "death");
         DamagedState = new PlayerDamagedState(this, StateMachine, "damaged");
         StunState = new PlayerStunState(this, StateMachine, "stunned");
-
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -130,12 +131,22 @@ public class Player : MonoBehaviour, IHasCombat
         if (Controller == null)
             Debug.Log("no controller");
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+        InteractButton.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + 2);
     }
 
     // logic
     private void Update()
     {
         StateMachine.CurrentState.Update();
+        if (Core.CollisionSenses.IsTouchingCarriable() && !isCarrying)
+        {
+            InteractButton.GetComponent<Animator>().SetBool("touching", true);
+        }
+        if (!Core.CollisionSenses.IsTouchingCarriable())
+        {
+            InteractButton.GetComponent<Animator>().SetBool("touching", false);
+        }
+        InteractButton.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + 2);
         Vector2 velocity = RigidBody.velocity;
         if ((velocity.x < -0.5f && Core.Movement.GetFacingDirection() > 0 && Controller.ReadInputX() < 0)
         || (velocity.x > 0.5f && Core.Movement.GetFacingDirection() < 0 && Controller.ReadInputX() > 0))
@@ -322,5 +333,27 @@ public class Player : MonoBehaviour, IHasCombat
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
+    }
+
+    public void PickUp()
+    {
+        isCarrying = true;
+        canSlash = false;
+        canStab = false;
+        canDashOrEvade = false;
+        carriable = Core.CollisionSenses.IsTouchingCarriable();
+        carriable.transform.SetParent(carryPoint);
+        carriable.transform.position = carryPoint.transform.position;
+        carriable.GetComponent<BoxCollider2D>().enabled = false;
+    }
+
+    public void Drop()
+    {
+        isCarrying = false;
+        canSlash = true;
+        canStab = true;
+        canDashOrEvade = true;
+        carriable.GetComponent<BoxCollider2D>().enabled = true;
+        carriable.transform.SetParent(null);
     }
 }

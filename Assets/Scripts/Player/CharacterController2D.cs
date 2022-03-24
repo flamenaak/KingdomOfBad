@@ -46,6 +46,11 @@ public class CharacterController2D : MonoBehaviour
         return Input.GetButton("Climb");
     }
 
+    public bool GetInputInteract()
+    {
+        return Input.GetButton("Interact");
+    }
+
     // private void OnDrawGizmos()
     // {
     //     Gizmos.DrawWireSphere(groundCheck.position, k_GroundedRadius);
