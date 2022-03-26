@@ -101,9 +101,9 @@ public class Enemy : MonoBehaviour, IHasCombat
     public void Die()
     {
         Core.Combat.Die();
-        GetComponent<BoxCollider2D>().enabled = false;
+        /*GetComponent<BoxCollider2D>().enabled = false;
         RigidBody.constraints = RigidbodyConstraints2D.FreezePositionX;
-        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;
+        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;*/
     }
 
     public void Knockback(Transform attacker, float amount)

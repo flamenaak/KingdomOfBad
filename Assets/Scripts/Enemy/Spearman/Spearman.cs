@@ -9,6 +9,11 @@ public class Spearman : Enemy
     public SpearmanPreSlashState PreSlashState { get; set; }
     public SpearmanAfterStabState AfterStabState { get; set; }
     public SpearmanWindUpState WindUpState { get; set; }
+    public SpearmanDeathState SpearmanDeathState { get; set; }
+
+    public GameObject itself;
+
+    public bool BossMinion = false;
 
     public SpearmanAI spearmanAI;
 
@@ -23,5 +28,9 @@ public class Spearman : Enemy
         WindUpState = new SpearmanWindUpState(this, StateMachine, "windUp");
         ChaseState = new EnemyChargeState(this, StateMachine, "move");
         MeleeAttackState = new SpearmanMeleeAttackState(this, StateMachine, "melee");
+        if (BossMinion)
+        {
+            DeathState = new SpearmanDeathState(this, StateMachine, "minionDeath");
+        }
     }
 }

@@ -9,6 +9,9 @@ public class Crossbowman : Enemy
     public bool reloaded = true;
     public Bolt bolt;
     public CrossbowmanReloadState CrossbowmanReloadState { get; set; }
+    public CrossbowmanDeathState CrossbowmanDeathState { get; set; }
+    public GameObject itself;
+    public bool BossMinion = false;
     public override List<DecisionFunction_State_Tuple> DecisionFunctions
     {
         get
@@ -37,6 +40,10 @@ public class Crossbowman : Enemy
         DodgeState = new CrossbowmanDodgeState(this, StateMachine, "dodge");
         RangedAttackState = new CrossbowmanShootState(this, StateMachine, "shoot");
         CrossbowmanReloadState = new CrossbowmanReloadState(this, StateMachine, "reload");
+        if (BossMinion)
+        {
+            DeathState = new CrossbowmanDeathState(this, StateMachine, "minionDeath");
+        }
     }
 
     public void Fire()
