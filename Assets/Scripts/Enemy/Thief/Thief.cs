@@ -13,7 +13,7 @@ public class Thief : Enemy
 
     public bool shouldEvade = false;
 
-    public bool bossMinion = false;
+    public bool BossMinion = false;
 
     public ThiefLungeState LungeState;
 
@@ -23,7 +23,7 @@ public class Thief : Enemy
         DodgeState = new ThiefDodgeState(this, StateMachine, "dodge");
         MeleeAttackState = new ThiefMeleeAttackState(this, StateMachine, "melee");
         LungeState = new ThiefLungeState(this, StateMachine, "melee");
-        if (bossMinion)
+        if (BossMinion)
         {
             DeathState = new ThiefDeathState(this, StateMachine, "minionDeath");
         }

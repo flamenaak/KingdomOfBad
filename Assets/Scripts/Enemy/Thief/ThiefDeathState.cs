@@ -30,6 +30,7 @@ public class ThiefDeathState : EnemyDeathState
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
         thief.itself.layer = 16;
+        thief.Core.CollisionSenses.isClimable(thief.itself);
     }
 
     public override void Update()

@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 public class CrossbowmanDeathState : EnemyDeathState
 {
     Crossbowman crossbowman;
@@ -28,5 +29,6 @@ public class CrossbowmanDeathState : EnemyDeathState
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
         crossbowman.itself.layer = 16;
+        crossbowman.Core.CollisionSenses.isClimable(crossbowman.itself);
     }
 }

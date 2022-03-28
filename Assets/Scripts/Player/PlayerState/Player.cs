@@ -27,6 +27,8 @@ public class Player : MonoBehaviour, IHasCombat
     public PlayerDamagedState DamagedState { get; private set; }
     public PlayerDeathState DeathState { get; private set; }
     public PlayerStunState StunState { get; private set; }
+    public PlayerClimbMoveState ClimbUpState { get; private set; }
+    public PlayerClimbIdleState ClimbIdleState { get; private set; }
     #endregion
 
     #region SpeedForceVariables
@@ -77,6 +79,7 @@ public class Player : MonoBehaviour, IHasCombat
     public Transform carryPoint;
     Transform carriable;
     public bool isCarrying;
+    public bool isAtTop;
     public float fallDamage = 2f;
     public float allowedFallDistance = 4f;
     public float deathFallDistance = 10f;
@@ -115,6 +118,8 @@ public class Player : MonoBehaviour, IHasCombat
         DeathState = new PlayerDeathState(this, StateMachine, "death");
         DamagedState = new PlayerDamagedState(this, StateMachine, "damaged");
         StunState = new PlayerStunState(this, StateMachine, "stunned");
+        ClimbUpState = new PlayerClimbMoveState(this, StateMachine, "climbUp");
+        ClimbIdleState = new PlayerClimbIdleState(this, StateMachine, "climbIdle");
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -128,6 +133,7 @@ public class Player : MonoBehaviour, IHasCombat
     {
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
         Core.Combat.Data.currentHealth = Core.Combat.Data.maxHealth;
+        isAtTop = false;
         if (Controller == null)
             Debug.Log("no controller");
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Enemy"), true);

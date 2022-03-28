@@ -55,5 +55,10 @@ public class RiseState : PlayerAirState
             player.InteractButton.GetComponent<Animator>().SetBool("pressed", false);
             player.Drop();
         }
+        else if (player.Core.CollisionSenses.isTouchingClimable() && player.Controller.ReadInputY() != 0)
+        {
+            player.RigidBody.velocity = Vector2.zero;
+            stateMachine.ChangeState(player.ClimbIdleState);
+        }
     }
 }

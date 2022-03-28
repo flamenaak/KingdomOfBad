@@ -44,7 +44,11 @@ public class PlayerIdleState : PlayerGroundedState
         else if (xInput != 0)
         {
             stateMachine.ChangeState(player.WalkState);
-        } 
+        }
+        else if (player.Core.CollisionSenses.isTouchingClimable() && yInput != 0) 
+        {
+            stateMachine.ChangeState(player.ClimbUpState);
+        }
         else if (!player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.FloatState);
