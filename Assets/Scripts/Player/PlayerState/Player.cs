@@ -27,7 +27,7 @@ public class Player : MonoBehaviour, IHasCombat
     public PlayerDamagedState DamagedState { get; private set; }
     public PlayerDeathState DeathState { get; private set; }
     public PlayerStunState StunState { get; private set; }
-    public PlayerClimbMoveState ClimbUpState { get; private set; }
+    public PlayerClimbMoveState ClimbMoveState { get; private set; }
     public PlayerClimbIdleState ClimbIdleState { get; private set; }
     #endregion
 
@@ -118,7 +118,7 @@ public class Player : MonoBehaviour, IHasCombat
         DeathState = new PlayerDeathState(this, StateMachine, "death");
         DamagedState = new PlayerDamagedState(this, StateMachine, "damaged");
         StunState = new PlayerStunState(this, StateMachine, "stunned");
-        ClimbUpState = new PlayerClimbMoveState(this, StateMachine, "climbUp");
+        ClimbMoveState = new PlayerClimbMoveState(this, StateMachine, "climbMove");
         ClimbIdleState = new PlayerClimbIdleState(this, StateMachine, "climbIdle");
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();

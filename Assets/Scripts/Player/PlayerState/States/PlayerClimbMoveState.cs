@@ -30,7 +30,6 @@ public class PlayerClimbMoveState : PlayerGroundedState
         if (!hit)
         {
             //Top of the stack
-            Debug.Log("Top");
             player.isAtTop = true;
         }
         else if (hit)
@@ -48,7 +47,7 @@ public class PlayerClimbMoveState : PlayerGroundedState
             player.RigidBody.velocity = new Vector2(xInput * player.WalkSpeed, yInput * player.WalkSpeed);
         }
         //Falling out of the climable entity
-        else if (xInput != 0 && !player.Core.CollisionSenses.isTouchingClimable())
+        else if (xInput != 0 && !player.Core.CollisionSenses.isTouchingClimable() || yInput != 0 && !player.Core.CollisionSenses.isTouchingClimable())
         {
             stateMachine.ChangeState(player.FallState);
         }
@@ -56,8 +55,9 @@ public class PlayerClimbMoveState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (yInput == 0 && !player.Core.CollisionSenses.IsGrounded())
+        else if (yInput == 0 && xInput == 0 && !player.Core.CollisionSenses.IsGrounded())
         {
+            player.RigidBody.velocity = Vector2.zero;
             stateMachine.ChangeState(player.ClimbIdleState);
         }
         else if(Input.GetButton("Jump"))

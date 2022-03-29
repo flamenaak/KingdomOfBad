@@ -29,17 +29,12 @@ public class PlayerClimbIdleState : PlayerGroundedState
         if (yInput != 0 || xInput != 0)
         {
             player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
-            stateMachine.ChangeState(player.ClimbUpState);
+            stateMachine.ChangeState(player.ClimbMoveState);
         }
         else if (yInput == 0 && player.Core.CollisionSenses.IsGrounded())
         {
             player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             stateMachine.ChangeState(player.IdleState);
-        }
-        else if (Input.GetButton("Jump") && xInput != 0)
-        {
-            player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
-            stateMachine.ChangeState(player.LiftState);
         }
     }
 
