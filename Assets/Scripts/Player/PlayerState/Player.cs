@@ -82,7 +82,7 @@ public class Player : MonoBehaviour, IHasCombat
     public bool isAtTop;
     public float fallDamage = 2f;
     public float allowedFallDistance = 4f;
-    public float deathFallDistance = 10f;
+    public float deathFallDistance = 5f;
 
     public float stunLength = 1f;
 
