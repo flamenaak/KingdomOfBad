@@ -38,7 +38,8 @@ public class FloatState : PlayerAirState
     public override void Update()
     {
         base.Update();
-        if (Input.GetButtonDown("Interact") && player.Core.CollisionSenses.IsTouchingCarriable() != null && !player.isCarrying)
+        if (Input.GetButtonDown("Interact") && player.Core.CollisionSenses.IsTouchingCarriable() != null 
+            && !player.isCarrying && player.Core.CollisionSenses.IsTouchingCarriable().GetComponent<SpriteRenderer>().sortingLayerName.Equals("Enemy"))
         {
             player.InteractButton.GetComponent<Animator>().SetBool("pressed", true);
             player.PickUp();

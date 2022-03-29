@@ -343,18 +343,20 @@ public class Player : MonoBehaviour, IHasCombat
 
     public void PickUp()
     {
-        isCarrying = true;
-        canSlash = false;
-        canStab = false;
-        canDashOrEvade = false;
-        carriable = Core.CollisionSenses.IsTouchingCarriable();
-        carriable.transform.SetParent(carryPoint);
-        carriable.transform.position = carryPoint.transform.position;
-        carriable.GetComponent<BoxCollider2D>().enabled = false;
-        if(carriable.GetComponent<Rigidbody2D>() != null)
-        {
-            carriable.GetComponent<Rigidbody2D>().isKinematic = true;
-        }
+            if (Core.CollisionSenses.IsTouchingCarriable().GetComponent<SpriteRenderer>().sortingLayerName.Equals("Enemy") || 
+                Core.CollisionSenses.IsTouchingCarriable().GetComponent<SpriteRenderer>().sortingLayerName.Equals("Wall"))
+            isCarrying = true;
+            canSlash = false;
+            canStab = false;
+            canDashOrEvade = false;
+            carriable = Core.CollisionSenses.IsTouchingCarriable();
+            carriable.transform.SetParent(carryPoint);
+            carriable.transform.position = carryPoint.transform.position;
+            carriable.GetComponent<BoxCollider2D>().enabled = false;
+            if (carriable.GetComponent<Rigidbody2D>() != null)
+            {
+                carriable.GetComponent<Rigidbody2D>().isKinematic = true;
+            }
     }
 
     public void Drop()

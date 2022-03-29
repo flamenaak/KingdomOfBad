@@ -113,7 +113,7 @@ public class CollisionSenses : CoreComponent
     {
         Collider2D interactable = Physics2D.OverlapBox(this.transform.position,
          new Vector2(1, 1), 0, Data.WhatIsInteractable);
-        if(interactable != null)
+        if(interactable != null && !interactable.tag.Equals("Climable"))
         {
             return interactable.transform;
         }
@@ -139,24 +139,22 @@ public class CollisionSenses : CoreComponent
 
     public void isClimable(GameObject itself)
     {
-        //GameObject player = GameObject.Find("Player");
-        //GameObject platform = GameObject.Find("Platform");
         RaycastHit2D hit = Physics2D.Linecast(itself.transform.position, new Vector2(itself.transform.position.x, itself.transform.position.y + 1f), Data.WhatIsInteractable);
         if (hit)
         {
             itself.tag = "Climable";
         }
-        else if (!hit)
+        else if (!hit && IsGrounded())
         {
             RaycastHit2D top = Physics2D.Linecast(itself.transform.position, new Vector2(itself.transform.position.x, itself.transform.position.y - 1f), Data.WhatIsInteractable);
-            /*if (top && !IsGrounded() && player.GetComponent<Player>().isAtTop)
+            if (top && !IsGrounded())
             {
-                Instantiate(platform, new Vector2(itself.transform.position.x, itself.transform.position.y - 0.5f), Quaternion.identity);
-            }*/
+                Debug.Log(2);
+                //Instantiate(Resources.Load("Prefabs/Platform"), new Vector2(itself.transform.position.x, itself.transform.position.y - 0.5f), Quaternion.identity);
+            }
             //First in the stack/Bottom
             itself.tag = "NonClimable";
         }
-        //Destroy(platform);
     }
 
     public Vector2 DetermineLedgePosition()
