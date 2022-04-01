@@ -9,8 +9,6 @@ public class Thief : Enemy
 
     public ParticleSystem SmokeBomb;
 
-    public GameObject itself;
-
     public GameObject Platform;
 
     public bool shouldEvade = false;

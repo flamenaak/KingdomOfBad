@@ -11,7 +11,6 @@ public class Crossbowman : Enemy
     public GameObject Platform;
     public CrossbowmanReloadState CrossbowmanReloadState { get; set; }
     public CrossbowmanDeathState CrossbowmanDeathState { get; set; }
-    public GameObject itself;
     public bool BossMinion = false;
     public override List<DecisionFunction_State_Tuple> DecisionFunctions
     {

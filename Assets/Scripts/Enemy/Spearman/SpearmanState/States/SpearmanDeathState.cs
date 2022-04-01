@@ -41,8 +41,8 @@ public class SpearmanDeathState : EnemyDeathState
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        spearman.itself.layer = 16;
+        spearman.transform.gameObject.layer = 16;
         spearman.tag = "Climable";
-        spearman.Core.CollisionSenses.isClimable(spearman.itself);
+        spearman.Core.CollisionSenses.isClimable();
     }
 }

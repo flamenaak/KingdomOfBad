@@ -39,8 +39,8 @@ public class CrossbowmanDeathState : EnemyDeathState
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        crossbowman.itself.layer = 16;
-        crossbowman.Core.CollisionSenses.isClimable(crossbowman.itself);
+        crossbowman.transform.gameObject.layer = 16;
+        crossbowman.Core.CollisionSenses.isClimable();
         crossbowman.tag = "Climable";
         Enter();
     }

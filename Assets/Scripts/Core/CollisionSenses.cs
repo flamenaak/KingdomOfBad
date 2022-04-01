@@ -137,7 +137,7 @@ public class CollisionSenses : CoreComponent
         }
     }
 
-    public void isClimable(GameObject itself)
+    public void isClimable()
     {
         RaycastHit2D interactableAbove = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), new Vector2(0.15f, 0.15f), 0, Vector2.up, 0, Data.WhatIsInteractable);
         RaycastHit2D interactableBelow = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y - 1.1f), new Vector2(0.15f, 0.15f), 0, Vector2.down, 0, Data.WhatIsInteractable);

@@ -11,8 +11,6 @@ public class Spearman : Enemy
     public SpearmanWindUpState WindUpState { get; set; }
     public SpearmanDeathState SpearmanDeathState { get; set; }
 
-    public GameObject itself;
-
     public GameObject Platform;
 
     public bool BossMinion = false;
