@@ -146,6 +146,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 1024
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 2048
   jumpThroughPlatform:
     serializedVersion: 2
     m_Bits: 48951

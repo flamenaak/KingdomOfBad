@@ -13,7 +13,11 @@ public class Spearman : Enemy
 
     public GameObject itself;
 
+    public GameObject Platform;
+
     public bool BossMinion = false;
+
+    public bool IAmTop;
 
     public SpearmanAI spearmanAI;
 
@@ -28,6 +32,8 @@ public class Spearman : Enemy
         WindUpState = new SpearmanWindUpState(this, StateMachine, "windUp");
         ChaseState = new EnemyChargeState(this, StateMachine, "move");
         MeleeAttackState = new SpearmanMeleeAttackState(this, StateMachine, "melee");
+        Platform.SetActive(false);
+        IAmTop = false;
         if (BossMinion)
         {
             DeathState = new SpearmanDeathState(this, StateMachine, "minionDeath");

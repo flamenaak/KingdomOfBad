@@ -113,7 +113,7 @@ public class CollisionSenses : CoreComponent
     {
         Collider2D interactable = Physics2D.OverlapBox(this.transform.position,
          new Vector2(1, 1), 0, Data.WhatIsInteractable);
-        if(interactable != null && !interactable.tag.Equals("Climable"))
+        if(interactable != null)
         {
             return interactable.transform;
         }
@@ -139,21 +139,33 @@ public class CollisionSenses : CoreComponent
 
     public void isClimable(GameObject itself)
     {
-        RaycastHit2D hit = Physics2D.Linecast(itself.transform.position, new Vector2(itself.transform.position.x, itself.transform.position.y + 1f), Data.WhatIsInteractable);
-        if (hit)
+        RaycastHit2D interactableAbove = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), new Vector2(0.15f, 0.15f), 0, Vector2.up, 0, Data.WhatIsInteractable);
+        RaycastHit2D interactableBelow = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y - 1.1f), new Vector2(0.15f, 0.15f), 0, Vector2.down, 0, Data.WhatIsInteractable);
+        if (interactableAbove)
         {
-            itself.tag = "Climable";
-        }
-        else if (!hit && IsGrounded())
-        {
-            RaycastHit2D top = Physics2D.Linecast(itself.transform.position, new Vector2(itself.transform.position.x, itself.transform.position.y - 1f), Data.WhatIsInteractable);
-            if (top && !IsGrounded())
+            if (interactableBelow)
             {
-                Debug.Log(2);
-                //Instantiate(Resources.Load("Prefabs/Platform"), new Vector2(itself.transform.position.x, itself.transform.position.y - 0.5f), Quaternion.identity);
+                Data.IAmTop = false;
+                //itself.tag = "Climable";
             }
-            //First in the stack/Bottom
-            itself.tag = "NonClimable";
+            else if(!interactableBelow)
+            {  
+                    Data.IAmTop = false;
+                    //itself.tag = "Climable";
+            }
+        }
+        else if (!interactableAbove)
+        {
+            if (interactableBelow && !IsGrounded())
+            {
+                Data.IAmTop = true;
+                //itself.tag = "Climable";
+            }
+            if (!interactableBelow && IsGrounded())
+            {
+                Data.IAmTop = false;
+                //itself.tag = "Climable";
+            }
         }
     }
 
@@ -174,5 +186,11 @@ public class CollisionSenses : CoreComponent
 
         float yDist = yHit.distance;
         return new Vector2(wallCheck.position.x + (Core.Movement.GetFacingDirection() * xDist), ledgeCheck.position.y - yDist);
+    }
+
+    public void OnDrawGizmos()
+    {
+        //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), new Vector2(0.25f, 0.25f));
+        //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.transform.position.y - 1.1f), new Vector2(0.25f, 0.25f));
     }
 }

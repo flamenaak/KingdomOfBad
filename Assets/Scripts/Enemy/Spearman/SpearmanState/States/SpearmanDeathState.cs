@@ -18,6 +18,18 @@ public class SpearmanDeathState : EnemyDeathState
     public override void Enter()
     {
         base.Enter();
+        if (spearman.Core.CollisionSenses.Data.IAmTop && !spearman.Platform.active)
+        {
+            if(!GameObject.Find("Player").GetComponent<Player>().isCarrying)
+                spearman.Platform.SetActive(false);
+            else
+            spearman.Platform.SetActive(true);
+        }
+        else if(!spearman.Core.CollisionSenses.Data.IAmTop && spearman.Platform.active)
+        {
+            spearman.Platform.SetActive(false);
+        }
+
     }
 
     public override void Exit()
@@ -30,6 +42,7 @@ public class SpearmanDeathState : EnemyDeathState
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
         spearman.itself.layer = 16;
+        spearman.tag = "Climable";
         spearman.Core.CollisionSenses.isClimable(spearman.itself);
     }
 }

@@ -11,6 +11,8 @@ public class Thief : Enemy
 
     public GameObject itself;
 
+    public GameObject Platform;
+
     public bool shouldEvade = false;
 
     public bool BossMinion = false;

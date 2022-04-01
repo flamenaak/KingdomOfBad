@@ -30,6 +30,13 @@ public class PlatformHandler : MonoBehaviour
         {
             effector.colliderMask = jumpThroughPlatform;
         }
+        float platformWidth = this.transform.localScale.x;
+        RaycastHit2D left = Physics2D.Raycast(this.transform.position, Vector2.left, (platformWidth/2) + 1f, whatIsPlayer);
+        RaycastHit2D right = Physics2D.Raycast(this.transform.position, Vector2.right, (platformWidth/2) + 1f, whatIsPlayer);
+        if(left || right)
+        {
+            effector.colliderMask = 0;
+        }
     }
 
     private void OnDrawGizmos()

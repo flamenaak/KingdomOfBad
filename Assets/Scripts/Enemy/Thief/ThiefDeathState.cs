@@ -18,6 +18,17 @@ public class ThiefDeathState : EnemyDeathState
     public override void Enter()
     {
         base.Enter();
+        if (thief.Core.CollisionSenses.Data.IAmTop && !thief.Platform.active)
+        {
+            if (!GameObject.Find("Player").GetComponent<Player>().isCarrying)
+                thief.Platform.SetActive(false);
+            else
+                thief.Platform.SetActive(true);
+        }
+        else if (!thief.Core.CollisionSenses.Data.IAmTop && thief.Platform.active)
+        {
+            thief.Platform.SetActive(false);
+        }
     }
 
     public override void Exit()
@@ -30,6 +41,7 @@ public class ThiefDeathState : EnemyDeathState
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
         thief.itself.layer = 16;
+        thief.tag = "Climable";
         thief.Core.CollisionSenses.isClimable(thief.itself);
     }
 

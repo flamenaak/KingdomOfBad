@@ -4840,7 +4840,7 @@ GameObject:
   - component: {fileID: 3635949609270556618}
   m_Layer: 0
   m_Name: Torch
-  m_TagString: Untagged
+  m_TagString: NonClimable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
