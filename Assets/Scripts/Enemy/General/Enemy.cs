@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour, IHasCombat
     public EnemyDodgeState DodgeState { get; set; }
     public EnemySearchState SearchState { get; set; }
 
-
+    public bool isClimable = false;
     public bool aware;
     public Core Core;
     public Combat Combat => Core.Combat;

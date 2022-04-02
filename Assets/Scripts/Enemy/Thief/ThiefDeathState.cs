@@ -40,9 +40,9 @@ public class ThiefDeathState : EnemyDeathState
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        thief.transform.gameObject.layer = 16;
-        thief.tag = "Climable";
-        thief.Core.CollisionSenses.isClimable();
+        //thief.transform.gameObject.layer = 16;
+        //thief.tag = "Climable";
+        //thief.Core.CollisionSenses.isClimable();
     }
 
     public override void Update()

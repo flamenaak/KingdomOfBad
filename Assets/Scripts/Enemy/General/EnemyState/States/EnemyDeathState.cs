@@ -33,6 +33,12 @@ public class EnemyDeathState : EnemyState
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
+        if (enemy.isClimable)
+        {
+            enemy.gameObject.transform.tag = "Climable";
+            enemy.gameObject.layer = 16;
+            enemy.Core.CollisionSenses.isClimable();
+        }
     }
 
     public override int GetHashCode()
