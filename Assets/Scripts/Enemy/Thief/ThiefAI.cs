@@ -30,7 +30,7 @@ public class ThiefAI : EnemyAI
         if (!entity)
             return false;
 
-        return !(ShouldDodge(entity) || ShouldMelleeAttack(entity)) && !thief.Core.CollisionSenses.IsReachingEdge();
+        return !(ShouldDodge(entity) || ShouldMelleeAttack(entity)) && !thief.Core.CollisionSenses.IsReachingEdgeBool();
     }
 
     public override bool ShouldDodge(Transform entity)
@@ -56,7 +56,7 @@ public class ThiefAI : EnemyAI
         
         float distance = Vector2.Distance(enemy.transform.position, entity.position);
         //Thief doesn't lunge over gaps
-        if (thief.CanLunge && distance <= thief.Core.Movement.Data.StabDistance && !thief.Core.CollisionSenses.IsReachingEdge() && enemy.Core.Movement.HasClearPath(thief.transform, entity.position))
+        if (thief.CanLunge && distance <= thief.Core.Movement.Data.StabDistance && !thief.Core.CollisionSenses.IsReachingEdgeBool() && enemy.Core.Movement.HasClearPath(thief.transform, entity.position))
             return true;
         if (distance <= 1)
             return true;

@@ -61,6 +61,20 @@ public class CollisionSenses : CoreComponent
         private set { ledgeCheck = value; }
     }
 
+    // position for checking for hostiles
+    public Transform HostileCheck
+    {
+        get
+        {
+            if (hostileCheck)
+                return hostileCheck;
+            Debug.LogError("missing hostile check on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { hostileCheck = value; }
+    }
+
     [SerializeField]
     private Transform ceilingCheck;
     [SerializeField]
@@ -69,17 +83,24 @@ public class CollisionSenses : CoreComponent
     private Transform wallCheck;
     [SerializeField]
     private Transform ledgeCheck;
+
+    [SerializeField]
+    private Transform hostileCheck;
     #endregion
 
     public DataCollisionSenses Data;
 
-    public bool IsFacingRight = true;
-
-    public bool IsTouchingWall()
+    public Vector2? IsTouchingWall()
     {
-        return Physics2D.Raycast(wallCheck.position,
+        var hit = Physics2D.Raycast(wallCheck.position,
             Vector2.right * Core.Movement.GetFacingDirection(), Data.WallCheckDistance, Data.WhatIsGround);
+
+        if (hit.collider) return hit.point;
+
+        return null;
     }
+
+    public bool IsTouchingWallBool() => IsTouchingWall() != null;
 
     public bool IsTouchingLedge()
     {
@@ -87,13 +108,20 @@ public class CollisionSenses : CoreComponent
             Vector2.right * Core.Movement.GetFacingDirection(), Data.WallCheckDistance, Data.WhatIsGround);
     }
 
-    public bool IsReachingEdge()
+    public bool IsReachingEdgeBool() => IsReachingEdge() != null;    
+
+    public Vector2? IsReachingEdge()
     {
-        RaycastHit2D raycast = Physics2D.Raycast(groundCheck.position + (Vector3)(Vector2.right * Core.Movement.GetFacingDirection() * Data.WallCheckDistance),
+        var startPoint = groundCheck.position + (Vector3)(Vector2.right * Core.Movement.GetFacingDirection() * Data.WallCheckDistance);
+
+        RaycastHit2D raycast = Physics2D.Raycast(startPoint,
             Vector2.down,
             Data.WallCheckDistance,
             Data.WhatIsGround);
-        return raycast.collider == null;
+
+        if (raycast) return null;
+
+        return startPoint;
     }
 
     public bool IsGrounded()

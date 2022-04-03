@@ -56,7 +56,7 @@ public class PlayerHangState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (player.Controller.ReadInputY() < 0 || (player.Core.CollisionSenses.IsTouchingLedge() && player.Core.CollisionSenses.IsTouchingWall()))
+        if (player.Controller.ReadInputY() < 0 || (player.Core.CollisionSenses.IsTouchingLedge() && player.Core.CollisionSenses.IsTouchingWallBool()))
         {
             stateMachine.ChangeState(player.FallState);
         }

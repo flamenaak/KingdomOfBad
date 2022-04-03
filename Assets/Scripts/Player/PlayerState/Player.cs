@@ -219,6 +219,7 @@ public class Player : MonoBehaviour, IHasCombat
         transform.position = startPosition;
         StateMachine.ChangeState(IdleState);
         Core.Combat.DamageCollider.enabled = true;
+        canRegen = true;
     }
 
     public bool HaveEnoughStamina()

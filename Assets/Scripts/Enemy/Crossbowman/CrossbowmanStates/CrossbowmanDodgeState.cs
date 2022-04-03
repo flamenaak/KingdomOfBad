@@ -34,7 +34,7 @@ public class CrossbowmanDodgeState : EnemyDodgeState
             Vector2 dashPos = crossbowman.Core.Movement.DetermineDashDestination(crossbowman.transform);
             crossbowman.CanDodge.StartCooldownTimer();
             if (!crossbowman.Core.Movement.HasClearPath(crossbowman.transform, (Vector2)crossbowman.transform.position + Vector2.right * crossbowman.Core.Movement.GetFacingDirection() * 1f) 
-                || crossbowman.Core.CollisionSenses.IsReachingEdge())
+                || crossbowman.Core.CollisionSenses.IsReachingEdgeBool())
             {
                 enemy.Core.Movement.Flip();
                 dashPos = crossbowman.Core.Movement.DetermineDashDestination(crossbowman.transform);

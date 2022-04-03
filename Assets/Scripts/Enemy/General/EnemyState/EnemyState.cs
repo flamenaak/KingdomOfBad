@@ -51,8 +51,8 @@ public class EnemyState : State
         base.DoChecks();
         detectedHostile = enemy.enemyAI.DetectHostile();
         
-        isTouchingWall = enemy.Core.CollisionSenses.IsTouchingWall();
+        isTouchingWall = enemy.Core.CollisionSenses.IsTouchingWallBool();
         isTouchingLedge = enemy.Core.CollisionSenses.IsTouchingLedge();
-        isReachingEdge = enemy.Core.CollisionSenses.IsReachingEdge();
+        isReachingEdge = enemy.Core.CollisionSenses.IsReachingEdgeBool();
     }
 }

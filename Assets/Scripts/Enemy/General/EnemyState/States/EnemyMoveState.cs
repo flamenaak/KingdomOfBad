@@ -36,8 +36,8 @@ public class EnemyMoveState : EnemyState
 
         if (enemy.Core.CollisionSenses.IsGrounded())
         {
-            var isEdge = enemy.Core.CollisionSenses.IsReachingEdge();
-            var isWall = enemy.Core.CollisionSenses.IsTouchingWall();
+            var isEdge = enemy.Core.CollisionSenses.IsReachingEdgeBool();
+            var isWall = enemy.Core.CollisionSenses.IsTouchingWallBool();
             var canGoForward = !isEdge && !isWall;
 
             if (canGoForward)
