@@ -63,8 +63,7 @@ public class CollisionSenses : CoreComponent
 
     [SerializeField]
     private Transform ceilingCheck;
-    [SerializeField]
-    private Transform groundCheck;
+    public Transform groundCheck;
     [SerializeField]
     private Transform wallCheck;
     [SerializeField]
@@ -172,12 +171,6 @@ public class CollisionSenses : CoreComponent
 
         float yDist = yHit.distance;
         return new Vector2(wallCheck.position.x + (Core.Movement.GetFacingDirection() * xDist), ledgeCheck.position.y - yDist);
-    }
-
-    public void OnDrawGizmos()
-    {
-        //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), new Vector2(0.25f, 0.25f));
-        //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.transform.position.y - 1.1f), new Vector2(0.25f, 0.25f));
     }
 }
 

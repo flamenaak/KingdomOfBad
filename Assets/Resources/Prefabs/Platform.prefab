@@ -146,9 +146,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 1024
-  whatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 2048
   jumpThroughPlatform:
     serializedVersion: 2
     m_Bits: 48951
@@ -180,4 +177,4 @@ MonoBehaviour:
   - {x: -0.07999995, y: 0.07888, z: 0}
   m_ShapePathHash: -939296851
   m_Mesh: {fileID: 0}
-  m_InstanceId: 111740
+  m_InstanceId: 134552

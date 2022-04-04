@@ -8,6 +8,9 @@ public class Climability : MonoBehaviour
     private bool IAmTop;
     public GameObject entity;
     public GameObject Platform;
+    public Transform GroundCheck;
+    public LayerMask WhatIsGround;
+    float spriteHeight;
 
     private void setPlatformActive()
     {
@@ -16,20 +19,26 @@ public class Climability : MonoBehaviour
             if (!GameObject.Find("Player").GetComponent<Player>().isCarrying)
             {
                 Platform.SetActive(true);
+                Platform.GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             }
             else
             {
                 Platform.SetActive(false);
+                Platform.GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
             }
         }
         else if(!IAmTop)
         {
             Platform.SetActive(false);
+            Platform.GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         }
     }
 
     void Start()
     {
+
+        //Platform.GetComponent<BoxCollider2D>().size = entity.GetComponent<BoxCollider2D>().size;
+        spriteHeight = entity.GetComponent<SpriteRenderer>().bounds.min.y;
         IAmTop = false;
         if (entity == null)
         {
@@ -39,12 +48,23 @@ public class Climability : MonoBehaviour
         {
             Debug.LogError($"Climability component cannot find Platform component, probably is not assigned.");
         }
+        if(entity.GetComponentInChildren<CollisionSenses>() == null)
+        {
+            entity.AddComponent<Core>();
+            DataCollisionSenses data = entity.AddComponent<DataCollisionSenses>();
+            CollisionSenses col = entity.AddComponent<CollisionSenses>();
+            col.Data = data;
+            data.WhatIsGround = WhatIsGround;
+            data.WhatIsInteractable = WhatIsInteractable;
+            GroundCheck.position = new Vector3(entity.transform.position.x, spriteHeight - 0.05f, 0);
+            col.groundCheck = GroundCheck;
+        }
     }
 
     void Update()
     {
-        RaycastHit2D interactableAbove = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), new Vector2(0.15f, 0.15f), 0, Vector2.up, 0, WhatIsInteractable);
-        RaycastHit2D interactableBelow = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y - 1.1f), new Vector2(0.15f, 0.15f), 0, Vector2.down, 0, WhatIsInteractable);
+        RaycastHit2D interactableAbove = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.GetComponentInParent<SpriteRenderer>().bounds.max.y + 0.25f), new Vector2(0.25f, 0.25f), 0, Vector2.up, 0, WhatIsInteractable);
+        RaycastHit2D interactableBelow = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.GetComponentInParent<SpriteRenderer>().bounds.min.y - 0.15f), new Vector2(0.25f, 0.25f), 0, Vector2.down, 0, WhatIsInteractable);
         if (interactableAbove)
         {
             if (interactableBelow)
@@ -58,16 +78,22 @@ public class Climability : MonoBehaviour
         }
         else if (!interactableAbove)
         {
-            if (interactableBelow && !entity.GetComponentInChildren<Core>().CollisionSenses.IsGrounded())
+            if (interactableBelow && !entity.GetComponentInChildren<CollisionSenses>().IsGrounded())
             {
                 IAmTop = true;
-                }
             }
-            if (!interactableBelow && entity.GetComponentInChildren<Core>().CollisionSenses.IsGrounded())
+            if (!interactableBelow && entity.GetComponentInChildren<CollisionSenses>().IsGrounded())
             {
                 IAmTop = false;
             }
+        }
         setPlatformActive();
     }
-    
+
+    public void OnDrawGizmos()
+    {
+        //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.GetComponentInParent<SpriteRenderer>().bounds.max.y + 0.25f), new Vector2(0.25f, 0.25f));
+        //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.GetComponentInParent<SpriteRenderer>().bounds.min.y - 0.15f), new Vector2(0.25f, 0.25f));
+    }
+
 }
