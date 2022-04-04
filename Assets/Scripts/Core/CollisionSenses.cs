@@ -71,7 +71,24 @@ public class CollisionSenses : CoreComponent
     private Transform ledgeCheck;
     #endregion
 
+    [SerializeField]
+    private IHasCollisionSenses entity;
+
     public DataCollisionSenses Data;
+
+    public IHasCollisionSenses Entity
+    {
+        get
+        {
+            if (entity != null)
+                return entity;
+
+            Debug.LogError("Missing Entity on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { entity = value; }
+    }
 
     public bool IsFacingRight = true;
 
@@ -137,38 +154,7 @@ public class CollisionSenses : CoreComponent
         }
     }
 
-    public void isClimable()
-    {
-        RaycastHit2D interactableAbove = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), new Vector2(0.15f, 0.15f), 0, Vector2.up, 0, Data.WhatIsInteractable);
-        RaycastHit2D interactableBelow = Physics2D.BoxCast(new Vector2(this.transform.position.x, this.transform.position.y - 1.1f), new Vector2(0.15f, 0.15f), 0, Vector2.down, 0, Data.WhatIsInteractable);
-        if (interactableAbove)
-        {
-            if (interactableBelow)
-            {
-                Data.IAmTop = false;
-                //itself.tag = "Climable";
-            }
-            else if(!interactableBelow)
-            {  
-                    Data.IAmTop = false;
-                    //itself.tag = "Climable";
-            }
-        }
-        else if (!interactableAbove)
-        {
-            if (interactableBelow && !IsGrounded())
-            {
-                Data.IAmTop = true;
-                //itself.tag = "Climable";
-            }
-            if (!interactableBelow && IsGrounded())
-            {
-                Data.IAmTop = false;
-                //itself.tag = "Climable";
-            }
-        }
-    }
-
+   
     public Vector2 DetermineLedgePosition()
     {
         RaycastHit2D xHit = Physics2D.Raycast(
@@ -193,4 +179,17 @@ public class CollisionSenses : CoreComponent
         //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.transform.position.y + 0.25f), new Vector2(0.25f, 0.25f));
         //Gizmos.DrawCube(new Vector2(this.transform.position.x, this.transform.position.y - 1.1f), new Vector2(0.25f, 0.25f));
     }
+}
+
+public interface IHasCollisionSenses
+{
+    CollisionSenses CollisionSenses { get; }
+
+    bool isTouchingWall();
+    bool isTouchingLedge();
+    bool isReachingEdge();
+    bool isGrounded();
+    Transform isTouchingCarrable();
+    bool isTouchingClimable();
+    Vector2 DetermineLedgePosition();
 }

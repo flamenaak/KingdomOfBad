@@ -17,17 +17,6 @@ public class CrossbowmanDeathState : EnemyDeathState
     public override void Enter()
     {
         base.Enter();
-        if (crossbowman.Core.CollisionSenses.Data.IAmTop && !crossbowman.Platform.active)
-        {
-            if (!GameObject.Find("Player").GetComponent<Player>().isCarrying)
-                crossbowman.Platform.SetActive(false);
-            else
-                crossbowman.Platform.SetActive(true);
-        }
-        else if (!crossbowman.Core.CollisionSenses.Data.IAmTop && crossbowman.Platform.active)
-        {
-            crossbowman.Platform.SetActive(false);
-        }
     }
 
     public override void Exit()
@@ -39,8 +28,5 @@ public class CrossbowmanDeathState : EnemyDeathState
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        //crossbowman.transform.gameObject.layer = 16;
-       // crossbowman.Core.CollisionSenses.isClimable();
-     //   crossbowman.tag = "Climable";
     }
 }

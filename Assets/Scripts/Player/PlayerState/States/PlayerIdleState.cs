@@ -67,14 +67,16 @@ public class PlayerIdleState : PlayerGroundedState
             stateMachine.ChangeState(player.WindUpState);
         }
         //Picking up interactable
-        else if (Input.GetButtonDown("Interact") && player.Core.CollisionSenses.IsTouchingCarriable() != null && !player.isCarrying)
+        else if (Input.GetButton("Interact") && player.Core.CollisionSenses.IsTouchingCarriable() != null && !player.isCarrying && player.CanInteract)
         {
+            player.CanInteract.StartCooldownTimer();
             player.InteractButton.GetComponent<Animator>().SetBool("pressed", true);
             player.PickUp();
         }
         //Dropping interactable
-        else if (Input.GetButtonUp("Interact") && player.isCarrying)
+        else if (Input.GetButton("Interact") && player.isCarrying && player.CanInteract)
         {
+            player.CanInteract.StartCooldownTimer();
             player.InteractButton.GetComponent<Animator>().SetBool("pressed", false);
             player.Drop();
         }

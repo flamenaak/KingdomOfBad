@@ -66,7 +66,7 @@ public class Player : MonoBehaviour, IHasCombat
     public CircleCollider2D circleCollider2D;
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
-
+    public CooldownComponent CanInteract;
     public ParticleSystem LandDust;
     public ParticleSystem Dust;
     public GameObject InteractButton;
