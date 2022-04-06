@@ -42,7 +42,6 @@ public class Enemy : MonoBehaviour, IHasCombat
     {
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
-
         Core = GetComponentInChildren<Core>();
 
         StateMachine = new StateMachine();
@@ -69,6 +68,7 @@ public class Enemy : MonoBehaviour, IHasCombat
 
     private void Update()
     {
+        //RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         StateMachine.CurrentState.Update();
         if(Core.Combat.damaged)
         {
@@ -101,9 +101,6 @@ public class Enemy : MonoBehaviour, IHasCombat
     public void Die()
     {
         Core.Combat.Die();
-        /*GetComponent<BoxCollider2D>().enabled = false;
-        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionX;
-        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;*/
     }
 
     public void Knockback(Transform attacker, float amount)

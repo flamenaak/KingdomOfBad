@@ -24,20 +24,18 @@ public class Climability : MonoBehaviour
             else
             {
                 Platform.SetActive(false);
-                Platform.GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                Platform.GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
         else if(!IAmTop)
         {
             Platform.SetActive(false);
-            Platform.GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            Platform.GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
     void Start()
     {
-
-        //Platform.GetComponent<BoxCollider2D>().size = entity.GetComponent<BoxCollider2D>().size;
         spriteHeight = entity.GetComponent<SpriteRenderer>().bounds.min.y;
         IAmTop = false;
         if (entity == null)
