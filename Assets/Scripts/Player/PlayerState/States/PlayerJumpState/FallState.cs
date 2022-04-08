@@ -53,18 +53,8 @@ public class FallState : PlayerAirState
     public override void Update()
     {
         base.Update();
-        if (Input.GetButtonDown("Interact") && player.Core.CollisionSenses.IsTouchingCarriable() != null && !player.isCarrying)
-        {
-            player.InteractButton.GetComponent<Animator>().SetBool("pressed", true);
-            player.PickUp();
-        }
-        //Dropping interactable
-        else if (Input.GetButtonUp("Interact") && player.isCarrying)
-        {
-            player.InteractButton.GetComponent<Animator>().SetBool("pressed", false);
-            player.Drop();
-        }
-        else if (player.Core.CollisionSenses.isTouchingClimable() && player.Controller.ReadInputY() != 0)
+        player.PickDropHandling();
+        if (player.Core.CollisionSenses.isTouchingClimable() && player.Controller.ReadInputY() != 0)
         {
             player.RigidBody.velocity = Vector2.zero;
             stateMachine.ChangeState(player.ClimbIdleState);

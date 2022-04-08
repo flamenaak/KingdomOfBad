@@ -365,11 +365,29 @@ public class Player : MonoBehaviour, IHasCombat
         canSlash = true;
         canStab = true;
         canDashOrEvade = true;
-        carriable.transform.SetParent(null);
+        carriable.transform.SetParent(GameObject.Find("Decor").transform);
         carriable.GetComponent<BoxCollider2D>().enabled = true;
         if (carriable.GetComponent<Rigidbody2D>() != null)
         {
             carriable.GetComponent<Rigidbody2D>().isKinematic = false;
+        }
+    }
+
+    public void PickDropHandling()
+    {
+        //Picking up interactable
+        if (Input.GetButton("Interact") && Core.CollisionSenses.IsTouchingCarriable() != null && !isCarrying && CanInteract)
+        {
+            CanInteract.StartCooldownTimer();
+            InteractButton.GetComponent<Animator>().SetBool("pressed", true);
+            PickUp();
+        }
+        //Dropping interactable
+        else if (Input.GetButton("Interact") && isCarrying && CanInteract)
+        {
+            CanInteract.StartCooldownTimer();
+            InteractButton.GetComponent<Animator>().SetBool("pressed", false);
+            Drop();
         }
     }
 }

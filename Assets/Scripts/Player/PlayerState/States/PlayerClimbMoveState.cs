@@ -36,18 +36,18 @@ public class PlayerClimbMoveState : PlayerGroundedState
         {
             player.isAtTop = false;
         }
-    }
-
-    public override void Update()
-    {
-        base.Update();
         //Climbing movement
         if ((yInput != 0 && player.Core.CollisionSenses.isTouchingClimable()) || (xInput != 0 && player.Core.CollisionSenses.isTouchingClimable()))
         {
             player.RigidBody.velocity = new Vector2(xInput * player.WalkSpeed, yInput * player.WalkSpeed);
         }
+    }
+
+    public override void Update()
+    {
+        base.Update();
         //Falling out of the climable entity
-        else if (xInput != 0 && !player.Core.CollisionSenses.isTouchingClimable() || yInput != 0 && !player.Core.CollisionSenses.isTouchingClimable())
+        if (xInput != 0 && !player.Core.CollisionSenses.isTouchingClimable() || yInput != 0 && !player.Core.CollisionSenses.isTouchingClimable())
         {
             stateMachine.ChangeState(player.FallState);
         }

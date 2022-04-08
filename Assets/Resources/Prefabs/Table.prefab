@@ -171,7 +171,7 @@ MonoBehaviour:
   - {x: -0.06021183, y: 0.02556389, z: 0}
   m_ShapePathHash: -501144945
   m_Mesh: {fileID: 0}
-  m_InstanceId: 149396
+  m_InstanceId: 28130
 --- !u!50 &-3240801398698848792
 Rigidbody2D:
   serializedVersion: 4
@@ -274,6 +274,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779277252664906114, guid: 49acca04a24dba14498ce05d4a76d227,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0551
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49acca04a24dba14498ce05d4a76d227, type: 3}
