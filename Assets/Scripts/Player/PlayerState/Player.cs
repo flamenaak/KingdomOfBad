@@ -90,10 +90,10 @@ public class Player : MonoBehaviour, IHasCombat
     public float yLedgeOffset = 0f;
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
-
-    protected float immuneTime = 1.0F;
-    protected float lastImmune;
-
+    
+    // -- helper varuable for handling carrying stuff
+    private int oldLayer;
+    private Transform oldParent;
 
     private void Awake()
     {
@@ -341,6 +341,7 @@ public class Player : MonoBehaviour, IHasCombat
         }
     }
 
+
     public void PickUp()
     {
             if (Core.CollisionSenses.IsTouchingCarriable().GetComponent<SpriteRenderer>().sortingLayerName.Equals("Enemy") || 
@@ -350,7 +351,10 @@ public class Player : MonoBehaviour, IHasCombat
             canStab = false;
             canDashOrEvade = false;
             carriable = Core.CollisionSenses.IsTouchingCarriable();
+            oldParent= carriable.parent;
             carriable.transform.SetParent(carryPoint);
+            oldLayer = carriable.gameObject.layer;
+            carriable.gameObject.layer = this.gameObject.layer;            
             carriable.transform.position = carryPoint.transform.position;
             carriable.GetComponent<BoxCollider2D>().enabled = false;
             if (carriable.GetComponent<Rigidbody2D>() != null)
@@ -365,7 +369,8 @@ public class Player : MonoBehaviour, IHasCombat
         canSlash = true;
         canStab = true;
         canDashOrEvade = true;
-        carriable.transform.SetParent(GameObject.Find("Decor").transform);
+        carriable.gameObject.layer = oldLayer;
+        carriable.transform.SetParent(oldParent);
         carriable.GetComponent<BoxCollider2D>().enabled = true;
         if (carriable.GetComponent<Rigidbody2D>() != null)
         {
