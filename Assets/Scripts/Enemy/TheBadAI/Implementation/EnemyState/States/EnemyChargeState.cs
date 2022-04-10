@@ -29,15 +29,8 @@ namespace BadAI
 
         public override void FixedUpdate()
         {
-            if (enemy.enemyAI.ShouldChase(detectedHostile))
-            {
-                enemy.RigidBody.velocity = Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.RunSpeed;
-                base.DoChecks();
-            }
-            else
-            {
-                base.FixedUpdate();
-            }
+            enemy.RigidBody.velocity = Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.RunSpeed;
+            base.DoChecks();
         }
 
         public override void DoChecks()

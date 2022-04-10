@@ -31,21 +31,11 @@ namespace BadAI
             base.FixedUpdate();
             if (!detectedHostile)
             {
-                stateMachine.ChangeState(enemy.SearchState);
+                // stateMachine.ChangeState(enemy.SearchState);
                 return;
             }
 
-            List<DecisionFunction_State_Tuple> decisionFunctions = enemy.DecisionFunctions;
-            foreach (DecisionFunction_State_Tuple tuple in decisionFunctions)
-            {
-                if (tuple.DecisionFunction(detectedHostile))
-                {
-                    stateMachine.ChangeState(tuple.NextState);
-                    return;
-                }
-            }
-
-            stateMachine.ChangeState(enemy.SearchState);
+            // stateMachine.ChangeState(enemy.SearchState);
         }
 
         public override void DoChecks()

@@ -6,7 +6,7 @@ public class CooldownComponent : MonoBehaviour
     /// Length of cooldown timer
     /// </summary>
     [SerializeField]
-    private float cooldownTime;
+    public float CooldownTime;
 
     /// <summary>
     /// True when the cooldown runs down and resets
@@ -15,15 +15,15 @@ public class CooldownComponent : MonoBehaviour
 
     public CooldownComponent(float cooldownTime) 
     {
-        this.cooldownTime = cooldownTime;
+        this.CooldownTime = cooldownTime;
     }
 
     public void Start()
     {
-        resetEnable();
+        ResetEnable();
     }
 
-    private void resetEnable()
+    public void ResetEnable()
     {
         IsEnabled = true;
     }
@@ -34,7 +34,7 @@ public class CooldownComponent : MonoBehaviour
     public void StartCooldownTimer()
     {
         IsEnabled = false;
-        Invoke("resetEnable", cooldownTime);
+        Invoke("ResetEnable", CooldownTime);
     }
 
     /// <summary>

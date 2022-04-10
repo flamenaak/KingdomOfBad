@@ -31,15 +31,6 @@ namespace BadAI
             {
                 base.FixedUpdate();
             }
-
-            if (enemy.enemyAI.ShouldMelleeAttack(detectedHostile))
-            {
-                DoChecks();
-            }
-            else
-            {
-                base.FixedUpdate();
-            }
         }
 
         public override void Update()

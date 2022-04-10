@@ -32,11 +32,7 @@ namespace BadAI
             base.FixedUpdate();
             if (Time.time - startTime > duration)
             {
-                if (!enemy.enemyAI.DetectHostile())
-                {
-                    enemy.Core.Movement.Flip();
-                }
-                stateMachine.ChangeState(enemy.IdleState);
+                
                 return;
             }
         }

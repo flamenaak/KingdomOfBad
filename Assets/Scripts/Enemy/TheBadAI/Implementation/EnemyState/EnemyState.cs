@@ -51,8 +51,6 @@ namespace BadAI
         public override void DoChecks()
         {
             base.DoChecks();
-            detectedHostile = enemy.enemyAI.DetectHostile();
-
             isTouchingWall = enemy.Core.CollisionSenses.IsTouchingWallBool();
             isTouchingLedge = enemy.Core.CollisionSenses.IsTouchingLedge();
             isReachingEdge = enemy.Core.CollisionSenses.IsReachingEdgeBool();

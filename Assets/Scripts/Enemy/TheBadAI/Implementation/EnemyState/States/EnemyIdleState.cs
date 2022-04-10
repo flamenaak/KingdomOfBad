@@ -8,9 +8,11 @@ namespace BadAI
     {
         public bool FlipAfterIdle { get; set; }
 
+        private const float DURATION = 1.5f;
+
         public EnemyIdleState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
         {
-            duration = 1.5f;
+            duration = DURATION;
         }
 
         public override void DoChecks()
@@ -46,6 +48,14 @@ namespace BadAI
         public override void Update()
         {
             base.Update();
+        }
+
+        public void SetDuration(float duration)
+        {
+            if (duration == 0)
+                duration = DURATION;
+            
+            this.duration = duration;
         }
     }
 }

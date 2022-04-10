@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 /// <summary>
 /// 
 /// </summary>
-public class BadTarget : MonoBehaviour
+public class BadTarget
 {
     public delegate Vector2 LocationGetter();
     /// <summary>
@@ -20,6 +21,8 @@ public class BadTarget : MonoBehaviour
     /// The higher the priority, the more likely the AI will choose to pursue the target
     /// </summary>
     public int Priority;
+    
+    public bool Completed = false;
 
     public static BadTarget operator > (BadTarget left, BadTarget right)
     {

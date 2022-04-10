@@ -1,26 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using BadAI;
 
-public abstract class BadBehaviour<T> where T : Enemy
+public abstract class BadBehaviour<T> where T : BadAI.Enemy
 {
     protected T entity;
     public BadTarget Target;
-    protected StateMachine stateMachine;
-    protected List<State> states;
+    protected BadAI.BadPathfinder pathFinder;
 
-    public BadBehaviour(T entity, BadTarget target)
+    public BadBehaviour(T entity, BadTarget target, BadAI.BadPathfinder pathFinder)
     {
         this.entity = entity;
         this.Target = target;
+        this.pathFinder = pathFinder;
 
-        stateMachine = new StateMachine();
-        states = new List<State>();
     }
-
-    public abstract void Start();
     public abstract void FixedUpdate();
     public abstract void Update();
-    public abstract void StateUpdate();
-    public abstract void StateFixedUpdate();
-    public abstract void Exit();
 }

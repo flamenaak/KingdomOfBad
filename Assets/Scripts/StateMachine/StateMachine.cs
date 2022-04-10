@@ -14,6 +14,8 @@ public class StateMachine
 
     public void ChangeState(State newState)
     {
+        if (newState.Equals(CurrentState)) return;
+        
         CurrentState.Exit();
         CurrentState = newState;
         newState.Enter();

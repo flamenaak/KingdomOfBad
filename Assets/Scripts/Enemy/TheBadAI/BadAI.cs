@@ -1,33 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BadAI<T> : MonoBehaviour where T : Enemy
+namespace BadAI
 {
-    protected BadTarget currentTarget;
-    public List<BadTarget> Targets;
-    protected BadBehaviour<T> currentBehaviour;
-    
-    // have couple of defined behaviours instead of a list of anonymous ones
-    // protected List<BadBehaviour<T>> behaviours;
-    protected T entity;
-
-    public LayerMask WhatIsPlayer;
-    public float LineOfSight;
-    [SerializeField]
-    protected Transform playerCheck;
-
-    protected abstract List<BadTarget> ScanForTargets();
-    protected abstract BadBehaviour<T> ChooseBehaviour(BadTarget target);
-
-    public void FixedUpdate()
+    public abstract class BadAI<T> : MonoBehaviour where T : BadAI.Enemy
     {
-        currentBehaviour.FixedUpdate();
-        currentBehaviour.StateFixedUpdate();
-    }
+        protected BadTarget currentTarget;
+        public List<BadTarget> Targets;
+        public BadBehaviour<T> CurrentBehaviour;
 
-    public void Update()
-    {
-        currentBehaviour.Update();
-        currentBehaviour.StateUpdate();
+        // have couple of defined behaviours instead of a list of anonymous ones
+        // protected List<BadBehaviour<T>> behaviours;
+        protected T entity;
+
+        public LayerMask WhatIsPlayer;
+        public float LineOfSight;
+        [SerializeField]
+        protected Transform playerCheck;
+
+        protected abstract List<BadTarget> ScanForTargets();
+        protected abstract BadBehaviour<T> ChooseBehaviour(BadTarget target);
+
+        public void FixedUpdate()
+        {
+            CurrentBehaviour.FixedUpdate();
+        }
+
+        public void Update()
+        {
+            CurrentBehaviour.Update();
+        }
     }
 }

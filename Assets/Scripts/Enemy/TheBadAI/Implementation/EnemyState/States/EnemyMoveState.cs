@@ -31,36 +31,13 @@ namespace BadAI
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (detectedHostile)
-            {
-                enemy.Awarness.GetComponent<Animator>().Play("Base Layer.Spotted", 0, 0);
-                stateMachine.ChangeState(enemy.HostileSpottedState);
-                return;
-            }
-
+            Debug.Log("shmoving");
             if (enemy.Core.CollisionSenses.IsGrounded())
             {
-                var isEdge = enemy.Core.CollisionSenses.IsReachingEdgeBool();
-                var isWall = enemy.Core.CollisionSenses.IsTouchingWallBool();
-                var canGoForward = !isEdge && !isWall;
-
-                if (canGoForward)
-                {
-                    enemy.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.WalkSpeed);
-                }
-                else
-                {
-                    if (isWall)
-                    {
-                        enemy.Core.Movement.Flip();
-                    }
-                    else
-                    {
-                        enemy.IdleState.FlipAfterIdle = true;
-                        stateMachine.ChangeState(enemy.IdleState);
-                        return;
-                    }
-                }
+                Debug.Log($"Facing direction : {enemy.Core.Movement.GetFacingDirection()}. WalkSpeed: {enemy.Core.Movement.Data.WalkSpeed} total velocity {(Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.WalkSpeed).magnitude}");
+                enemy.RigidBody.velocity = (Vector2.right * enemy.Core.Movement.GetFacingDirection() * enemy.Core.Movement.Data.WalkSpeed);
+            } else {
+                Debug.Log("not grounded but walking");
             }
         }
 

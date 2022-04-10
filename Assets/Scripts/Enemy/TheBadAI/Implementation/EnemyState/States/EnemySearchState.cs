@@ -36,7 +36,7 @@ namespace BadAI
 
             if (flipCountCurrent >= FlipCountMax)
             {
-                stateMachine.ChangeState(enemy.IdleState);
+                // stateMachine.ChangeState(enemy.IdleState);
                 return;
             }
 
@@ -47,7 +47,6 @@ namespace BadAI
             }
             else if (Time.time - lastFlipTime > FlipPause)
             {
-                enemy.enemyAI.SearchForHostile();
                 enemy.Core.Movement.Flip();
                 flipCountCurrent++;
                 lastFlipTime = Time.time;
