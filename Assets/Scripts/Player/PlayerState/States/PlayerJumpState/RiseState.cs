@@ -43,11 +43,5 @@ public class RiseState : PlayerAirState
     public override void Update()
     {
         base.Update();
-        player.PickDropHandling();
-        if (player.Core.CollisionSenses.isTouchingClimable() && player.Controller.ReadInputY() != 0)
-        {
-            player.RigidBody.velocity = Vector2.zero;
-            stateMachine.ChangeState(player.ClimbIdleState);
-        }
     }
 }

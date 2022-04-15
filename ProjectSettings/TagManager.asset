@@ -26,8 +26,8 @@ TagManager:
   - PlayerDamage
   - EnemyDamage
   - Interactable
-  - 
-  - 
+  - Climable
+  - Carriable
   - 
   - 
   - 

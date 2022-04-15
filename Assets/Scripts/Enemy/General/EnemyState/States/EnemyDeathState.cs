@@ -17,6 +17,10 @@ public class EnemyDeathState : EnemyState
     public override void Enter()
     {
         base.Enter();
+        if (enemy.isInteractableOnDeath)
+        {
+            enemy.gameObject.layer = 18;
+        }
     }
 
     public override bool Equals(object obj)
@@ -33,11 +37,6 @@ public class EnemyDeathState : EnemyState
     {
         base.FixedUpdate();
         enemy.RigidBody.velocity = Vector2.zero;
-        if (enemy.isClimableOnDeath)
-        {
-            enemy.gameObject.transform.tag = "Climable";
-            enemy.gameObject.layer = 16;
-        }
     }
 
     public override int GetHashCode()

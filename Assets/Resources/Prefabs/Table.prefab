@@ -1,5 +1,48 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8076100191959431664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1250899290128239041}
+  - component: {fileID: 952492160274480637}
+  m_Layer: 18
+  m_Name: Carriability
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1250899290128239041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076100191959431664}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4316346011737691205}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &952492160274480637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076100191959431664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420600a7ccbb3c041ab337a6fd4ef00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8768955984417326630
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +76,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 3422698862590437137}
+  - {fileID: 1250899290128239041}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -171,7 +215,7 @@ MonoBehaviour:
   - {x: -0.06021183, y: 0.02556389, z: 0}
   m_ShapePathHash: -501144945
   m_Mesh: {fileID: 0}
-  m_InstanceId: 28130
+  m_InstanceId: 145716
 --- !u!50 &-3240801398698848792
 Rigidbody2D:
   serializedVersion: 4
@@ -187,12 +231,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1001 &2808366672183834998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -274,6 +318,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669899929938186756, guid: 49acca04a24dba14498ce05d4a76d227,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5779277252664906114, guid: 49acca04a24dba14498ce05d4a76d227,
         type: 3}

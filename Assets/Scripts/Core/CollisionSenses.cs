@@ -124,35 +124,6 @@ public class CollisionSenses : CoreComponent
         }
         return false;
     }
-
-    public Transform IsTouchingCarriable()
-    {
-        Collider2D interactable = Physics2D.OverlapBox(this.transform.position,
-         new Vector2(1, 1), 0, Data.WhatIsInteractable);
-        if(interactable != null)
-        {
-            return interactable.transform;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public bool isTouchingClimable()
-    {
-        Collider2D interactable = Physics2D.OverlapBox(this.transform.position,
-        new Vector2(1, 1), 0, Data.WhatIsInteractable);
-        if (interactable != null && interactable.tag.Equals("Climable"))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
    
     public Vector2 DetermineLedgePosition()
     {

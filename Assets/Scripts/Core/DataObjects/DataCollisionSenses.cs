@@ -13,4 +13,7 @@ public class DataCollisionSenses : MonoBehaviour
     public LayerMask WhatIsGround;
 
     public LayerMask WhatIsInteractable;
+
+    public LayerMask WhatIsClimable;
+
 }

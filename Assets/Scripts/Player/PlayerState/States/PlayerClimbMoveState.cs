@@ -26,19 +26,10 @@ public class PlayerClimbMoveState : PlayerGroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        RaycastHit2D hit = Physics2D.Raycast(player.transform.position, Vector2.up, 1f, player.Core.CollisionSenses.Data.WhatIsInteractable);
-        if (!hit)
-        {
-            //Top of the stack
-            player.isAtTop = true;
-        }
-        else if (hit)
-        {
-            player.isAtTop = false;
-        }
         //Climbing movement
-        if ((yInput != 0 && player.Core.CollisionSenses.isTouchingClimable()) || (xInput != 0 && player.Core.CollisionSenses.isTouchingClimable()))
+        if(yInput != 0 && player.GetComponentInChildren<ClimabilityHandler>().isTouchingClimable()|| xInput != 0 && player.GetComponentInChildren<ClimabilityHandler>().isTouchingClimable()) 
         {
+            player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             player.RigidBody.velocity = new Vector2(xInput * player.WalkSpeed, yInput * player.WalkSpeed);
         }
     }
@@ -47,22 +38,26 @@ public class PlayerClimbMoveState : PlayerGroundedState
     {
         base.Update();
         //Falling out of the climable entity
-        if (xInput != 0 && !player.Core.CollisionSenses.isTouchingClimable() || yInput != 0 && !player.Core.CollisionSenses.isTouchingClimable())
-        {
+         if (xInput != 0 && !player.GetComponentInChildren<ClimabilityHandler>().isTouchingClimable() || yInput != 0 && !player.GetComponentInChildren<ClimabilityHandler>().isTouchingClimable())
+         {
+            player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             stateMachine.ChangeState(player.FallState);
-        }
-        else if (yInput == 0 && player.Core.CollisionSenses.IsGrounded())
-        {
+         }
+         else if (yInput == 0 && player.Core.CollisionSenses.IsGrounded())
+         {
+            player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             stateMachine.ChangeState(player.IdleState);
-        }
-        else if (yInput == 0 && xInput == 0 && !player.Core.CollisionSenses.IsGrounded())
-        {
+         }
+         else if (yInput == 0 && xInput == 0 && !player.Core.CollisionSenses.IsGrounded())
+         {
+            player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             player.RigidBody.velocity = Vector2.zero;
-            stateMachine.ChangeState(player.ClimbIdleState);
-        }
-        else if(Input.GetButton("Jump"))
-        {
+             stateMachine.ChangeState(player.ClimbIdleState);
+         }
+         else if(Input.GetButton("Jump"))
+         {
+            player.RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             stateMachine.ChangeState(player.LiftState);
-        }
+         }
     }
 }

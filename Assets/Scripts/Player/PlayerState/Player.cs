@@ -76,9 +76,6 @@ public class Player : MonoBehaviour, IHasCombat
     private CameraMovement camera;
 
     private Vector2 startPosition;
-    public Transform carryPoint;
-    Transform carriable;
-    public bool isCarrying;
     public bool isAtTop;
     public float fallDamage = 2f;
     public float allowedFallDistance = 4f;
@@ -91,9 +88,6 @@ public class Player : MonoBehaviour, IHasCombat
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
     
-    // -- helper varuable for handling carrying stuff
-    private int oldLayer;
-    private Transform oldParent;
 
     private void Awake()
     {
@@ -144,14 +138,6 @@ public class Player : MonoBehaviour, IHasCombat
     private void Update()
     {
         StateMachine.CurrentState.Update();
-        if (Core.CollisionSenses.IsTouchingCarriable() && !isCarrying)
-        {
-            InteractButton.GetComponent<Animator>().SetBool("touching", true);
-        }
-        if (!Core.CollisionSenses.IsTouchingCarriable())
-        {
-            InteractButton.GetComponent<Animator>().SetBool("touching", false);
-        }
         InteractButton.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + 2);
         Vector2 velocity = RigidBody.velocity;
         if ((velocity.x < -0.5f && Core.Movement.GetFacingDirection() > 0 && Controller.ReadInputX() < 0)
@@ -338,61 +324,6 @@ public class Player : MonoBehaviour, IHasCombat
             {
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
-        }
-    }
-
-
-    public void PickUp()
-    {
-            if (Core.CollisionSenses.IsTouchingCarriable().GetComponent<SpriteRenderer>().sortingLayerName.Equals("Enemy") || 
-                Core.CollisionSenses.IsTouchingCarriable().GetComponent<SpriteRenderer>().sortingLayerName.Equals("Wall"))
-            isCarrying = true;
-            canSlash = false;
-            canStab = false;
-            canDashOrEvade = false;
-            carriable = Core.CollisionSenses.IsTouchingCarriable();
-            oldParent= carriable.parent;
-            carriable.transform.SetParent(carryPoint);
-            oldLayer = carriable.gameObject.layer;
-            carriable.gameObject.layer = this.gameObject.layer;            
-            carriable.transform.position = carryPoint.transform.position;
-            carriable.GetComponent<BoxCollider2D>().enabled = false;
-            if (carriable.GetComponent<Rigidbody2D>() != null)
-            {
-                carriable.GetComponent<Rigidbody2D>().isKinematic = true;
-            }
-    }
-
-    public void Drop()
-    {
-        isCarrying = false;
-        canSlash = true;
-        canStab = true;
-        canDashOrEvade = true;
-        carriable.gameObject.layer = oldLayer;
-        carriable.transform.SetParent(oldParent);
-        carriable.GetComponent<BoxCollider2D>().enabled = true;
-        if (carriable.GetComponent<Rigidbody2D>() != null)
-        {
-            carriable.GetComponent<Rigidbody2D>().isKinematic = false;
-        }
-    }
-
-    public void PickDropHandling()
-    {
-        //Picking up interactable
-        if (Input.GetButton("Interact") && Core.CollisionSenses.IsTouchingCarriable() != null && !isCarrying && CanInteract)
-        {
-            CanInteract.StartCooldownTimer();
-            InteractButton.GetComponent<Animator>().SetBool("pressed", true);
-            PickUp();
-        }
-        //Dropping interactable
-        else if (Input.GetButton("Interact") && isCarrying && CanInteract)
-        {
-            CanInteract.StartCooldownTimer();
-            InteractButton.GetComponent<Animator>().SetBool("pressed", false);
-            Drop();
         }
     }
 }

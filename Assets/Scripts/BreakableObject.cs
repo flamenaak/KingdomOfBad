@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableObject : MonoBehaviour
+public class BreakableObject : MonoBehaviour, IHasCollider
 {
     // Start is called before the first frame update
     public GameObject brokenEntity;
@@ -22,6 +22,11 @@ public class BreakableObject : MonoBehaviour
         {
             Break();
         }
+    }
+
+    public BoxCollider2D GetCollider2D()
+    {
+        return this.gameObject.GetComponent<BoxCollider2D>();
     }
 
     private void Break()

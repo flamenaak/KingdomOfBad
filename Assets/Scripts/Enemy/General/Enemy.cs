@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IHasCombat
+public class Enemy : MonoBehaviour, IHasCombat, IHasCollider
 {
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}
@@ -16,11 +16,11 @@ public class Enemy : MonoBehaviour, IHasCombat
     public EnemyDodgeState DodgeState { get; set; }
     public EnemySearchState SearchState { get; set; }
 
-    public bool isClimableOnDeath = false;
+    public bool isInteractableOnDeath = false;
     public bool aware;
     public Core Core;
     public Combat Combat => Core.Combat;
-    
+
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
     public GameObject Awarness;
@@ -128,5 +128,10 @@ public class Enemy : MonoBehaviour, IHasCombat
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
+    }
+
+    public BoxCollider2D GetCollider2D()
+    {
+        return this.gameObject.GetComponent<BoxCollider2D>();
     }
 }

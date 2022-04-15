@@ -8,12 +8,6 @@ public class LiftState : PlayerAirState
     {
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -29,12 +23,6 @@ public class LiftState : PlayerAirState
     void Update()
     {
         base.Update();
-        player.PickDropHandling();
-        if (player.Core.CollisionSenses.isTouchingClimable() && player.Controller.ReadInputY() != 0)
-        {
-            player.RigidBody.velocity = Vector2.zero;
-            stateMachine.ChangeState(player.ClimbIdleState);
-        }
     }
 
     public override void Enter()

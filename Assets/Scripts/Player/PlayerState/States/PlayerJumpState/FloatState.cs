@@ -17,7 +17,6 @@ public class FloatState : PlayerAirState
         }
         CheckHang();
 
-       // player.RigidBody.velocity += new Vector2(player.Controller.ReadInputX() * player.WalkSpeed,0);
         CheckAirInput();
         if (player.RigidBody.velocity.y < -0.2f)
         {
@@ -38,11 +37,6 @@ public class FloatState : PlayerAirState
     public override void Update()
     {
         base.Update();
-        player.PickDropHandling();
-        if (player.Core.CollisionSenses.isTouchingClimable() && player.Controller.ReadInputY() != 0)
-        {
-            player.RigidBody.velocity = Vector2.zero;
-            stateMachine.ChangeState(player.ClimbIdleState);
-        }
+  
     }
 }
