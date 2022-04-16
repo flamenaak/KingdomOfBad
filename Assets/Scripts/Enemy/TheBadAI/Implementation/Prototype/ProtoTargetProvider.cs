@@ -6,7 +6,7 @@ namespace BadAI
 {
     class ProtoTargetProvider : MonoBehaviour
     {
-        private List<BadTarget> targetList = new ();
+        private Dictionary<string, BadTarget> targetList = new();
         private Transform playerCheck;
         private LayerMask whatIsHostile;
         private LayerMask whatIsGround;
@@ -16,28 +16,32 @@ namespace BadAI
 
         public bool Initialized = false;
 
-        public List<BadTarget> GetTargets()
+        public Dictionary<string, BadTarget> GetTargets()
         {
             return targetList;
         }
 
         public void FixedUpdate()
         {
-            targetList = targetList.Where(target => !target.Completed).ToList();
+            targetList = (Dictionary<string, BadTarget>)targetList.Where(entry => !entry.Value.Completed);
         }
 
-        protected List<BadTarget> ScanForTargets()
+        protected Dictionary<string, BadTarget> ScanForTargets()
         {
             // check for hostile
             var hostileTarget = DetectHostile();
             if (hostileTarget)
             {
-                targetList.Add(new BadTarget()
+                var hostileId = BadTarget.GetIdFromGameObject(hostileTarget.gameObject);
+                if (targetList[hostileId] == null)
                 {
-                    Type = BadTargetType.Attack,
-                    Priority = 10,
-                    GetLocation = () => hostileTarget.position
-                });
+                    targetList.Add(hostileId, new BadTarget(hostileId)
+                    {
+                        Type = BadTargetType.Attack,
+                        Priority = 10,
+                        GetLocation = () => hostileTarget.position
+                    });
+                }
             }
 
             // check for enviroment to avoid
@@ -63,12 +67,12 @@ namespace BadAI
             // }
 
             // check for patrol destination
-            if (targetList.Find(t => t.Type == BadTargetType.Travel) == null)
+            if (!targetList.Any(t => t.Value.Type == BadTargetType.Travel))
             {
                 Debug.Log("adding travel target");
 
                 var patrolTarget = Vector2.right * patrolDistance * entity.Core.Movement.GetFacingDirection() + (Vector2)entity.transform.position;
-                targetList.Add(new BadTarget()
+                addTarget(new BadTarget(BadTarget.GetIdFromVector(patrolTarget))
                 {
                     Type = BadTargetType.Travel,
                     Priority = 1,
@@ -79,7 +83,6 @@ namespace BadAI
             return targetList;
         }
 
-        
         // assume single hostile
         private Transform DetectHostile()
         {
@@ -97,6 +100,12 @@ namespace BadAI
             if (!wallHit) return possibleHit.transform;
 
             return null;
+        }
+
+        private void addTarget(BadTarget target)
+        {
+            if (targetList[target.Id] == null)
+                targetList.Add(target.Id, target);
         }
     }
 }

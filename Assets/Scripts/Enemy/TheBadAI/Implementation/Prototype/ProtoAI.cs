@@ -28,7 +28,7 @@ namespace BadAI
 
         public void Start()
         {
-            idleWalkerBehaviour = new IdleWalkerBehaviourProto(entity, new BadTarget()
+            idleWalkerBehaviour = new IdleWalkerBehaviourProto(entity, new BadTarget(BadTarget.GetIdFromVector(entity.RigidBody.position))
             {
                 Completed = false,
                 GetLocation = () => entity.RigidBody.position,
@@ -45,8 +45,8 @@ namespace BadAI
             var targetList = ScanForTargets();
             if (!targetList.Any()) return;
 
-            var priority = targetList.Max(t => t.Priority);
-            var chosenTarget = targetList.Find(t => t.Priority == priority);
+            var priority = targetList.Max(t => t.Value.Priority);
+            var chosenTarget = targetList.Where(t => t.Value.Priority == priority).First().Value;
             var choosenBehaviour = ChooseBehaviour(chosenTarget);
         }
 
@@ -66,7 +66,7 @@ namespace BadAI
         }
 
 
-        protected override List<BadTarget> ScanForTargets()
+        protected override Dictionary<string, BadTarget> ScanForTargets()
         {
             return targetProvider.GetTargets();
         }

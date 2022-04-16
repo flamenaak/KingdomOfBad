@@ -6,7 +6,7 @@ namespace BadAI
     public abstract class BadAI<T> : MonoBehaviour where T : BadAI.Enemy
     {
         protected BadTarget currentTarget;
-        public List<BadTarget> Targets;
+        public Dictionary<string, BadTarget> Targets;
         public BadBehaviour<T> CurrentBehaviour;
 
         // have couple of defined behaviours instead of a list of anonymous ones
@@ -18,7 +18,7 @@ namespace BadAI
         [SerializeField]
         protected Transform playerCheck;
 
-        protected abstract List<BadTarget> ScanForTargets();
+        protected abstract Dictionary<string, BadTarget> ScanForTargets();
         protected abstract BadBehaviour<T> ChooseBehaviour(BadTarget target);
 
         public void FixedUpdate()
