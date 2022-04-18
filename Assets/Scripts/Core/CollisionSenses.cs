@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CollisionSenses : CoreComponent
 {
@@ -71,11 +72,11 @@ public class CollisionSenses : CoreComponent
     #endregion
 
     [SerializeField]
-    private IHasCollisionSenses entity;
+    private IHasCollider entity;
 
     public DataCollisionSenses Data;
 
-    public IHasCollisionSenses Entity
+    public IHasCollider Entity
     {
         get
         {
@@ -90,6 +91,11 @@ public class CollisionSenses : CoreComponent
     }
 
     public bool IsFacingRight = true;
+
+    public void Start()
+    {
+        entity = GetComponentInParent<IHasCollider>();
+    }
 
     public bool IsTouchingWall()
     {
@@ -114,17 +120,21 @@ public class CollisionSenses : CoreComponent
 
     public bool IsGrounded()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, Data.GroundedRadius, Data.WhatIsGround);
-        for (int i = 0; i < colliders.Length; i++)
+        Bounds b = entity.GetBodyCollider2D().bounds;
+        List<Collider2D> groundCollisions = new List<Collider2D>(Physics2D.OverlapCircleAll(groundCheck.position, Data.GroundedRadius, Data.WhatIsGround | Data.WhatIsPlatform));
+        List<Collider2D> bodyCollisions = new List<Collider2D>(Physics2D.OverlapBoxAll(b.center + Vector3.up * 0.5f, b.size * 2, 0));
+        var collisions = groundCollisions.Except(bodyCollisions);
+
+        for (int i = 0; i < groundCollisions.Count; i++)
         {
-            if (colliders[i].gameObject != gameObject)
+            if (groundCollisions[i].gameObject != gameObject)
             {
                 return true;
             }
         }
         return false;
     }
-   
+
     public Vector2 DetermineLedgePosition()
     {
         RaycastHit2D xHit = Physics2D.Raycast(
@@ -143,17 +153,4 @@ public class CollisionSenses : CoreComponent
         float yDist = yHit.distance;
         return new Vector2(wallCheck.position.x + (Core.Movement.GetFacingDirection() * xDist), ledgeCheck.position.y - yDist);
     }
-}
-
-public interface IHasCollisionSenses
-{
-    CollisionSenses CollisionSenses { get; }
-
-    bool isTouchingWall();
-    bool isTouchingLedge();
-    bool isReachingEdge();
-    bool isGrounded();
-    Transform isTouchingCarrable();
-    bool isTouchingClimable();
-    Vector2 DetermineLedgePosition();
 }

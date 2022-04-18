@@ -24,9 +24,14 @@ public class BreakableObject : MonoBehaviour, IHasCollider
         }
     }
 
-    public BoxCollider2D GetCollider2D()
+    public BoxCollider2D GetBodyCollider2D()
     {
         return this.gameObject.GetComponent<BoxCollider2D>();
+    }
+    
+    public Collider2D GetGroundCheckCollider2D()
+    {
+        return GetBodyCollider2D();
     }
 
     private void Break()

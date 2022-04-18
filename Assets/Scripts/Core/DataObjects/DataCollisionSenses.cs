@@ -16,4 +16,6 @@ public class DataCollisionSenses : MonoBehaviour
 
     public LayerMask WhatIsClimable;
 
+    public LayerMask WhatIsPlatform;
+
 }

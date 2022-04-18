@@ -3,7 +3,7 @@ using System;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Player : MonoBehaviour, IHasCombat
+public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
 {
     public StateMachine StateMachine { get; private set; }
 
@@ -72,7 +72,8 @@ public class Player : MonoBehaviour, IHasCombat
     public GameObject InteractButton;
     public Core Core { get; set; }
     public Combat Combat => Core.Combat;
-
+    
+    private Platformer platformer;
     private CameraMovement camera;
 
     private Vector2 startPosition;
@@ -87,7 +88,13 @@ public class Player : MonoBehaviour, IHasCombat
     public float yLedgeOffset = 0f;
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
-    
+    public int ClimbInput { get => Controller.ReadInputY();}
+
+    public LayerMask LayerMask { get => gameObject.layer;}
+
+    public CollisionSenses CollisionSenses => throw new NotImplementedException();
+
+    public Collider2D PhysicsCollider => throw new NotImplementedException();
 
     private void Awake()
     {
@@ -132,6 +139,8 @@ public class Player : MonoBehaviour, IHasCombat
             Debug.Log("no controller");
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
         InteractButton.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + 2);
+
+        platformer = GetComponentInChildren<Platformer>();
     }
 
     // logic
@@ -145,6 +154,8 @@ public class Player : MonoBehaviour, IHasCombat
         {
             Core.Movement.Flip();
         }
+
+        platformer.IgnorePlatform = Controller.ReadInputY() < 0;
     }
 
     // physics
@@ -325,5 +336,21 @@ public class Player : MonoBehaviour, IHasCombat
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
+    }
+
+    // preferably call this only from the ClimabilityHandler
+    public void StartClimbing(int climbInput)
+    {
+        StateMachine.ChangeState(ClimbMoveState);
+    }
+
+    public Collider2D GetGroundCheckCollider2D()
+    {
+        return this.circleCollider2D;
+    }
+
+    public BoxCollider2D GetBodyCollider2D()
+    {
+        return this.boxCollider2D;
     }
 }
