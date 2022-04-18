@@ -183,3 +183,6 @@ MonoBehaviour:
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 512
+  singlePlatformLayer:
+    serializedVersion: 2
+    m_Bits: 524288

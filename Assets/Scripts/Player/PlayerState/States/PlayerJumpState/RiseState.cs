@@ -37,7 +37,6 @@ public class RiseState : PlayerAirState
                 stateMachine.ChangeState(player.FloatState);
             }
         }
-
     }
 
     public override void Update()

@@ -16,7 +16,6 @@ public class LiftState : PlayerAirState
         {
             this.stateMachine.ChangeState(player.RiseState);
         }
-
     }
 
     // Update is called once per frame

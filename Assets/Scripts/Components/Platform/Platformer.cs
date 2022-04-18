@@ -10,6 +10,9 @@ public class Platformer : MonoBehaviour
 
     public bool IgnorePlatform;
 
+    public float LegOffset = 0.15f;
+    public float CenterOffset = 1;
+
 
     private void Start()
     {
@@ -26,13 +29,15 @@ public class Platformer : MonoBehaviour
     {
         Bounds bounds = parent.GetBodyCollider2D().bounds;
         Vector2 overlapSize = bounds.extents * 2;
-        overlapSize += new Vector2(0.5f, 0.05f);
+        overlapSize += new Vector2(0.5f, 0.5f);
         Vector2 newCenter = bounds.center;
-        newCenter += Vector2.up;
-        var legs = bounds.center - new Vector3(0, bounds.extents.y + 0.2f, 0);
+        //newCenter += Vector2.up * CenterOffset;
+        var underLegs = bounds.center - new Vector3(0, (bounds.extents.y * 2) + LegOffset, 0);
+        var legs = bounds.center - new Vector3(0, (bounds.extents.y * 2), 0);
 
-        var platforms = Physics2D.OverlapBoxAll(legs, new Vector2(bounds.size.x * 2, 0.2f), 0, WhatIsPlatform);
-        var farCast = Physics2D.OverlapBoxAll(newCenter, overlapSize * 2, 0, WhatIsPlatform);
+        var platforms = Physics2D.OverlapBoxAll(underLegs, new Vector2(bounds.size.x * 2, 0.2f), 0, WhatIsPlatform);
+        var bodyOverlaps = Physics2D.OverlapAreaAll(bounds.min, bounds.max);
+        var farCast = Physics2D.OverlapBoxAll(bounds.center, overlapSize * 2, 0, WhatIsPlatform);
 
         // reset all platform in reach
         foreach (Collider2D platform in farCast)
@@ -41,28 +46,28 @@ public class Platformer : MonoBehaviour
             Physics2D.IgnoreCollision(parent.GetGroundCheckCollider2D(), platform, true);
         }
         // set collision for the platform under the legs
-        foreach (Collider2D platform in platforms)
+        foreach (Collider2D platform in platforms.Except(bodyOverlaps))
         {
             Physics2D.IgnoreCollision(parent.GetBodyCollider2D(), platform, IgnorePlatform);
             Physics2D.IgnoreCollision(parent.GetGroundCheckCollider2D(), platform, IgnorePlatform);
         }
     }
 
-    public void OnDrawGizmos()
-    {
-        if (parent == null) return;
+    // public void OnDrawGizmos()
+    // {
+    //     if (parent == null) return;
 
-        Bounds bounds = parent.GetBodyCollider2D().bounds;
-        Vector2 overlapSize = bounds.extents * 2;
-        overlapSize += new Vector2(0.5f, 0.05f);
-        Vector2 newCenter = bounds.center;
-        newCenter += Vector2.up;
-        var legs = bounds.center - new Vector3(0, bounds.extents.y + 0.2f, 0);
+    //     Bounds bounds = parent.GetBodyCollider2D().bounds;
+    //     Vector2 overlapSize = bounds.extents * 2;
+    //     overlapSize += new Vector2(0.5f, 0.5f);
+    //     Vector2 newCenter = bounds.center;
+    //     //newCenter += Vector2.up * CenterOffset;
+    //     var legs = bounds.center - new Vector3(0, (bounds.extents.y * 2) + LegOffset, 0);
 
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawCube(legs, new Vector2(bounds.size.x * 2, 0.5f));
+    //     Gizmos.color = Color.cyan;
+    //     Gizmos.DrawCube(legs, new Vector2(bounds.size.x * 2, 0.2f));
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawCube(bounds.center, overlapSize);
-    }
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawCube(bounds.center, overlapSize);
+    // }
 }

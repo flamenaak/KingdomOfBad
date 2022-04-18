@@ -43,7 +43,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
 
     #region CooldownVariable
     public float DashCooldown = 2.0f;
-    public bool canDashOrEvade = true;    
+    public bool canDashOrEvade = true;
     public float SlashCooldown = 0.5f;
     public bool canSlash = true;
     public float StabCooldown = 1.5f;
@@ -72,8 +72,11 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
     public GameObject InteractButton;
     public Core Core { get; set; }
     public Combat Combat => Core.Combat;
-    
+
     private Platformer platformer;
+
+    public Platformer Platformer {get => platformer;}
+
     private CameraMovement camera;
 
     private Vector2 startPosition;
@@ -88,9 +91,9 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
     public float yLedgeOffset = 0f;
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
-    public int ClimbInput { get => Controller.ReadInputY();}
+    public int ClimbInput { get => Controller.ReadInputY(); }
 
-    public LayerMask LayerMask { get => gameObject.layer;}
+    public LayerMask LayerMask { get => gameObject.layer; }
 
     public CollisionSenses CollisionSenses => throw new NotImplementedException();
 
@@ -162,6 +165,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
     private void FixedUpdate()
     {
         StateMachine.CurrentState.FixedUpdate();
+        platformer.IgnorePlatform = RigidBody.velocity.y > 0;
     }
 
     public void OnDrawGizmos()
@@ -175,7 +179,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
 
         }
 
-         //Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        //Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
     public void startSlashCoolDown()
     {
@@ -237,7 +241,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
 
     public bool HaveEnoughStamina()
     {
-        return Core.Combat.Data.currentHealth >= 1.0;    
+        return Core.Combat.Data.currentHealth >= 1.0;
     }
 
     void ResetRegen()
@@ -252,12 +256,12 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
     public void DepleteStamina(float amount)
     {
         Core.Combat.Data.currentHealth -= amount;
-        if(Core.Combat.Data.currentHealth < 0.0f)
+        if (Core.Combat.Data.currentHealth < 0.0f)
         {
             Core.Combat.Data.currentHealth = 0.0f;
         }
         Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
-    
+
         ResetRegen();
     }
 
@@ -282,7 +286,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
             }
             staminaRegen = null;
         }
-        else 
+        else
         {
             yield return null;
         }
@@ -314,7 +318,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
     public void Knockback(Transform attacker, float amount)
     {
         Core.Combat.Knockback();
-        if(attacker.position.x < this.transform.position.x)
+        if (attacker.position.x < this.transform.position.x)
         {
             if (Core.Movement.IsFacingRight)
             {
@@ -325,7 +329,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
                 RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
-        else if(attacker.position.x > this.transform.position.x)
+        else if (attacker.position.x > this.transform.position.x)
         {
             if (Core.Movement.IsFacingRight)
             {

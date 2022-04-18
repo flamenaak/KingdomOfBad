@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHasCollider {
-    BoxCollider2D GetCollider2D();
+public interface IHasCollider
+{
+    BoxCollider2D GetBodyCollider2D();
+    Collider2D GetGroundCheckCollider2D();
 }
 
 public class Climability : MonoBehaviour
@@ -13,7 +15,12 @@ public class Climability : MonoBehaviour
     public Transform GroundCheck;
     public LayerMask WhatIsClimable;
     public LayerMask WhatIsGround;
+
+    [SerializeField]
+    private LayerMask singlePlatformLayer;
+
     float GroundedRadius = 0.25f;
+
     BoxCollider2D parentCol;
     BoxCollider2D myNewCollider;
 
@@ -25,7 +32,7 @@ public class Climability : MonoBehaviour
             Debug.LogError($"Climability component cannot find Platform component, probably is not assigned.");
             return;
         }
-        parentCol = GetComponentInParent<IHasCollider>().GetCollider2D();
+        parentCol = GetComponentInParent<IHasCollider>().GetBodyCollider2D();
         myNewCollider = gameObject.AddComponent<BoxCollider2D>();
         myNewCollider.size = new Vector2(parentCol.size.x, parentCol.size.y);
         myNewCollider.offset = new Vector2(parentCol.offset.x, parentCol.offset.y);
@@ -44,17 +51,16 @@ public class Climability : MonoBehaviour
         RaycastHit2D climableBelow = Physics2D.BoxCast(new Vector2(myNewCollider.bounds.center.x, myNewCollider.bounds.center.y - myNewCollider.bounds.extents.y - 0.15f),
             new Vector2(myNewCollider.bounds.size.x, 0.2f), 0, Vector2.down, 0, WhatIsClimable);
 
-        IAmTop = !climableAbove && climableBelow && !IsGrounded() && !GameObject.FindObjectOfType<Player>().GetComponentInChildren<CariabilityHandler>().isCarrying;
+        IAmTop = !climableAbove && climableBelow && !IsGrounded();
         if (IAmTop)
         {
             Platform.SetActive(true);
-             GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
-        else if (!IAmTop)
+        else
         {
             Platform.SetActive(false);
             GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-
         }
     }
 
@@ -69,5 +75,17 @@ public class Climability : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private int getLayerNumber(LayerMask mask)
+    {
+        int layerNumber = 0;
+        int layer = mask.value;
+        while (layer > 0)
+        {
+            layer = layer >> 1;
+            layerNumber++;
+        }
+        return layerNumber;
     }
 }
