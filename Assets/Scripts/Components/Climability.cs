@@ -37,8 +37,7 @@ public class Climability : MonoBehaviour
         myNewCollider.offset = new Vector2(parentCol.offset.x, parentCol.offset.y);
 
         Platform.GetComponent<BoxCollider2D>().size = parentCol.size;
-        Platform.GetComponent<BoxCollider2D>().offset = new Vector2(parentCol.offset.x, parentCol.offset.y);
-        Platform.gameObject.transform.localPosition = new Vector3(0,0,0);
+        Platform.GetComponent<BoxCollider2D>().offset = parentCol.offset;
 
         RaycastHit2D climableAbove = Physics2D.BoxCast(new Vector2(myNewCollider.bounds.center.x, myNewCollider.bounds.center.y + myNewCollider.bounds.extents.y + 0.15f),
             new Vector2(myNewCollider.bounds.size.x, 0.2f), 0, Vector2.up, 0, WhatIsClimable);
@@ -46,20 +45,16 @@ public class Climability : MonoBehaviour
             new Vector2(myNewCollider.bounds.size.x, 0.2f), 0, Vector2.down, 0, WhatIsClimable);
 
         IAmTop = !climableAbove && climableBelow && !IsGrounded() && !GameObject.FindObjectOfType<Player>().GetComponentInChildren<CariabilityHandler>().isCarrying;
-        settingPlatform();
-    }
-
-    private void settingPlatform()
-    {
         if (IAmTop)
         {
             Platform.SetActive(true);
-            Platform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+             GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         }
-        else if(!IAmTop)
+        else if (!IAmTop)
         {
             Platform.SetActive(false);
-            Platform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
         }
     }
 

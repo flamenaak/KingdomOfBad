@@ -17,7 +17,7 @@ public class PlatformHandler : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(this.transform.position, new Vector2(boxCollider2D.bounds.size.x, boxCollider2D.bounds.size.y + 1f), 0f, Vector2.zero, 0f, whatIsPlayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(this.transform.position, new Vector2(boxCollider2D.bounds.size.x, boxCollider2D.bounds.size.y + 2f), 0f, Vector2.zero, 0f, whatIsPlayer);
         if (raycastHit)
         {
             if (Input.GetKey(KeyCode.S))
@@ -37,9 +37,9 @@ public class PlatformHandler : MonoBehaviour
             effector.colliderMask = jumpThroughPlatform;
         }
         //Checking for sides of the platform
-        RaycastHit2D left = Physics2D.BoxCast(new Vector2(boxCollider2D.bounds.center.x - boxCollider2D.bounds.extents.x, boxCollider2D.bounds.center.y - 0.1f), 
+        RaycastHit2D left = Physics2D.BoxCast(new Vector2(boxCollider2D.bounds.center.x - boxCollider2D.bounds.extents.x - 0.1f, boxCollider2D.bounds.center.y), 
             new Vector2(0.1f, boxCollider2D.bounds.size.y), 0 , Vector2.left, 0, whatIsPlayer);
-        RaycastHit2D right = Physics2D.BoxCast(new Vector2(boxCollider2D.bounds.center.x + boxCollider2D.bounds.extents.x, boxCollider2D.bounds.center.y + 0.1f), 
+        RaycastHit2D right = Physics2D.BoxCast(new Vector2(boxCollider2D.bounds.center.x + boxCollider2D.bounds.extents.x + 0.1f, boxCollider2D.bounds.center.y), 
             new Vector2(0.1f, boxCollider2D.bounds.size.y), 0 , Vector2.right, 0, whatIsPlayer);
         if (left && GameObject.FindObjectOfType<Player>().Core.CollisionSenses.IsGrounded() || right && GameObject.FindObjectOfType<Player>().Core.CollisionSenses.IsGrounded())
         {
