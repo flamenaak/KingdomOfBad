@@ -165,7 +165,6 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
     private void FixedUpdate()
     {
         StateMachine.CurrentState.FixedUpdate();
-        platformer.IgnorePlatform = RigidBody.velocity.y > 0;
     }
 
     public void OnDrawGizmos()
