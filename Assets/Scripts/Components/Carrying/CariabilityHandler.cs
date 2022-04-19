@@ -31,13 +31,14 @@ public class CariabilityHandler : MonoBehaviour
 
     }
 
+    // return transform of a parent of carriable
     public Transform IsTouchingCarriable()
     {
         Collider2D interactable = Physics2D.OverlapBox(this.transform.position,
          new Vector2(1, 1), 0, WhatIsCarriable);
         if (interactable != null)
         {
-            return interactable.GetComponentInParent<SpriteRenderer>().transform;
+            return interactable.gameObject.transform.parent;
         }
         else
         {
@@ -58,19 +59,20 @@ public class CariabilityHandler : MonoBehaviour
         oldParent = carriable.parent;
         oldLayer = carriable.gameObject.layer;
         //Setting of parent
-        carriable.transform.SetParent(carryPoint);
+        carriable.SetParent(carryPoint);
         //Setting of layer and transform to carry point
         carriable.gameObject.layer = this.gameObject.layer;
-        carriable.transform.position = carryPoint.transform.position;
+        carriable.position = carryPoint.transform.position;
         carriable.GetComponent<BoxCollider2D>().enabled = false;
         carriable.GetComponentInChildren<Carriability>().GetComponent<BoxCollider2D>().enabled = false;
         if (carriable.GetComponent<Rigidbody2D>() != null)
         {
             carriable.GetComponent<Rigidbody2D>().isKinematic = true;
         }
-        var stackable = carriable.GetComponent<Stackability>();
-        if (stackable && stackable.Climable)
-            stackable.Climable.ForcePlatformOff = true;
+        var stackable = carriable.gameObject.GetComponentInChildren<Stackability>();
+        if (stackable != null){
+            stackable.PickUp();
+        }
     }
 
     public void Drop()
@@ -90,9 +92,10 @@ public class CariabilityHandler : MonoBehaviour
         }
         carriable.transform.SetParent(oldParent);
 
-        var stackable = carriable.GetComponent<Stackability>();
-        if (stackable && stackable.Climable)
-            stackable.Climable.ForcePlatformOff = false;
+        var stackable = carriable.GetComponentInChildren<Stackability>();
+        if (stackable != null){
+            stackable.Drop();
+        }
     }
 
     public void PickDropHandling()

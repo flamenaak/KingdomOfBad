@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8076100191959431664
+--- !u!1 &3039936273748522335
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1250899290128239041}
-  - component: {fileID: 952492160274480637}
+  - component: {fileID: 7487267485123881529}
+  - component: {fileID: 7971159398991515624}
   m_Layer: 18
-  m_Name: Carriability
+  m_Name: Stackability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1250899290128239041
+--- !u!4 &7487267485123881529
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8076100191959431664}
+  m_GameObject: {fileID: 3039936273748522335}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,18 +31,19 @@ Transform:
   m_Father: {fileID: 4316346011737691205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &952492160274480637
+--- !u!114 &7971159398991515624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8076100191959431664}
+  m_GameObject: {fileID: 3039936273748522335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 420600a7ccbb3c041ab337a6fd4ef00e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ae198fe1c388ab47b0d07029d786de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ClimableOwner: {fileID: 1054073813027254536}
 --- !u!1 &8768955984417326630
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +76,7 @@ Transform:
   m_LocalPosition: {x: 13.86, y: -0.551, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
-  - {fileID: 1250899290128239041}
+  - {fileID: 7487267485123881529}
   - {fileID: 1054073813027254536}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -215,7 +216,7 @@ MonoBehaviour:
   - {x: -0.06021183, y: 0.02556389, z: 0}
   m_ShapePathHash: -501144945
   m_Mesh: {fileID: 0}
-  m_InstanceId: 66036
+  m_InstanceId: 55242
 --- !u!50 &-3240801398698848792
 Rigidbody2D:
   serializedVersion: 4
@@ -257,7 +258,7 @@ PrefabInstance:
     - target: {fileID: 1264032132574063703, guid: c5673348fcca4154dac9a2787e006197,
         type: 3}
       propertyPath: m_InstanceId
-      value: -52190
+      value: -41416
       objectReference: {fileID: 0}
     - target: {fileID: 9030432280212758826, guid: c5673348fcca4154dac9a2787e006197,
         type: 3}

@@ -53,7 +53,7 @@ public class Climability : MonoBehaviour
         RaycastHit2D climableBelow = Physics2D.BoxCast(new Vector2(myNewCollider.bounds.center.x, myNewCollider.bounds.center.y - myNewCollider.bounds.extents.y - 0.15f),
             new Vector2(myNewCollider.bounds.size.x, 0.2f), 0, Vector2.down, 0, WhatIsClimable);
 
-        IAmTop = !climableAbove && climableBelow && !IsGrounded() && !ForcePlatformOff;
+        IAmTop = !climableAbove && climableBelow && !IsGrounded();
         if (IAmTop)
         {
             Platform.SetActive(true);
@@ -89,5 +89,10 @@ public class Climability : MonoBehaviour
             layerNumber++;
         }
         return layerNumber;
+    }
+
+    public void SetColider(bool active)
+    {
+        myNewCollider.enabled = active;
     }
 }
