@@ -68,6 +68,9 @@ public class CariabilityHandler : MonoBehaviour
         {
             carriable.GetComponent<Rigidbody2D>().isKinematic = true;
         }
+        var stackable = carriable.GetComponent<Stackability>();
+        if (stackable && stackable.Climable)
+            stackable.Climable.ForcePlatformOff = true;
     }
 
     public void Drop()
@@ -86,6 +89,10 @@ public class CariabilityHandler : MonoBehaviour
             carriable.GetComponent<Rigidbody2D>().isKinematic = false;
         }
         carriable.transform.SetParent(oldParent);
+
+        var stackable = carriable.GetComponent<Stackability>();
+        if (stackable && stackable.Climable)
+            stackable.Climable.ForcePlatformOff = false;
     }
 
     public void PickDropHandling()
