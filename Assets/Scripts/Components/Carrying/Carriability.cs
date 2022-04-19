@@ -6,7 +6,7 @@ public class Carriability : MonoBehaviour
 {
     BoxCollider2D parentCol;
     BoxCollider2D myNewCollider;
-    void Start()
+    protected void Start()
     {
         parentCol = GetComponentInParent<IHasCollider>().GetBodyCollider2D();
         myNewCollider = gameObject.AddComponent<BoxCollider2D>();
@@ -14,7 +14,7 @@ public class Carriability : MonoBehaviour
         myNewCollider.offset = new Vector2(parentCol.offset.x, parentCol.offset.y);
     }
 
-    private void Update()
+    protected void Update()
     {
         myNewCollider.size = new Vector2(parentCol.size.x, parentCol.size.y);
         myNewCollider.offset = new Vector2(parentCol.offset.x, parentCol.offset.y);
