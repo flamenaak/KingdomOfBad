@@ -30,8 +30,6 @@ public class Platformer : MonoBehaviour
         Bounds bounds = parent.GetBodyCollider2D().bounds;
         Vector2 overlapSize = bounds.extents * 2;
         overlapSize += new Vector2(0.5f, 0.5f);
-        Vector2 newCenter = bounds.center;
-        //newCenter += Vector2.up * CenterOffset;
         var underLegs = bounds.center - new Vector3(0, (bounds.extents.y * 2) + LegOffset, 0);
         var legs = bounds.center - new Vector3(0, (bounds.extents.y * 2), 0);
 
