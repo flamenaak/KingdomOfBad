@@ -26,7 +26,7 @@ public class CharacterController2D : MonoBehaviour
     public int ReadInputY()
     {
         int moveY = 0;
-        // moveY += Input.GetButton("Up") ? 1 : 0;
+        moveY += Input.GetButton("Up") ? 1 : 0;
         moveY += Input.GetButton("Down") ? -1 : 0;
         return moveY;
     }
@@ -44,6 +44,11 @@ public class CharacterController2D : MonoBehaviour
     public bool GetClimbInput()
     {
         return Input.GetButton("Climb");
+    }
+
+    public bool GetInputInteract()
+    {
+        return Input.GetButton("Interact");
     }
 
     // private void OnDrawGizmos()

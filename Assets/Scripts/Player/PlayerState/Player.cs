@@ -3,7 +3,7 @@ using System;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Player : MonoBehaviour, IHasCombat
+public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
 {
     public StateMachine StateMachine { get; private set; }
 
@@ -27,6 +27,8 @@ public class Player : MonoBehaviour, IHasCombat
     public PlayerDamagedState DamagedState { get; private set; }
     public PlayerDeathState DeathState { get; private set; }
     public PlayerStunState StunState { get; private set; }
+    public PlayerClimbMoveState ClimbMoveState { get; private set; }
+    public PlayerClimbIdleState ClimbIdleState { get; private set; }
     #endregion
 
     #region SpeedForceVariables
@@ -41,7 +43,7 @@ public class Player : MonoBehaviour, IHasCombat
 
     #region CooldownVariable
     public float DashCooldown = 2.0f;
-    public bool canDashOrEvade = true;    
+    public bool canDashOrEvade = true;
     public float SlashCooldown = 0.5f;
     public bool canSlash = true;
     public float StabCooldown = 1.5f;
@@ -64,19 +66,24 @@ public class Player : MonoBehaviour, IHasCombat
     public CircleCollider2D circleCollider2D;
     public SpriteRenderer SpriteRenderer;
     public CharacterController2D Controller;
-
+    public CooldownComponent CanInteract;
     public ParticleSystem LandDust;
     public ParticleSystem Dust;
-
+    public GameObject InteractButton;
     public Core Core { get; set; }
     public Combat Combat => Core.Combat;
 
-    private CameraMovement camera;
+    private Platformer platformer;
+
+    public Platformer Platformer {get => platformer;}
+
+    private new CameraMovement camera;
 
     private Vector2 startPosition;
+    public bool isAtTop;
     public float fallDamage = 2f;
     public float allowedFallDistance = 4f;
-    public float deathFallDistance = 10f;
+    public float deathFallDistance = 5f;
 
     public float stunLength = 1f;
 
@@ -84,11 +91,13 @@ public class Player : MonoBehaviour, IHasCombat
     public float yLedgeOffset = 0f;
     public float xClimbOffset = 0.25f;
     public float yClimbOffset = 0.15f;
+    public int ClimbInput { get => Controller.ReadInputY(); }
 
-    protected float immuneTime = 1.0F;
-    protected float lastImmune;
+    public LayerMask LayerMask { get => gameObject.layer; }
 
+    public CollisionSenses CollisionSenses => throw new NotImplementedException();
 
+    public Collider2D PhysicsCollider => throw new NotImplementedException();
 
     private void Awake()
     {
@@ -113,7 +122,8 @@ public class Player : MonoBehaviour, IHasCombat
         DeathState = new PlayerDeathState(this, StateMachine, "death");
         DamagedState = new PlayerDamagedState(this, StateMachine, "damaged");
         StunState = new PlayerStunState(this, StateMachine, "stunned");
-
+        ClimbMoveState = new PlayerClimbMoveState(this, StateMachine, "climbMove");
+        ClimbIdleState = new PlayerClimbIdleState(this, StateMachine, "climbIdle");
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -127,21 +137,28 @@ public class Player : MonoBehaviour, IHasCombat
     {
         camera = (CameraMovement)GameObject.FindGameObjectWithTag("MainCamera").GetComponent("CameraMovement");
         Core.Combat.Data.currentHealth = Core.Combat.Data.maxHealth;
+        isAtTop = false;
         if (Controller == null)
             Debug.Log("no controller");
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Enemy"), true);
+        InteractButton.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + 2);
+
+        platformer = GetComponentInChildren<Platformer>();
     }
 
     // logic
     private void Update()
     {
         StateMachine.CurrentState.Update();
+        InteractButton.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + 2);
         Vector2 velocity = RigidBody.velocity;
         if ((velocity.x < -0.5f && Core.Movement.GetFacingDirection() > 0 && Controller.ReadInputX() < 0)
         || (velocity.x > 0.5f && Core.Movement.GetFacingDirection() < 0 && Controller.ReadInputX() > 0))
         {
             Core.Movement.Flip();
         }
+
+        platformer.IgnorePlatform = Controller.ReadInputY() < 0;
     }
 
     // physics
@@ -161,7 +178,7 @@ public class Player : MonoBehaviour, IHasCombat
 
         }
 
-         //Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        //Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
     public void startSlashCoolDown()
     {
@@ -223,7 +240,7 @@ public class Player : MonoBehaviour, IHasCombat
 
     public bool HaveEnoughStamina()
     {
-        return Core.Combat.Data.currentHealth >= 1.0;    
+        return Core.Combat.Data.currentHealth >= 1.0;
     }
 
     void ResetRegen()
@@ -238,12 +255,12 @@ public class Player : MonoBehaviour, IHasCombat
     public void DepleteStamina(float amount)
     {
         Core.Combat.Data.currentHealth -= amount;
-        if(Core.Combat.Data.currentHealth < 0.0f)
+        if (Core.Combat.Data.currentHealth < 0.0f)
         {
             Core.Combat.Data.currentHealth = 0.0f;
         }
         Core.Combat.Healthbar.GetComponent<Slider>().value = Core.Combat.Data.currentHealth;
-    
+
         ResetRegen();
     }
 
@@ -268,7 +285,7 @@ public class Player : MonoBehaviour, IHasCombat
             }
             staminaRegen = null;
         }
-        else 
+        else
         {
             yield return null;
         }
@@ -300,7 +317,7 @@ public class Player : MonoBehaviour, IHasCombat
     public void Knockback(Transform attacker, float amount)
     {
         Core.Combat.Knockback();
-        if(attacker.position.x < this.transform.position.x)
+        if (attacker.position.x < this.transform.position.x)
         {
             if (Core.Movement.IsFacingRight)
             {
@@ -311,7 +328,7 @@ public class Player : MonoBehaviour, IHasCombat
                 RigidBody.velocity = new Vector2(amount * -Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
-        else if(attacker.position.x > this.transform.position.x)
+        else if (attacker.position.x > this.transform.position.x)
         {
             if (Core.Movement.IsFacingRight)
             {
@@ -322,5 +339,21 @@ public class Player : MonoBehaviour, IHasCombat
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
+    }
+
+    // preferably call this only from the ClimabilityHandler
+    public void StartClimbing(int climbInput)
+    {
+        StateMachine.ChangeState(ClimbMoveState);
+    }
+
+    public Collider2D GetGroundCheckCollider2D()
+    {
+        return this.circleCollider2D;
+    }
+
+    public BoxCollider2D GetBodyCollider2D()
+    {
+        return this.boxCollider2D;
     }
 }

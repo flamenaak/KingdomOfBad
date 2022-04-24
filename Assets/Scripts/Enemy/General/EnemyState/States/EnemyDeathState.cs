@@ -17,6 +17,10 @@ public class EnemyDeathState : EnemyState
     public override void Enter()
     {
         base.Enter();
+        if (enemy.isInteractableOnDeath)
+        {
+            enemy.gameObject.layer = 18;
+        }
     }
 
     public override bool Equals(object obj)

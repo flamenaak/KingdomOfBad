@@ -33,7 +33,7 @@ public class FallState : PlayerAirState
         if (player.Core.CollisionSenses.IsGrounded())
         {
             endPosition = player.transform.position;
-            if (startPosition.y - endPosition.y >= player.allowedFallDistance)
+            if (startPosition.y - endPosition.y >= 4f && startPosition.y - endPosition.y < player.allowedFallDistance)
             {
                 player.Damage(player.fallDamage);
                 stateMachine.ChangeState(player.StunState);
@@ -48,5 +48,10 @@ public class FallState : PlayerAirState
         }
 
         CheckHang();
+    }
+
+    public override void Update()
+    {
+        base.Update();
     }
 }

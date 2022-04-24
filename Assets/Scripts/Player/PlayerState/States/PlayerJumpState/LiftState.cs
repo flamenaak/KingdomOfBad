@@ -8,12 +8,6 @@ public class LiftState : PlayerAirState
     {
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -22,22 +16,5 @@ public class LiftState : PlayerAirState
         {
             this.stateMachine.ChangeState(player.RiseState);
         }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IHasCombat
+public class Enemy : MonoBehaviour, IHasCombat, IHasCollider
 {
     public StateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState {get ;set;}
@@ -16,15 +16,15 @@ public class Enemy : MonoBehaviour, IHasCombat
     public EnemyDodgeState DodgeState { get; set; }
     public EnemySearchState SearchState { get; set; }
 
-
+    public bool isInteractableOnDeath = false;
     public bool aware;
     public Core Core;
     public Combat Combat => Core.Combat;
-    
+
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
     public GameObject Awarness;
-
+    public Stackability stackability {get; private set;}
     public Rigidbody2D RigidBody;
     public virtual List<DecisionFunction_State_Tuple> DecisionFunctions {
         get {
@@ -42,7 +42,6 @@ public class Enemy : MonoBehaviour, IHasCombat
     {
         Anim = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
-
         Core = GetComponentInChildren<Core>();
 
         StateMachine = new StateMachine();
@@ -65,10 +64,17 @@ public class Enemy : MonoBehaviour, IHasCombat
         aware = false;
         StateMachine.Initialize(IdleState);
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Actor"), true);
+
+        stackability = GetComponentInChildren<Stackability>();
+        if (stackability != null)
+        {
+            stackability.SetActive(false);
+        }
     }
 
     private void Update()
     {
+        //RigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         StateMachine.CurrentState.Update();
         if(Core.Combat.damaged)
         {
@@ -101,9 +107,6 @@ public class Enemy : MonoBehaviour, IHasCombat
     public void Die()
     {
         Core.Combat.Die();
-        GetComponent<BoxCollider2D>().enabled = false;
-        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionX;
-        RigidBody.constraints = RigidbodyConstraints2D.FreezePositionY;
     }
 
     public void Knockback(Transform attacker, float amount)
@@ -131,5 +134,15 @@ public class Enemy : MonoBehaviour, IHasCombat
                 RigidBody.velocity = new Vector2(amount * Core.Movement.GetFacingDirection(), Core.Combat.Data.knockbackSpeedY);
             }
         }
+    }
+
+    public BoxCollider2D GetBodyCollider2D()
+    {
+        return this.gameObject.GetComponent<BoxCollider2D>();
+    }
+
+    public Collider2D GetGroundCheckCollider2D()
+    {
+        return GetBodyCollider2D();
     }
 }

@@ -16,6 +16,11 @@ public class RiseState : PlayerAirState
         player.RigidBody.velocity = new Vector2(player.RigidBody.velocity.x, 10);
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -32,6 +37,10 @@ public class RiseState : PlayerAirState
                 stateMachine.ChangeState(player.FloatState);
             }
         }
+    }
 
+    public override void Update()
+    {
+        base.Update();
     }
 }

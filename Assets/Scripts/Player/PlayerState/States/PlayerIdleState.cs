@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedState
 {
+    Transform carriable;
     public PlayerIdleState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -43,7 +44,7 @@ public class PlayerIdleState : PlayerGroundedState
         else if (xInput != 0)
         {
             stateMachine.ChangeState(player.WalkState);
-        } 
+        }
         else if (!player.Core.CollisionSenses.IsGrounded())
         {
             stateMachine.ChangeState(player.FloatState);

@@ -8,5 +8,14 @@ public class DataCollisionSenses : MonoBehaviour
 
     public float GroundedRadius = 0.25f;
 
+    public bool IAmTop = false;
+
     public LayerMask WhatIsGround;
+
+    public LayerMask WhatIsInteractable;
+
+    public LayerMask WhatIsClimable;
+
+    public LayerMask WhatIsPlatform;
+
 }

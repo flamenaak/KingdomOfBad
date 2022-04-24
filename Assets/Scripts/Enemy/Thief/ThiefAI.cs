@@ -6,9 +6,6 @@ public class ThiefAI : EnemyAI
 {
     protected Thief thief;
 
-    Vector2 candidatePoint = new Vector2();
-    Vector2 sizeOfGizmo = new Vector2();
-
     public override void Awake()
     {
         base.Awake();

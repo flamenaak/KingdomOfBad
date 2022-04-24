@@ -11,6 +11,8 @@ public class Thief : Enemy
 
     public bool shouldEvade = false;
 
+    public bool BossMinion = false;
+
     public ThiefLungeState LungeState;
 
     public override void Awake()
@@ -19,6 +21,10 @@ public class Thief : Enemy
         DodgeState = new ThiefDodgeState(this, StateMachine, "dodge");
         MeleeAttackState = new ThiefMeleeAttackState(this, StateMachine, "melee");
         LungeState = new ThiefLungeState(this, StateMachine, "melee");
+        if (BossMinion)
+        {
+            DeathState = new ThiefDeathState(this, StateMachine, "minionDeath");
+        }
     }
 
     public override void Start()

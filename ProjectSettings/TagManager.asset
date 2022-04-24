@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Collision
+  - Climable
+  - NonClimable
   layers:
   - Default
   - TransparentFX
@@ -23,10 +25,10 @@ TagManager:
   - PlayerWeapon
   - PlayerDamage
   - EnemyDamage
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+  - Climable
+  - Carriable
+  - DumbPlatform
   - 
   - 
   - 

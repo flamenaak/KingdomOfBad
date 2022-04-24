@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CollisionSenses : CoreComponent
 {
@@ -63,17 +64,38 @@ public class CollisionSenses : CoreComponent
 
     [SerializeField]
     private Transform ceilingCheck;
-    [SerializeField]
-    private Transform groundCheck;
+    public Transform groundCheck;
     [SerializeField]
     private Transform wallCheck;
     [SerializeField]
     private Transform ledgeCheck;
     #endregion
 
+    [SerializeField]
+    private IHasCollider entity;
+
     public DataCollisionSenses Data;
 
+    public IHasCollider Entity
+    {
+        get
+        {
+            if (entity != null)
+                return entity;
+
+            Debug.LogError("Missing Entity on " + Core.transform.parent.name);
+            return null;
+        }
+
+        private set { entity = value; }
+    }
+
     public bool IsFacingRight = true;
+
+    public void Start()
+    {
+        entity = GetComponentInParent<IHasCollider>();
+    }
 
     public bool IsTouchingWall()
     {
@@ -98,10 +120,14 @@ public class CollisionSenses : CoreComponent
 
     public bool IsGrounded()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, Data.GroundedRadius, Data.WhatIsGround);
-        for (int i = 0; i < colliders.Length; i++)
+        Bounds b = entity.GetBodyCollider2D().bounds;
+        List<Collider2D> groundCollisions = new List<Collider2D>(Physics2D.OverlapCircleAll(groundCheck.position, Data.GroundedRadius, Data.WhatIsGround | Data.WhatIsPlatform));
+        List<Collider2D> bodyCollisions = new List<Collider2D>(Physics2D.OverlapBoxAll(b.center + Vector3.up * 0.5f, b.size * 2, 0));
+        var collisions = groundCollisions.Except(bodyCollisions);
+
+        for (int i = 0; i < groundCollisions.Count; i++)
         {
-            if (colliders[i].gameObject != gameObject)
+            if (groundCollisions[i].gameObject != gameObject)
             {
                 return true;
             }

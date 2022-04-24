@@ -308,6 +308,18 @@ TextureImporter:
   - first:
       213: 185196150065951188
     second: Table_3
+  - first:
+      213: 1168199557410664526
+    second: Ladder_0
+  - first:
+      213: 6812989265837402300
+    second: Ladder_1
+  - first:
+      213: 628748199056069160
+    second: Ladder_2
+  - first:
+      213: 4183651218935542294
+    second: Ladder_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -2446,6 +2458,90 @@ TextureImporter:
       bones: []
       spriteID: 4d17372dae2f19200800000000000000
       internalID: 185196150065951188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ladder_0
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 890
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e403b3ede47463010800000000000000
+      internalID: 1168199557410664526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ladder_1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 890
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb8a9c8f3a99c8e50800000000000000
+      internalID: 6812989265837402300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ladder_2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 890
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82257e1e723c9b800800000000000000
+      internalID: 628748199056069160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ladder_3
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 890
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61278c02e905f0a30800000000000000
+      internalID: 4183651218935542294
       vertices: []
       indices: 
       edges: []

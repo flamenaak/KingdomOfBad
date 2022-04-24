@@ -9,7 +9,9 @@ public class PlayerGroundedState : PlayerState
     protected bool slash;
     protected bool stab;
     protected bool windUp;
+    protected bool interact;
     protected int xInput;
+    protected int yInput;
     public PlayerGroundedState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -24,6 +26,8 @@ public class PlayerGroundedState : PlayerState
         stab = player.Controller.GetStabInput();
         windUp = player.Controller.GetWindUpInput();
         xInput = player.Controller.ReadInputX();
+        yInput = player.Controller.ReadInputY();
+        interact = player.Controller.GetInputInteract();
     }
 
     public override void Enter()
