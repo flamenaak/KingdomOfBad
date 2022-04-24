@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Carriability : MonoBehaviour
 {
-    BoxCollider2D parentCol;
-    BoxCollider2D myNewCollider;
+    protected BoxCollider2D parentCol;
+    protected BoxCollider2D myNewCollider;
     protected void Start()
     {
         parentCol = GetComponentInParent<IHasCollider>().GetBodyCollider2D();

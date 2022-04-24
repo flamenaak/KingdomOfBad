@@ -31,4 +31,10 @@ public class Stackability : Carriability
     {
         Climable.SetColider(true);
     }
+
+    public void SetActive(bool active)
+    {
+        Climable.gameObject.SetActive(active);
+        gameObject.SetActive(active);
+    }
 }

@@ -18,6 +18,7 @@ public class ThiefDeathState : EnemyDeathState
     public override void Enter()
     {
         base.Enter();
+        thief.stackability.SetActive(true);
     }
 
     public override void Exit()

@@ -32,7 +32,7 @@ public class PlayerHangState : PlayerState
             {
                 ledgePos = player.Core.CollisionSenses.DetermineLedgePosition();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 stateMachine.ChangeState(player.FallState);
             }

@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour, IHasCombat, IHasCollider
     public Animator Anim { get; private set; }
     public EnemyAI enemyAI;
     public GameObject Awarness;
-
+    public Stackability stackability {get; private set;}
     public Rigidbody2D RigidBody;
     public virtual List<DecisionFunction_State_Tuple> DecisionFunctions {
         get {
@@ -64,6 +64,12 @@ public class Enemy : MonoBehaviour, IHasCombat, IHasCollider
         aware = false;
         StateMachine.Initialize(IdleState);
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, LayerMask.NameToLayer("Actor"), true);
+
+        stackability = GetComponentInChildren<Stackability>();
+        if (stackability != null)
+        {
+            stackability.SetActive(false);
+        }
     }
 
     private void Update()

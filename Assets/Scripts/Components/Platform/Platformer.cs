@@ -5,7 +5,7 @@ using System.Linq;
 public class Platformer : MonoBehaviour
 {
     [SerializeField]
-    private LayerMask WhatIsPlatform;
+    private LayerMask WhatIsPlatform = new LayerMask();
     private IHasCollider parent;
 
     public bool IgnorePlatform;

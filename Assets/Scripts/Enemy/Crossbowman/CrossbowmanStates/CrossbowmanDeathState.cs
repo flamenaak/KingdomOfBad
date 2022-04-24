@@ -17,6 +17,7 @@ public class CrossbowmanDeathState : EnemyDeathState
     public override void Enter()
     {
         base.Enter();
+        crossbowman.stackability.SetActive(true);
     }
 
     public override void Exit()

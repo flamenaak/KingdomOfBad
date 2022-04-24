@@ -17,20 +17,4 @@ public class LiftState : PlayerAirState
             this.stateMachine.ChangeState(player.RiseState);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        base.Update();
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
 }

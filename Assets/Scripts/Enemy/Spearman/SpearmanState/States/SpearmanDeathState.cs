@@ -18,6 +18,7 @@ public class SpearmanDeathState : EnemyDeathState
     public override void Enter()
     {
         base.Enter();
+        spearman.stackability.SetActive(true);
     }
 
     public override void Exit()

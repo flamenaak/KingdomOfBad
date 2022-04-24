@@ -77,7 +77,7 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
 
     public Platformer Platformer {get => platformer;}
 
-    private CameraMovement camera;
+    private new CameraMovement camera;
 
     private Vector2 startPosition;
     public bool isAtTop;
