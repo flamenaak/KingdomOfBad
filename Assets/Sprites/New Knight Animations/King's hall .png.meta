@@ -50,6 +50,15 @@ TextureImporter:
   - first:
       213: -3972719220654649121
     second: King's hall _banner_idle
+  - first:
+      213: 2765475830065156945
+    second: King's hall _chandelier_1
+  - first:
+      213: -3444643803156095146
+    second: King's hall _entrance_door_0
+  - first:
+      213: 7502010755913264837
+    second: King's hall _entrance_door_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -180,9 +189,9 @@ TextureImporter:
       name: King's hall _floor
       rect:
         serializedVersion: 2
-        x: 143
+        x: 130
         y: 833
-        width: 278
+        width: 291
         height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -288,7 +297,7 @@ TextureImporter:
         x: 330
         y: 880
         width: 13
-        height: 16
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -424,6 +433,69 @@ TextureImporter:
       bones: []
       spriteID: fd0538ccae01ed8c0800000000000000
       internalID: -3972719220654649121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _chandelier_1
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 889
+        width: 3
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15356f58d91f06620800000000000000
+      internalID: 2765475830065156945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _entrance_door_0
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 740
+        width: 15
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65f512726ba2230d0800000000000000
+      internalID: -3444643803156095146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _entrance_door_1
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 782
+        width: 14
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ceae5ff80f7c1860800000000000000
+      internalID: 7502010755913264837
       vertices: []
       indices: 
       edges: []
