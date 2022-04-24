@@ -34,7 +34,7 @@ public class Climability : MonoBehaviour
             Debug.LogError($"Climability component cannot find Platform component, probably is not assigned.");
             return;
         }
-        parentCol = GetComponentInParent<IHasCollider>().GetBodyCollider2D();
+        parentCol = GetComponentInParent<BoxCollider2D>();
         myNewCollider = gameObject.AddComponent<BoxCollider2D>();
         myNewCollider.size = new Vector2(parentCol.size.x, parentCol.size.y);
         myNewCollider.offset = new Vector2(parentCol.offset.x, parentCol.offset.y);

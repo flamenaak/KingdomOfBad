@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4280836827826450009}
   - component: {fileID: 4280836827826450014}
   - component: {fileID: 4280836827826450011}
-  m_Layer: 19
-  m_Name: DumbPlatform
+  m_Layer: 8
+  m_Name: Platform
   m_TagString: Collision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4280836827826450013}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.5, y: 0.507, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -45,7 +45,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.000022063963, y: 0.004991236}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.015987633, y: 0.005880909}
+  m_Size: {x: 0.06, y: 0.0049132854}
   m_EdgeRadius: 0
 --- !u!114 &4280836827826450011
 MonoBehaviour:
@@ -83,4 +83,4 @@ MonoBehaviour:
   - {x: -0.07999995, y: 0.07888, z: 0}
   m_ShapePathHash: -939296851
   m_Mesh: {fileID: 0}
-  m_InstanceId: 65966
+  m_InstanceId: 86238

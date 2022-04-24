@@ -31,7 +31,6 @@ public class Platformer : MonoBehaviour
         Vector2 overlapSize = bounds.extents * 2;
         overlapSize += new Vector2(0.5f, 0.5f);
         var underLegs = bounds.center - new Vector3(0, (bounds.extents.y * 2) + LegOffset, 0);
-        var legs = bounds.center - new Vector3(0, (bounds.extents.y * 2), 0);
 
         var platforms = Physics2D.OverlapBoxAll(underLegs, new Vector2(bounds.size.x * 2, 0.2f), 0, WhatIsPlatform);
         var bodyOverlaps = Physics2D.OverlapAreaAll(bounds.min, bounds.max);
@@ -51,21 +50,19 @@ public class Platformer : MonoBehaviour
         }
     }
 
-    // public void OnDrawGizmos()
-    // {
-    //     if (parent == null) return;
+    public void OnDrawGizmos()
+    {
+        if (parent == null) return;
 
-    //     Bounds bounds = parent.GetBodyCollider2D().bounds;
-    //     Vector2 overlapSize = bounds.extents * 2;
-    //     overlapSize += new Vector2(0.5f, 0.5f);
-    //     Vector2 newCenter = bounds.center;
-    //     //newCenter += Vector2.up * CenterOffset;
-    //     var legs = bounds.center - new Vector3(0, (bounds.extents.y * 2) + LegOffset, 0);
+        Bounds bounds = parent.GetBodyCollider2D().bounds;
+        Vector2 overlapSize = bounds.extents * 2;
+        overlapSize += new Vector2(0.5f, 0.5f);
+        var underLegs = bounds.center - new Vector3(0, (bounds.extents.y * 2) + LegOffset, 0);
 
-    //     Gizmos.color = Color.cyan;
-    //     Gizmos.DrawCube(legs, new Vector2(bounds.size.x * 2, 0.2f));
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawCube(underLegs, new Vector2(bounds.size.x * 2, 0.2f));
 
-    //     Gizmos.color = Color.yellow;
-    //     Gizmos.DrawCube(bounds.center, overlapSize);
-    // }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawCube(bounds.center, overlapSize);
+    }
 }

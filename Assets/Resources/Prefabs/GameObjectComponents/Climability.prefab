@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 9030432281122547711}
   - component: {fileID: 9030432280212758826}
   m_Layer: 17
-  m_Name: DumbClimability
+  m_Name: Climability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9030432279490250516}
-  - {fileID: 1264032132574063701}
+  - {fileID: 1534108080884806585}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377d52106ababa04792902b6c59f9406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Platform: {fileID: 1264032132574063697}
+  Platform: {fileID: 1534108080884806589}
   GroundCheck: {fileID: 9030432279490250516}
   WhatIsClimable:
     serializedVersion: 2
@@ -85,8 +85,9 @@ MonoBehaviour:
     m_Bits: 512
   singlePlatformLayer:
     serializedVersion: 2
-    m_Bits: 524288
---- !u!1001 &3090077292815237644
+    m_Bits: 256
+  ForcePlatformOff: 0
+--- !u!1001 &3324405575486316000
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -96,12 +97,12 @@ PrefabInstance:
     - target: {fileID: 4280836827826450009, guid: da908cab8708a3f4ca2b36389ea06366,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4280836827826450009, guid: da908cab8708a3f4ca2b36389ea06366,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.507
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4280836827826450009, guid: da908cab8708a3f4ca2b36389ea06366,
         type: 3}
@@ -150,30 +151,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4280836827826450011, guid: da908cab8708a3f4ca2b36389ea06366,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280836827826450011, guid: da908cab8708a3f4ca2b36389ea06366,
-        type: 3}
       propertyPath: m_InstanceId
-      value: -26670
+      value: -84512
       objectReference: {fileID: 0}
     - target: {fileID: 4280836827826450013, guid: da908cab8708a3f4ca2b36389ea06366,
         type: 3}
       propertyPath: m_Name
-      value: DumbPlatform
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280836827826450013, guid: da908cab8708a3f4ca2b36389ea06366,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da908cab8708a3f4ca2b36389ea06366, type: 3}
---- !u!1 &1264032132574063697 stripped
+--- !u!1 &1534108080884806589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4280836827826450013, guid: da908cab8708a3f4ca2b36389ea06366,
     type: 3}
-  m_PrefabInstance: {fileID: 3090077292815237644}
+  m_PrefabInstance: {fileID: 3324405575486316000}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1264032132574063701 stripped
+--- !u!4 &1534108080884806585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4280836827826450009, guid: da908cab8708a3f4ca2b36389ea06366,
     type: 3}
-  m_PrefabInstance: {fileID: 3090077292815237644}
+  m_PrefabInstance: {fileID: 3324405575486316000}
   m_PrefabAsset: {fileID: 0}
