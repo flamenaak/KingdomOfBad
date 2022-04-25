@@ -59,6 +59,9 @@ TextureImporter:
   - first:
       213: 7502010755913264837
     second: King's hall _entrance_door_1
+  - first:
+      213: -4010868261688519012
+    second: King's hall _back_wall
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -191,7 +194,7 @@ TextureImporter:
         serializedVersion: 2
         x: 130
         y: 833
-        width: 291
+        width: 296
         height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -496,6 +499,27 @@ TextureImporter:
       bones: []
       spriteID: 5ceae5ff80f7c1860800000000000000
       internalID: 7502010755913264837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _back_wall
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 840
+        width: 13
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c96da2501988658c0800000000000000
+      internalID: -4010868261688519012
       vertices: []
       indices: 
       edges: []
