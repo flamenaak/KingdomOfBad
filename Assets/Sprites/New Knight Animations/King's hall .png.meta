@@ -62,6 +62,15 @@ TextureImporter:
   - first:
       213: -4010868261688519012
     second: King's hall _back_wall
+  - first:
+      213: 8115596370912078058
+    second: King's hall _roof
+  - first:
+      213: 3114325624304159978
+    second: King's hall _beam_0
+  - first:
+      213: 6982123864747175886
+    second: King's hall _beam_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -520,6 +529,69 @@ TextureImporter:
       bones: []
       spriteID: c96da2501988658c0800000000000000
       internalID: -4010868261688519012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _roof
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 628
+        width: 323
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae8e9aca6e360a070800000000000000
+      internalID: 8115596370912078058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _beam_0
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 626
+        width: 282
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeccb87a7ae483b20800000000000000
+      internalID: 3114325624304159978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _beam_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 622
+        width: 276
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecf680089ac75e060800000000000000
+      internalID: 6982123864747175886
       vertices: []
       indices: 
       edges: []
