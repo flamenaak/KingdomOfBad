@@ -71,6 +71,15 @@ TextureImporter:
   - first:
       213: 6982123864747175886
     second: King's hall _beam_1
+  - first:
+      213: 2884110023782045943
+    second: King's hall _chandelier_fallen
+  - first:
+      213: -2067141999617980812
+    second: King's hall _water_fen
+  - first:
+      213: 2443837995431065397
+    second: King's hall _water_drop
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -369,9 +378,9 @@ TextureImporter:
       name: King's hall _window_2
       rect:
         serializedVersion: 2
-        x: 230
+        x: 227
         y: 860
-        width: 17
+        width: 24
         height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -390,9 +399,9 @@ TextureImporter:
       name: King's hall _window_3
       rect:
         serializedVersion: 2
-        x: 260
+        x: 257
         y: 860
-        width: 17
+        width: 24
         height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -584,7 +593,7 @@ TextureImporter:
         width: 276
         height: 2
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -592,6 +601,69 @@ TextureImporter:
       bones: []
       spriteID: ecf680089ac75e060800000000000000
       internalID: 6982123864747175886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _chandelier_fallen
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 880
+        width: 13
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f81ca439ca660820800000000000000
+      internalID: 2884110023782045943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _water_fen
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 880
+        width: 12
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 476ca74bd490053e0800000000000000
+      internalID: -2067141999617980812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: King's hall _water_drop
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 880
+        width: 1
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 537754675b14ae120800000000000000
+      internalID: 2443837995431065397
       vertices: []
       indices: 
       edges: []
