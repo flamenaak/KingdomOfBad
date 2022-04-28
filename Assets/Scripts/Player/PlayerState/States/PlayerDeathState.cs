@@ -16,6 +16,7 @@ public class PlayerDeathState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.DeathBloodSplash.Play();
     }
 
     public override bool Equals(object obj)
@@ -25,6 +26,7 @@ public class PlayerDeathState : PlayerGroundedState
 
     public override void Exit()
     {
+        player.DeathBloodSplash.Stop();
         base.Exit();
     }
 

@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour, IHasCombat, IHasCollider
     public GameObject Awarness;
     public Stackability stackability {get; private set;}
     public Rigidbody2D RigidBody;
+    public ParticleSystem BloodSplash;
+    public ParticleSystem DamagedBloodSplash;
     public virtual List<DecisionFunction_State_Tuple> DecisionFunctions {
         get {
            return new List<DecisionFunction_State_Tuple> { 

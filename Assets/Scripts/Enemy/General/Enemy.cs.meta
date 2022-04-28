@@ -3,7 +3,15 @@ guid: 39f61127197f78c4b814b246ddc32c64
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Core: {instanceID: 0}
+  - enemyAI: {instanceID: 0}
+  - Awarness: {instanceID: 0}
+  - RigidBody: {instanceID: 0}
+  - BloodSplash: {fileID: 1677812035238639578, guid: 1aac859dd499db64792e271b3aac927d,
+      type: 3}
+  - DamagedBloodSplash: {fileID: 2610669587920012769, guid: 8507bc1b35f5fd642aa408dd37237af9,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

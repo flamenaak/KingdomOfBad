@@ -18,6 +18,7 @@ public class PlayerDamagedState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.DamagedBloodSplash.Play();
     }
 
     public override bool Equals(object obj)
@@ -28,6 +29,7 @@ public class PlayerDamagedState : PlayerGroundedState
     public override void Exit()
     {
         player.Core.Combat.damaged = false;
+        player.DamagedBloodSplash.Stop();
         base.Exit();
     }
 

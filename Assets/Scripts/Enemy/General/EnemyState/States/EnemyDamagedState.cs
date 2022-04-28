@@ -17,11 +17,13 @@ public class EnemyDamagedState : EnemyState
     public override void Enter()
     {
         base.Enter();
+        enemy.DamagedBloodSplash.Play();
     }
 
     public override void Exit()
     {
         enemy.Core.Combat.damaged = false;
+        enemy.DamagedBloodSplash.Stop();
         base.Exit();
     }
 

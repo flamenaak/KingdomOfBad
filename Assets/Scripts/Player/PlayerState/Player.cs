@@ -69,6 +69,8 @@ public class Player : MonoBehaviour, IHasCombat, ICanClimb, IHasCollider
     public CooldownComponent CanInteract;
     public ParticleSystem LandDust;
     public ParticleSystem Dust;
+    public ParticleSystem DamagedBloodSplash;
+    public ParticleSystem DeathBloodSplash;
     public GameObject InteractButton;
     public Core Core { get; set; }
     public Combat Combat => Core.Combat;

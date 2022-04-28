@@ -6,7 +6,6 @@ public class EnemyDeathState : EnemyState
 {
     public EnemyDeathState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-
     }
 
     public override void DoChecks()
@@ -17,6 +16,7 @@ public class EnemyDeathState : EnemyState
     public override void Enter()
     {
         base.Enter();
+        enemy.BloodSplash.Play();
         if (enemy.isInteractableOnDeath)
         {
             enemy.gameObject.layer = 18;
@@ -30,6 +30,7 @@ public class EnemyDeathState : EnemyState
 
     public override void Exit()
     {
+        enemy.BloodSplash.Stop();
         base.Exit();
     }
 
