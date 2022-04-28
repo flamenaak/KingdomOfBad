@@ -5,7 +5,6 @@ using UnityEngine;
 public class King : MonoBehaviour
 {
     public StateMachine StateMachine { get; private set; }
-
     public KingSittingIdleState SittingIdleState { get; set; } 
     public KingStandUpState StandUpState { get; set; }
     public KingStandingIdleState StandingIdleState { get; set; }
