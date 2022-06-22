@@ -119,6 +119,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -128,8 +130,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -150,9 +152,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -864,6 +869,39 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Drinking_guard_5: -6656834737248956984
+      King_sitting_1: 1217950955772457077
+      King_standing_up_1: 5908850085761125721
+      Drinking_guard_2: -7972259999253833018
+      Sleeping_guard_0: -2579804537783056187
+      King_sitting_0: -7885467917876151547
+      Drinking_guard_3: 904636675761448042
+      Sleeping_guard_2: -3871862134770657732
+      King_standing_up_3: 167810477738660355
+      King_standing_2: 2712400086652556519
+      King_sitting_4: 1192797924117851111
+      Drinking_guard_6: -5456665973503014888
+      King_standing_0: 5275654312661531029
+      King_sitting_2: -8376917354631496389
+      Drinking_guard_4: -5625168551772653557
+      Drinking_guard_1: -4170383454699834122
+      King_standing_up_4: 3847221242174354889
+      King_standing_up_10: -8799215727161504348
+      King_standing_up_7: 6052231068392918623
+      King_standing_up_6: -8625847257014482713
+      Sleeping_guard_1: -6123491719334128594
+      King_standing_up_2: -9094143488976505383
+      King_standing_up_0: -5108428389053470756
+      King_standing_up_8: 4034967132160085013
+      Drinking_guard_8: -7217470539817329389
+      Drinking_guard_9: 5963711647068533984
+      King_standing_1: -3181623603778101025
+      King_standing_up_9: 8678694795426000763
+      King_sitting_3: 910876452163844446
+      Drinking_guard_7: 3317610311184782232
+      King_standing_up_5: 497025474811474756
+      Drinking_guard_0: 1357662166958763960
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

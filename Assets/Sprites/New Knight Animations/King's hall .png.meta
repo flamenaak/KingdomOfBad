@@ -101,6 +101,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -110,8 +112,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -132,9 +134,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -180,7 +185,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3730cb94df87df640800000000000000
-      internalID: 5115377781021868915
+      internalID: -6674053525085314106
       vertices: []
       indices: 
       edges: []
@@ -222,7 +227,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6c3a859fdaff063a0800000000000000
-      internalID: -6674053525085314106
+      internalID: -5945936681189377553
       vertices: []
       indices: 
       edges: []
@@ -678,6 +683,31 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      King's hall _banner_0: 7125178995550672766
+      King's hall _window_2: -2383476455716232552
+      King's hall _roof: 8115596370912078058
+      King's hall _banner_1: -3177412598537689925
+      King's hall _water_fen: -2067141999617980812
+      King's hall _banner_2: -299315844181593517
+      King's hall _collumn_foreground: 7234564875154736125
+      King's hall _collumn: -6674053525085314106
+      King's hall _entrance_door_0: -3444643803156095146
+      King's hall _beam_1: 6982123864747175886
+      King's hall _window_3: -8397518862317810118
+      King's hall _banner_idle: -3972719220654649121
+      King's hall _chandelier_1: 2765475830065156945
+      King's hall _banner_3: 5539824685780708229
+      King's hall _water_drop: 2443837995431065397
+      King's hall _window_1: 8111494146604308454
+      King's hall _entrance_door_1: 7502010755913264837
+      King's hall _chandelier_fallen: 2884110023782045943
+      King's hall _back_wall: -4010868261688519012
+      King's hall _chandelier_0: 443768480948294319
+      King's hall _window_4: 5107290209159591707
+      King's hall _window_0: 7594985189433955839
+      King's hall _beam_0: 3114325624304159978
+      King's hall _floor: -5945936681189377553
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

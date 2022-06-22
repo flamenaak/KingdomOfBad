@@ -62,6 +62,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -71,8 +73,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -93,9 +95,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -408,6 +413,20 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      KnightWalk_3: 7439635253617921395
+      KnightWalk_6: -2401132638184973804
+      KnightWalk_2: 649646748852464657
+      KnightWalk_4: -6497393852434509403
+      KnightWalk_5: 4036904600137081275
+      KnightWalk_8: 7536175568016560877
+      KnightWalk_7: 1481598439446958671
+      KnightWalk_12: -3916651508023614235
+      KnightWalk_9: 4441880693749137196
+      KnightWalk_11: 4942497746681616628
+      KnightWalk_10: -2309240872652698156
+      KnightWalk_0: -7317840316397144351
+      KnightWalk_1: 832112703276176981
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
