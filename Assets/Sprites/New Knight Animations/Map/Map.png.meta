@@ -1534,7 +1534,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_54
+      name: Windmill_0
       rect:
         serializedVersion: 2
         x: 87
@@ -2006,7 +2006,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_53: -7348929559201483037
       Map_10: 3552423187675160797
       Map_2: -3888327117574300182
       Map_48: 6408873623997500287
@@ -2033,7 +2032,6 @@ TextureImporter:
       Broken_Windmill_1: 6084803303968313873
       Map_65: 8081522254003099205
       Map_22: 8573059855525071730
-      Map_54: 4425271440581574078
       Map_25: -1056934510162341840
       Map_32: 7265655196937639400
       Map_43: 4125586807256846168
@@ -2054,6 +2052,7 @@ TextureImporter:
       Map_45: 261444279322193459
       Map_64: 3533443336603929511
       Map_62: -1356788850171221566
+      Windmill_0: 4425271440581574078
       Map_23: 7425192431115120889
       Map_12: -1256734235086954373
       Map_73: 7918614727497737223
@@ -2080,8 +2079,9 @@ TextureImporter:
       Map_63: -3186739434785413484
       Map_47: 6293237369934708708
       Map_8: 4179868169176919638
-      Map_39: 5075881640569961040
+      Map_53: -7348929559201483037
       Map_19: 8792265869481431602
+      Map_39: 5075881640569961040
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
