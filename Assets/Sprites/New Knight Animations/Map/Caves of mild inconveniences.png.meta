@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0a5207c31bb87dc41a3511cf02647a18
+guid: 10dbe048defe5c24badb30c1fd76411a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: The bog of unpleasant smells_0
+      name: Caves of mild inconveniences_0
       rect:
         serializedVersion: 2
-        x: 237
-        y: 913
-        width: 415
-        height: 173
+        x: 903
+        y: 844
+        width: 155
+        height: 199
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,8 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba662fe10e9df6c4f9d94803d6cd8e07
-      internalID: -406392959
+      spriteID: e4253201cf923a94f9c987f2a3de51d9
+      internalID: -568939581
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      The bog of unpleasant smells_0: -406392959
+      Caves of mild inconveniences_0: -568939581
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
