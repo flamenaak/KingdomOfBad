@@ -107,12 +107,12 @@ TextureImporter:
       name: Chapel of Yellow Nipple_0
       rect:
         serializedVersion: 2
-        x: 688
-        y: 743
-        width: 370
-        height: 109
+        x: 684
+        y: 739
+        width: 378
+        height: 117
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

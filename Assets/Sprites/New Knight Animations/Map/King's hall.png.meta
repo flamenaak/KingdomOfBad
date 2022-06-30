@@ -107,12 +107,12 @@ TextureImporter:
       name: King's hall_0
       rect:
         serializedVersion: 2
-        x: 622
-        y: 975
-        width: 124
-        height: 72
+        x: 618
+        y: 971
+        width: 132
+        height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

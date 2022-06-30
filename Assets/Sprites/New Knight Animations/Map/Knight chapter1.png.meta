@@ -107,12 +107,12 @@ TextureImporter:
       name: Knight chapter1_0
       rect:
         serializedVersion: 2
-        x: 237
-        y: 743
-        width: 517
-        height: 304
+        x: 233
+        y: 739
+        width: 525
+        height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

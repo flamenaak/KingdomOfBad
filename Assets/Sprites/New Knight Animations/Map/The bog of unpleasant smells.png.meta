@@ -107,12 +107,12 @@ TextureImporter:
       name: The bog of unpleasant smells_0
       rect:
         serializedVersion: 2
-        x: 237
-        y: 913
-        width: 415
-        height: 173
+        x: 233
+        y: 909
+        width: 423
+        height: 181
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

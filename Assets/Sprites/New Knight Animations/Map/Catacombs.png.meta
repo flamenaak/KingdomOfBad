@@ -107,10 +107,10 @@ TextureImporter:
       name: Catacombs_0
       rect:
         serializedVersion: 2
-        x: 237
-        y: 885
-        width: 277
-        height: 111
+        x: 233
+        y: 881
+        width: 285
+        height: 119
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
