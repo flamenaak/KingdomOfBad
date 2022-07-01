@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
     public TMP_Text textArea;
     public GameObject[] levels;
+    public SceneManager[] scenes;
     public CooldownComponent canSwitch;
     public Material outlinedMaterial;
     public Material defaultMaterial;
@@ -40,6 +42,10 @@ public class MapManager : MonoBehaviour
             currentPos++;
             Select();
         }
+        if (Input.GetButton("Interact"))
+        {
+            SceneManager.LoadScene(levels[currentPos].name);
+        }
 
     }
 
@@ -50,6 +56,5 @@ public class MapManager : MonoBehaviour
         //outline chosen area and set back original material for the previous
         levels[currentPos].GetComponent<SpriteRenderer>().material = outlinedMaterial;
         levels[lastPos].GetComponent<SpriteRenderer>().material = defaultMaterial;
-        //if interact button pressed move to given level
     }
 }
