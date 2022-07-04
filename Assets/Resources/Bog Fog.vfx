@@ -1248,7 +1248,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.007843137718737126,"g":0.0313725508749485,"b":0.007843137718737126,"a":1.0},"time":0.0},{"color":{"r":0.013725490309298039,"g":0.1039215698838234,"b":0.019607843831181527,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.2078431397676468,"time":0.3470664620399475},{"alpha":0.2078431397676468,"time":0.5882353186607361}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.01568627543747425,"g":0.062745101749897,"b":0.01568627543747425,"a":1.0},"time":0.0},{"color":{"r":0.013725490309298039,"g":0.1039215698838234,"b":0.019607843831181527,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.3960784375667572,"time":0.3470664620399475},{"alpha":0.3960784375667572,"time":0.582360565662384}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -1299,7 +1299,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661614596}
       inputSlot: {fileID: 8926484042661614557}
-    position: {x: 753, y: -51}
+    position: {x: 753, y: -52}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661614596

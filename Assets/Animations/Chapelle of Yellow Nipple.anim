@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Knight's Chapter
+  m_Name: Chapelle of Yellow Nipple
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,13 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 1891851855, guid: c6a848a2586fabc47bcdc3b6c7b1f789, type: 3}
+      value: {fileID: -1068603760, guid: ddb295be9d8f75049b52111b1f630d0d, type: 3}
     - time: 0.25
-      value: {fileID: -681830072, guid: a364520664262644ea66adf70815bb54, type: 3}
+      value: {fileID: 223246536, guid: 171427c56aac43b4080d85c13fe104cc, type: 3}
     - time: 0.5
-      value: {fileID: 1966949893, guid: 63781bb15bde9604890af6735aad9c88, type: 3}
+      value: {fileID: -1640113249, guid: 1ea0a8c47106b194c9caa628cbc7dd9d, type: 3}
     - time: 0.75
-      value: {fileID: 1891851855, guid: c6a848a2586fabc47bcdc3b6c7b1f789, type: 3}
+      value: {fileID: -1068603760, guid: ddb295be9d8f75049b52111b1f630d0d, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,10 +46,10 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 1891851855, guid: c6a848a2586fabc47bcdc3b6c7b1f789, type: 3}
-    - {fileID: -681830072, guid: a364520664262644ea66adf70815bb54, type: 3}
-    - {fileID: 1966949893, guid: 63781bb15bde9604890af6735aad9c88, type: 3}
-    - {fileID: 1891851855, guid: c6a848a2586fabc47bcdc3b6c7b1f789, type: 3}
+    - {fileID: -1068603760, guid: ddb295be9d8f75049b52111b1f630d0d, type: 3}
+    - {fileID: 223246536, guid: 171427c56aac43b4080d85c13fe104cc, type: 3}
+    - {fileID: -1640113249, guid: 1ea0a8c47106b194c9caa628cbc7dd9d, type: 3}
+    - {fileID: -1068603760, guid: ddb295be9d8f75049b52111b1f630d0d, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
