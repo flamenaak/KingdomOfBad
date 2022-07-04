@@ -43,9 +43,4 @@ public class RiseState : PlayerAirState
     {
         base.Update();
     }
-
-    public override void Update()
-    {
-        base.Update();
-    }
 }
