@@ -8,6 +8,7 @@ public class Crossbowman : Enemy
 
     public bool reloaded = true;
     public Bolt bolt;
+    public GameObject Platform;
     public CrossbowmanReloadState CrossbowmanReloadState { get; set; }
     public CrossbowmanDeathState CrossbowmanDeathState { get; set; }
     public bool BossMinion = false;
