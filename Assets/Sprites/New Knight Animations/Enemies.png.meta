@@ -407,8 +407,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -418,8 +416,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -440,12 +438,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -3173,135 +3168,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Crossbowman_move_6: -8194286608898290098
-      Crossbowman_Death_0: -3677388578715449969
-      Spearman_Slash_8: 3528696545735274776
-      Spearman_Death_2: 3239750355448910219
-      Death_10: 7877921557971618100
-      Searching_1: 8214992237754589118
-      Spearman_Stab_12: -2687233724321928115
-      Spearman_Stab_4: 2884737313679868233
-      Crossbowman_Damaged_3: -2998995395697284367
-      Bolt: -1632509268861782422
-      Spearman_Death_3: 5197189315874054843
-      Spearman_Stab_10: -2767687718110399205
-      Spearman_Idle_2: -3375038303658136201
-      Searching_4: -4672408666891060877
-      Crossbowman_idle_2: -8949767727110273653
-      Spearman_Move_5: -509115650628796296
-      Death_4: -1147401495359466748
-      Spearman_Move_9: -4030233447086554269
-      Death_11: 5366457973745487733
-      Crossbowman_Death_3: 7027872553957238786
-      Death_2: -7945901444079236628
-      Crossbowman_move_7: 1992161305237088239
-      Crossbowman_Dodge_10: -3908582556919349228
-      Crossbowman_Dodge_1: -88126416166889395
-      Crossbowman_Damaged_2: -2251326128723052975
-      Spearman_Slash_5: -3753579385025995478
-      Crossbowman_Reload_0: 281971560821966503
-      Thief_Death_0: 3963637521249654660
-      Crossbowman_Dodge_4: -3795149127210610995
-      Spearman_Slash_6: -2496844334191475400
-      Thief_Damaged_3: -327514432990638087
-      Spearman_Move_4: 8849371530552776352
-      Spearman_Stab_6: -5557010403634338699
-      Crossbowman_Damaged_1: 4587673724615464695
-      Spotted_2: 450555567493972228
-      Thief_Damaged_4: -846593386734640808
-      Crossbowman_Dodge_9: 5096798637288347760
-      Death_17: 615673380907259118
-      Spearman_Idle_1: -4181999719777712613
-      Thief_Death_2: -5912028405313391129
-      Spearman_Idle_0: -1010674888820381983
-      Spearman_Slash_1: -4453719734264909257
-      Crossbowman_Damaged_5: 6292691625679946888
-      Death_14: 5023289697677887148
-      Spotted_5: 7418927152471405234
-      Crossbowman_move_2: -4238003056365228607
-      Crossbowman_Shoot_0: -6215373132702329084
-      Crossbowman_move_4: -7299916145096339233
-      Thief_Death_1: 8393362849812203762
-      Crossbowman_Dodge_2: -4656416737252121297
-      Thief_Damaged_5: 3005459295459972260
-      Spearman_Move_6: -8178165961756399743
-      Spearman_Move_8: -4640851858021030223
-      Crossbowman_move_10: 5428214678119402275
-      Spearman_Move_10: 9099896256582322714
-      Damaged_0: 590312977676163301
-      Death_8: 2192450021786810173
-      Spotted_3: 5480056424480108288
-      Spearman_Move_2: 368555085621994118
-      Crossbowman_Dodge_3: 8981017190978900272
-      Searching_0: 1823596973268455144
-      Spearman_Stab_1: 1205781820415724575
-      Enemies_77: -3087958048477219219
-      Spearman_Slash_2: 89139527193386499
-      Spearman_Stab_9: -1871929004497759837
-      Crossbowman_move_5: -4933128433902454764
-      Spearman_Stab_7: 3551148586647959576
-      Thief_Damaged_2: 5586420018639894052
-      Spearman_Idle_4: -4669921857946425314
-      Spearman_Move_0: -731756946235510198
-      Death_0: -7537196482120660328
-      Spearman_Death_0: 6940734687792239648
-      Damaged_2: -1508715040571728308
-      Spearman_Stab_8: -7452406817521087278
-      Crossbowman_move_3: -184014217326568715
-      Spotted_4: -8072977402653731372
-      Death_13: 5875395181630150645
-      Spearman_Death_1: -8243208416857005183
-      Crossbowman_Death_2: 3660494594444218831
-      Death_9: 4326287474489854147
-      Searching_3: -6961333781056756240
-      Crossbowman_Dodge_8: 3758680154995228956
-      Spearman_Slash_7: 2752182825275558492
-      Searching_6: 2301194597526324844
-      Crossbowman_Dodge_6: -5392914322310365440
-      Spearman_Idle_3: 1432442515227095082
-      Spotted_1: -6640614073646168285
-      Spotted_6: 5104648564829428216
-      Spearman_Move_3: -3567033628092068868
-      Crossbowman_Dodge_11: -7340435992496341900
-      Spearman_Slash_0: 9150857795518445384
-      Death_12: 572134458542851419
-      Damaged_3: -199097416636975947
-      Death_16: 9008768272413781845
-      Spearman_Stab_2: 724912592566366239
-      Crossbowman_idle_4: -2045263686945575246
-      Searching_2: -589091789353595709
-      Crossbowman_move_11: -2734681040658012826
-      Searching_5: -5234243887011947869
-      Crossbowman_Death_1: 3701666406343386126
-      Death_7: -7844560889915226194
-      Spearman_Stab_0: 5751447635443309442
-      Crossbowman_Damaged_4: -9067941519535602811
-      Spearman_Stab_3: -438660108337136262
-      Spearman_Move_1: 1621394836268213013
-      Death_15: 1511843784806208459
-      Death_1: -860468679390908754
-      Death_5: 8414478535512612329
-      Spearman_Slash_4: 2054728660546970155
-      Spearman_Move_7: -3934682143293241471
-      Crossbowman_Dodge_5: 3998031152197799805
-      Spearman_Stab_5: -1360573819756025394
-      Spearman_Stab_11: -6767087442504108573
-      Crossbowman_Reload_1: 6760816455620728065
-      Crossbowman_move_8: 3656204211181538475
-      Damaged_1: -4710835892303214055
-      Spearman_Slash_3: -2213654343223091228
-      Crossbowman_idle_3: 7620030484785497571
-      Crossbowman_move_1: 7490056065647952752
-      Crossbowman_Dodge_7: -5716800537163901602
-      Thief_Death_3: -318846305294400523
-      Thief_Damaged_1: -3891519679325919375
-      Spotted_0: -5449054242775794067
-      Death_6: 3714015224569861163
-      Crossbowman_idle_1: -769092572047933806
-      Crossbowman_move_9: 8006013045212815849
-      Thief_Damaged_0: 5803252358176458923
-      Death_3: -8421458170528590454
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

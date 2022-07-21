@@ -65,8 +65,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -76,8 +74,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -98,12 +96,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -437,21 +432,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      KnightDash_12: -5623279303747407204
-      KnightDash_5: -7625680974331662379
-      KnightDash_10: 5522115296931245292
-      KnightDash_13: 4084893312738792064
-      KnightDash_0: 8485881682283287717
-      KnightDash_4: -1647657415098206602
-      KnightDash_8: 4472281844095277174
-      KnightDash_9: -7592897150419714338
-      KnightDash_3: 4059603910413685683
-      KnightDash_11: -7958136181279246000
-      KnightDash_1: -1562194725168210701
-      KnightDash_7: 6128660393717725414
-      KnightDash_2: 8590758279477013910
-      KnightDash_6: -2951251856420336863
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

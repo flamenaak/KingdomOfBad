@@ -71,8 +71,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -82,8 +80,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -104,12 +102,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -485,23 +480,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      KnightWallHang_13: -7321138979995428407
-      KnightWallHang_14: -6194729517105270525
-      KnightWallHang_7: -7120674140755733524
-      KnightWallHang_4: -3192522182264312479
-      KnightWallHang_15: 4078670792562149940
-      KnightWallHang_3: -5958344128282534670
-      KnightWallHang_10: -8261600549641476207
-      KnightWallHang_9: -9103656819174266130
-      KnightWallHang_6: 4724056755232108107
-      KnightWallHang_1: 5842452978564870138
-      KnightWallHang_12: 1956105857177234381
-      KnightWallHang_8: -5985268426156258987
-      KnightWallHang_2: 5315675828316955296
-      KnightWallHang_0: 5422663941998545957
-      KnightWallHang_11: -4116278643349307104
-      KnightWallHang_5: 8528187930979674196
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

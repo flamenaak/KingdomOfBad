@@ -56,8 +56,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -67,8 +65,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -89,12 +87,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -365,18 +360,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      KnightRun_2: -6054106439150290708
-      KnightRun_4: 4331979357671168930
-      KnightRun_7: 4936078878800136758
-      KnightRun_1: 6981868198252482289
-      KnightRun_6: 2398449042546354303
-      KnightRun_5: -7243670411279780411
-      KnightRun_8: -1379561462390202093
-      KnightRun_0: -2819087591767578059
-      KnightRun_3: -3800790355418859373
-      KnightRun_9: 3147716791078871905
-      KnightRun_10: -4850906624342888160
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

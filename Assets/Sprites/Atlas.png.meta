@@ -131,8 +131,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -142,8 +140,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -164,12 +162,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -965,43 +960,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      player_1: -4869357254534750094
-      steel_sword: -7566632554201152900
-      chest_0: -2151125692419375991
-      muddy_floor_7: 3823991837180300354
-      wall_0: -6721728136321296765
-      wall_2: -407774699277236136
-      torch_0: -1291705123832498677
-      muddy_floor_1: -7450669156800766785
-      wall_1: 7870480730772048316
-      chest_empty_0: 7029400602700474323
-      torch_2: -8369517905372312421
-      chest_full_0: 4355180666568580090
-      torch_7: 2748396297729853354
-      player_0: 4018074224661003100
-      healing_fountain_0: 5327950094024008212
-      healing_fountain_1: 6615319868462110837
-      broadsword: -7503008079389545076
-      healing_fountain_2: -1347233719151212251
-      torch_8: -4446556834619780616
-      torch_6: -2217874986795218178
-      torch_3: -9106852675655700425
-      wooden_sword: 2592197434785513267
-      torch_4: 745968338076216934
-      muddy_floor_3: 1726203059708922746
-      iron_sword: 8970763576347242229
-      enemy_0: 2466828561161279858
-      muddy_floor_0: -5599750456436461424
-      muddy_floor_2: -4272707242783423304
-      damaged_iron_sword: 2185041290902523119
-      muddy_floor_4: 3628468241054914511
-      torch_1: 7182614658172301277
-      katana: 5894979182433546639
-      muddy_floor_5: -3513202607186615407
-      torch_5: -2834699621007424056
-      muddy_floor_6: -9198928466637730507
-      floor_0: -7826287199498012479
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

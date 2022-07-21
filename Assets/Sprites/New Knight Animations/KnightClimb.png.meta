@@ -68,8 +68,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -79,8 +77,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -101,12 +99,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -461,22 +456,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      KnightClimb_3: 3811860412446379912
-      KnightClimb_11: -5081237032851788559
-      KnightClimb_6: 8181309847460257107
-      KnightClimb_13: 6139318430812168051
-      KnightClimb_5: -6920988453181899833
-      KnightClimb_12: -3890153703850104454
-      KnightClimb_1: 3160565102148505957
-      KnightClimb_4: -6833938400445910819
-      KnightClimb_2: 7714675939486904618
-      KnightClimb_14: 3240114369338828756
-      KnightClimb_10: 5642951046020234808
-      KnightClimb_8: 4575269616711735925
-      KnightClimb_7: 4192546168217139783
-      KnightClimb_9: -122443441488586682
-      KnightClimb_0: 1800924540907823857
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

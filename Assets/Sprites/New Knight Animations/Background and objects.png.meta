@@ -341,8 +341,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -352,8 +350,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -374,12 +372,9 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -1727,7 +1722,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 18f79736f7ec48600800000000000000
-      internalID: 8977058987386691151
+      internalID: 469727307678449537
       vertices: []
       indices: 
       edges: []
@@ -1748,7 +1743,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ddd25842ed9130400800000000000000
-      internalID: -1156070974223432256
+      internalID: 289103242967985629
       vertices: []
       indices: 
       edges: []
@@ -1769,7 +1764,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4078058d491679670800000000000000
-      internalID: 4566913284222363461
+      internalID: 8545406109871015684
       vertices: []
       indices: 
       edges: []
@@ -1790,7 +1785,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4f74323d85afa4170800000000000000
-      internalID: 8063788571146220274
+      internalID: 8163612533968816116
       vertices: []
       indices: 
       edges: []
@@ -2561,109 +2556,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Background and objects_65: 2650532867385820984
-      Background and objects_55: 3356762225918416086
-      Background and objects_16: 4387276124773511529
-      fountain_3: 7582139747294370846
-      Background and objects_48: -4394387760254307812
-      banner_1: -2958160682496372895
-      Barrel_0: -6842213954907613565
-      Background and objects_58: -8191101866362691628
-      box_1: 7799751668725252432
-      fountain_5: -3046170107260727618
-      Ladder_0: 1168199557410664526
-      Background and objects_66: -3690728261562119213
-      Background and objects_37: 2388639248869991647
-      fountain_6: 2129619622156431650
-      Background and objects_53: -3294167397976164928
-      Background and objects_10: -5380543663023905687
-      Ladder_3: 4183651218935542294
-      Background and objects_12: -6662885167253074759
-      Background and objects_61: 6339522610153126167
-      Background and objects_36: 2610683437969764695
-      Background and objects_40: 8063788571146220274
-      Background and objects_44: -4739589524790674298
-      Background and objects_11: 60671548398309520
-      Barrel_1: -3440439646473413438
-      Vase_2: 4724344293937190213
-      Background and objects_47: 8813471277051841096
-      Table_3: 185196150065951188
-      Background and objects_64: 4790012880889521819
-      Background and objects_52: -1762081617889539378
-      Background and objects_26: -2750958316824866648
-      Background and objects_33: 2848622852093376505
-      Ladder_1: 6812989265837402300
-      Background and objects_32: 5573703567311922636
-      box_0: -7494955335546677130
-      banner_4: 2813033694203876797
-      Background and objects_18: 3975937944848955338
-      Background and objects_63: 8800495570174874702
-      Background and objects_5: 8924772951575976293
-      Background and objects_27: -2489480114687865688
-      Wall_Top_1: 7845113076517628027
-      fountain_1: -6378089210485526631
-      Background and objects_20: -7345282139946760253
-      Background and objects_67: 3662998777965507177
-      Background and objects_29: 1263695712765919711
-      Barrel_2: -696285975154372051
-      Table_2: 8767280907029200425
-      Background and objects_62: 5322175799694934778
-      Barrel_3: 3619819301640658875
-      fountain_2: 3479463877879716533
-      Vase_3: 8688331142097913532
-      Background and objects_23: -7369158308788522977
-      Background and objects_45: -708859886894857835
-      Background and objects_35: 8460622704729366689
-      Background and objects_54: 2128435026335751911
-      banner_5: 4549529354661189793
-      Background and objects_15: -8092882297197248244
-      Background and objects_28: 1189636791943814163
-      Background and objects_14: -3909446510640478785
-      Wall_Top_0: -4767339382764162832
-      Background and objects_25: 6689666357422374003
-      Background and objects_3: 4292819394077955831
-      Background and objects_34: -1657914255301071986
-      Background and objects_50: -7432915477467409813
-      Background and objects_42: 7811100393828590714
-      Background and objects_39: 4566913284222363461
-      banner_6: -6973496138676538308
-      Table_1: -873340322579379784
-      Background and objects_9: 4881961213818401991
-      Background and objects_51: 8570872936312742820
-      Background and objects_21: 2590317887436262568
-      Background and objects_7: 6792022144495276844
-      Background and objects_19: 8842380725800268254
-      Background and objects_6: -1488437681048877338
-      Background and objects_60: 6592196992744278462
-      Background and objects_38: -6957910972960550483
-      Background and objects_56: -5803995804888945940
-      Background and objects_30: 8977058987386691151
-      Background and objects_57: -5019743429571240439
-      Wall_Top_2: -1286241530613009991
-      Background and objects_13: -3159518323590233869
-      Background and objects_17: 1950066243342879025
-      fountain_4: 998974795661755702
-      Background and objects_49: -5982333708962207081
-      Vase_1: 6300682587497425878
-      Table_0: -9046256053083555918
-      Background and objects_8: -8431951397427721358
-      banner_0: -3648917797458354123
-      Background and objects_4: -6567695461956551463
-      Background and objects_59: -525116262968906576
-      Ladder_2: 628748199056069160
-      fountain_0: 1034896226215493072
-      waterDrop_0: 7925684015116799562
-      Background and objects_46: 2823433876519070381
-      Background and objects_41: -8638256201554588015
-      Background and objects_24: 6710040847521112682
-      box_2: 7440455550377132084
-      Background and objects_43: 7408244374850970179
-      Background and objects_22: -1178807632681372742
-      banner_2: 1177928075645688697
-      banner_3: 4022721948845577352
-      Vase_0: -3138316659340702242
-      Background and objects_31: -1156070974223432256
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
