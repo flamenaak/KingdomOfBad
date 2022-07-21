@@ -143,6 +143,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -152,8 +154,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -174,9 +176,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -1056,6 +1061,47 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Thief_20: 7872633693980329472
+      Thief_18: 8122963605166625335
+      Thief_27: -1346082247834116618
+      Thief_11: 6781518532799561996
+      Thief_29: -7394368226377925307
+      Thief_4: 1937225949302888066
+      Thief_12: 558917605916089062
+      Thief_36: 8688028692032496745
+      Thief_22: 4261078732105269144
+      Thief_34: 434752773724308271
+      Thief_21: -1141017638162318089
+      Thief_0: 2759625832949664974
+      Thief_9: -2437037966712245055
+      Thief_26: -7627113502788353834
+      Thief_37: -9023080823821647589
+      Thief_33: -8329461864579967649
+      Thief_5: 7668418516334040060
+      Thief_38: 6192779002225267365
+      Thief_15: 6624065841014085460
+      Thief_28: 7572356171314647820
+      Thief_16: 8074936530806780918
+      Thief_30: 2492550287926960575
+      Thief_31: -7510088480225727946
+      Thief_25: -396781079846946634
+      Thief_1: 6674077867272231801
+      Thief_8: -5119236626837732370
+      Thief_6: 1026404866474992840
+      Thief_14: -2997135018590768515
+      Thief_2: -2305040796722866168
+      Thief_24: -7088191531190919062
+      Thief_23: -2199974733416172443
+      Thief_35: -4257084996668003854
+      Thief_32: -4585869001116314655
+      Thief_10: 1127592502855584038
+      Thief_7: 1433560884088503022
+      Thief_17: -8897233835094866397
+      Thief_13: -5460192695336779597
+      Thief_19: -6154834492025182870
+      Thief_39: -5694428397718638546
+      Thief_3: 6184289100250789393
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/King's hall.unity
+    guid: efdd907c01cd0964f9e663c0a04e5922
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: a1ecd31e422f7f04d9ef2533f1143c0f
   m_configObjects: {}
